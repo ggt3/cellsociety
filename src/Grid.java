@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * 
+ * @author GA
+ *
+ */
 
 public class Grid {
 	private Cell[][] myCells;
@@ -37,4 +41,5 @@ public class Grid {
 	public void addCell(Cell target, int row, int col) {
 		myCells[row][col] = target;
 	}
+	
 }
