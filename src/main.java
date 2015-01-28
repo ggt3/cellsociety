@@ -4,6 +4,8 @@ public class main {
 		System.out.print("Helllo World HI IM GEORGIA");
 
 		System.out.print("bye world DUH");
+		
+		//View()
 
 		
 	}
