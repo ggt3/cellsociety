@@ -1,38 +1,52 @@
 package viewPackage;
 
 
+import java.awt.Dimension;
+import java.util.ResourceBundle;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+//import org.controlsfx.dialog.Dialogs;
+
 
 public class View extends Application{
-	
+    private Scene myScene;
 	private Integer frameRate=100;
 	private Integer windowSize=600;
 	private Integer speed=1;
 	private Integer[][] yo = new Integer[2][2];
 	private Text btn6;
+	private Text t;
+	private Group root;
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
+    public static final Dimension DEFAULT_SIZE = new Dimension(600, 600);
+	private ResourceBundle myResources;
+	private String fileName="";
 	
     public static void main(String[] args) {
         launch(args);
     }
-	
+    
+    
 	public Button makeButton(Stage s,double x,int level, String string)
 	{
 		Button btn = new Button();
@@ -57,8 +71,63 @@ public class View extends Application{
     			{
     				speed++;
     				System.out.println(speed);
+    				btn6.setText(""+speed+"");
     			}
+    			if(string.equals("DOWN"))
+    			{
+    				if (speed>0)
+    					speed--;
+    				System.out.println(speed);
+    				btn6.setText(""+speed+"");
+    			}
+    			if(string.equals("    Load    "))
+    			{
     				
+                    Label secondLabel = new Label("Please Enter Your File Name:");
+                    
+                    GridPane grid = new GridPane();
+                    grid.setAlignment(Pos.CENTER);
+                    grid.setHgap(10);
+                    grid.setVgap(10);
+                    grid.setPadding(new Insets(25, 25, 25, 25));
+                    
+                    TextField textField = new TextField();
+                    grid.add(textField, 0, 1);
+                    grid.getChildren().add(secondLabel);
+
+                    Scene secScene = new Scene(grid, 400, 400);
+                    
+                    Button hitBtn = new Button("Go");
+                    hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
+                    grid.add(hitBtn, 1, 4);
+                    
+                    
+                    
+                    Stage secondStage = new Stage();
+                    hitBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                    	@Override
+                    	    public void handle(ActionEvent e) {
+                    	        if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField.getText().endsWith("xml"))) {
+                    	        	fileName=textField.getText();
+                    	        	System.out.println(fileName);
+                    	        	secondStage.close();
+                    	            Text texty=addText(fileName,20,0,90);
+                    	            root.getChildren().add(texty);
+                    	        } else {
+                    	        	System.out.println("File Name entered is not a valid name");
+                    	        }
+                    	     }
+                    	 });
+                    secondStage.setTitle("Load File");
+                    secondStage.setScene(secScene);
+                     
+                    //Set position of second window, related to primary window.
+                    secondStage.setX(s.getX() + 100);
+                    secondStage.setY(s.getY() + 100);
+                    secondStage.show();
+    				
+    			}
     			
     			
     	        KeyFrame frame = start(60);
@@ -70,6 +139,11 @@ public class View extends Application{
         });
         return btn;
 	}
+	
+    public void showError (String message) {
+        //Object myResources;
+		//Dialogs.create().title(myResources.getString("ErrorTitle")).message(message).showError();
+    }
 	
 	protected KeyFrame start(int i) {
 		// TODO Auto-generated method stub
@@ -90,21 +164,22 @@ public class View extends Application{
         primaryStage.setTitle("Cell Society");
         
         double currWidth=primaryStage.getWidth();
-        Button btn=makeButton(primaryStage,30,1,"Play");
-        Button btn2=makeButton(primaryStage,(windowSize/6)+30,1,"Pause");
+        Button btn=makeButton(primaryStage,20,1,"Play");
+        Button btn2=makeButton(primaryStage,(windowSize/6)+10,1,"Pause");
         Button btn3=makeButton(primaryStage,(windowSize/12)*9,1,"    Load    ");
-        
+        Button btn7=makeButton(primaryStage,(windowSize/6)*2+20,1,"Step");
         Button btn4=makeButton(primaryStage,(windowSize/24)*13,8,"   UP   ");
         Button btn5=makeButton(primaryStage,(windowSize/24)*13,32,"DOWN");
         //Button btn6=makeButton(primaryStage,(windowSize/24)*11,1,""+speed+"");
-        Text btn6=addText(""+speed+"",40,(windowSize/24)*11,50);
-        Text t=addText("ERROR",20,0,windowSize-20);
+        btn6=addText(""+speed+"",40,(windowSize/24)*12,50);
+        t=addText("ERROR",20,0,windowSize-20);
         
         
-        Group root = new Group();
-        //drawGrid(root);
+        root = new Group();
+
         displayGrid(root,550,550,10,10);
-        root.getChildren().addAll(btn,btn2,btn3,btn4,btn5,btn6,t);
+        root.getChildren().addAll(btn,btn2,btn3,btn4,btn5,btn6,t,btn7);
+
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
@@ -115,50 +190,14 @@ public class View extends Application{
     	//btn6.setText(""+speed+"");
     }
     
-    private void drawGrid(Group root){
-    	int x=10;
-    	while (x<(windowSize-30))
-    	{
-        	Path path = new Path();
-            MoveTo moveTo = new MoveTo();
-            moveTo.setX(x);
-            moveTo.setY(100);
-           
-            LineTo lineTo = new LineTo();
-            lineTo.setX(x);
-            lineTo.setY(540);
-           
-            path.getElements().add(moveTo);
-            path.getElements().add(lineTo);
-            path.setStrokeWidth(1);
-            path.setStroke(Color.BLACK);
-            root.getChildren().add(path);
-            x+=20;
-    	}
-    	int y=100;
-    	while (y<550)
-    	{
-        	Path path = new Path();
-            MoveTo moveTo = new MoveTo();
-            moveTo.setX(10);
-            moveTo.setY(y);
-           
-            LineTo lineTo = new LineTo();
-            lineTo.setX(550);
-            lineTo.setY(y);
-           
-            path.getElements().add(moveTo);
-            path.getElements().add(lineTo);
-            path.setStrokeWidth(1);
-            path.setStroke(Color.BLACK);
-            root.getChildren().add(path);
-            y+=20;
-    	}
-       
+    
+    private void fix(Text t)
+    {
+    	root.getChildren().remove(t);
+    	t.setText(""+speed+"");
+    	root.getChildren().add(t);
+    	
     }
-    
-    
-    
     
     private void displayGrid(Group root,int xtot, int ytot,int x,int y){
     	for(int i=50;i<xtot;i+=x+1)
