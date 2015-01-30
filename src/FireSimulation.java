@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class FireSimulation extends Simulation{
 
-	
 	private Random myGenerator = new Random(1234);
 	
 	public FireSimulation(Grid aGrid, Map<String, Object> thresholds ) {

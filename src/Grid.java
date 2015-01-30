@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 /**
  * general grid structure
@@ -9,9 +10,11 @@ import java.util.List;
 
 public class Grid {
 	private Cell[][] myCells;
+	private HashMap<String, String> colorMapping;
 	
-	public Grid(int row, int column) {
+	public Grid(int row, int column, HashMap<String, String> colorMap) {
 		myCells = new Cell[row][column]; //creates 2D array with dimensions
+		colorMapping = colorMap;
 	}
 	
 	//returns 8 neighbors surrounding the cell at (row, col)
@@ -55,6 +58,7 @@ public class Grid {
 		return stateList;
 	}
 	
+	//TODO: public gridToColor()??
 	
 	public Cell getCell(int row, int col) {
 		return myCells[row][col];
