@@ -1,3 +1,4 @@
+package model;
 import java.util.Map;
 /**
  * this abstract class will define a general structure for any type of simulation
