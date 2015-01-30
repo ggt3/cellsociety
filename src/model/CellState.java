@@ -4,7 +4,7 @@ public enum CellState {
 	
 	//Conway game of life
 	ALIVE,
-	DEAD,
+	//empty
 	
 	//Segregation
 	X,
