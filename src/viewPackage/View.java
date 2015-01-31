@@ -4,6 +4,7 @@ package viewPackage;
 import java.awt.Dimension;
 import java.util.ResourceBundle;
 
+import controller.Controller;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -28,7 +29,7 @@ import javafx.util.Duration;
 //import org.controlsfx.dialog.Dialogs;
 
 
-public class View extends Application{
+public class View {
     private Scene myScene;
 	private Integer frameRate=100;
 	private Integer windowSize=600;
@@ -41,11 +42,11 @@ public class View extends Application{
     public static final Dimension DEFAULT_SIZE = new Dimension(600, 600);
 	private ResourceBundle myResources;
 	private String fileName="";
-	
-    public static void main(String[] args) {
-        launch(args);
+	private Controller control;
+
+    public View() {
+    	
     }
-    
     
 	public Button makeButton(Stage s,double x,int level, String string)
 	{
@@ -129,12 +130,7 @@ public class View extends Application{
     				
     			}
     			
-    			
-    	        KeyFrame frame = start(60);
-    	        Timeline animation = new Timeline();
-    	        animation.setCycleCount(Animation.INDEFINITE);
-    	        animation.getKeyFrames().add(frame);
-    	        animation.play();
+  
             }
         });
         return btn;
@@ -145,10 +141,7 @@ public class View extends Application{
 		//Dialogs.create().title(myResources.getString("ErrorTitle")).message(message).showError();
     }
 	
-	protected KeyFrame start(int i) {
-		// TODO Auto-generated method stub
-		return new KeyFrame(Duration.millis(1000 / frameRate), e -> updateSprites());
-	}
+
 
 	public Text addText(String s,int size,int xLoc,int yLoc)
 	{
@@ -218,5 +211,4 @@ public class View extends Application{
 		rex.setFill(Color.BLUE);
 		//return null;
 	}
-
 }

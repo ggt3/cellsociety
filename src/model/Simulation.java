@@ -18,7 +18,6 @@ public abstract class Simulation {
 		colors = attributes.getColorMap(); //stores the state to color map
 	}
 	
-
 	
 	public Grid getCurrent() {
 		return currentGrid;
