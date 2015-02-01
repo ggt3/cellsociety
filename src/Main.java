@@ -14,8 +14,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		myControl = new Controller(new View());
-		
+		//myControl = new Controller(new View());
+		myView=new View();
 		
 	}
 	

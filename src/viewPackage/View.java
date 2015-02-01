@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.ResourceBundle;
 
 import controller.Controller;
+import controller.Packager;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -34,8 +35,7 @@ public class View {
 	private Integer frameRate=100;
 	private Integer windowSize=600;
 	private Integer speed=1;
-	private Integer[][] yo = new Integer[2][2];
-	private Text btn6;
+	private Text speedText;
 	private Text t;
 	private Group root;
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
@@ -43,13 +43,20 @@ public class View {
 	private ResourceBundle myResources;
 	private String fileName="";
 	private Controller control;
-
+	private Stage mainStage;
+	private Rectangle[][] yo;// = new Rectangle[2][2];
+	private int totalWidthOfGrid=450;
+	private int totalHeightOfGrid=450;
+	
     public View() {
-    	
+    	Stage s=new Stage();
+    	start(s);
     }
     
 	public Button makeButton(Stage s,double x,int level, String string)
 	{
+		
+		
 		Button btn = new Button();
         btn.setText(string);
         btn.setLayoutX(x);
@@ -65,21 +72,19 @@ public class View {
  
             @Override
             public void handle(ActionEvent event) {
-            	s.setTitle("Cell Society");
-    			s.show();
     			
     			if(string.equals("   UP   "))
     			{
     				speed++;
     				System.out.println(speed);
-    				btn6.setText(""+speed+"");
+    				speedText.setText(""+speed+"");
     			}
     			if(string.equals("DOWN"))
     			{
     				if (speed>0)
     					speed--;
     				System.out.println(speed);
-    				btn6.setText(""+speed+"");
+    				speedText.setText(""+speed+"");
     			}
     			if(string.equals("    Load    "))
     			{
@@ -116,6 +121,7 @@ public class View {
                     	            Text texty=addText(fileName,20,0,90);
                     	            root.getChildren().add(texty);
                     	        } else {
+                    	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
                     	        	System.out.println("File Name entered is not a valid name");
                     	        }
                     	     }
@@ -152,33 +158,37 @@ public class View {
         return t;
 	}
 
-	@Override
+	//@Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Cell Society");
-        
+        mainStage=primaryStage;
         double currWidth=primaryStage.getWidth();
-        Button btn=makeButton(primaryStage,20,1,"Play");
-        Button btn2=makeButton(primaryStage,(windowSize/6)+10,1,"Pause");
-        Button btn3=makeButton(primaryStage,(windowSize/12)*9,1,"    Load    ");
-        Button btn7=makeButton(primaryStage,(windowSize/6)*2+20,1,"Step");
-        Button btn4=makeButton(primaryStage,(windowSize/24)*13,8,"   UP   ");
-        Button btn5=makeButton(primaryStage,(windowSize/24)*13,32,"DOWN");
-        //Button btn6=makeButton(primaryStage,(windowSize/24)*11,1,""+speed+"");
-        btn6=addText(""+speed+"",40,(windowSize/24)*12,50);
+        //AllButton btn=new PlayButton();
+        Button play=makeButton(primaryStage,20,1,"Play");
+        Button pause=makeButton(primaryStage,(windowSize/6)+10,1,"Pause");
+        Button load=makeButton(primaryStage,(windowSize/12)*9,1,"    Load    ");
+        Button step=makeButton(primaryStage,(windowSize/6)*2+20,1,"Step");
+        Button speedUp=makeButton(primaryStage,(windowSize/24)*13,8,"   UP   ");
+        Button speedDown=makeButton(primaryStage,(windowSize/24)*13,32,"DOWN");
+        speedText=addText(""+speed+"",40,(windowSize/24)*12,50);
         t=addText("ERROR",20,0,windowSize-20);
         
         
         root = new Group();
 
-        displayGrid(root,550,550,10,10);
-        root.getChildren().addAll(btn,btn2,btn3,btn4,btn5,btn6,t,btn7);
+        //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
+        double x=determineXlength(10);
+        double y=determineYlength(10);
+        
+        yo=new Rectangle[10][10];
+        
+        displayGrid(500,550,x,y);
+        root.getChildren().addAll(play,pause,load,speedUp,speedDown,speedText,step,t);
 
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
-    private void updateSprites (Stage s,Button btn) {
-    	btn.setText(""+speed+"");
-    }
+
     private void updateSprites () {
     	//btn6.setText(""+speed+"");
     }
@@ -192,23 +202,70 @@ public class View {
     	
     }
     
-    private void displayGrid(Group root,int xtot, int ytot,int x,int y){
-    	for(int i=50;i<xtot;i+=x+1)
-    	{
-    		for (int j=100;j<ytot;j+=y+1)
-    		{
+    private Rectangle[][] displayGrid(int xtot, int ytot,double x,double y){
+    	int xIndex=0;
+    	//int yIndex=0;
+    	for(int i=50;i<xtot;i+=x){
+    		int yIndex=0;
+    		for (int j=100;j<ytot;j+=y){
     			Rectangle rex=new Rectangle(i,j,x,y);
-    			rex.setFill(Color.BLUE);
+    			//use encapsulated info to determine color like example commented below
+    			//rex.setFill(infoFromController[i][j]);
+    			rex.setFill(Color.WHITE);
+    			rex.setStroke(Color.BLACK);
+    			rex.setStrokeWidth(0.5);
     			root.getChildren().add(rex);
+    			//yo[xIndex][yIndex]=rex;
+    			yIndex++;
     		}
-    			//System.out.println();
-    		
+    		xIndex++;
     	}
+    	return yo;
     }
-
+    
+    public void updateGrid(Packager colorGrid){
+    	for(int i=0;i<10;i++){
+    		for (int j=0;j<10;j++){
+    			Rectangle rex2=yo[i][j];
+    			String cheese=colorGrid.getColorGrid().get(i).get(j).toUpperCase();
+    			rex2.setFill(Color.BLUE);
+    		}
+    	}
+    	//return yo;
+    }
+    private double determineXlength(int numCols){
+    	double xsize=totalWidthOfGrid/numCols;
+    	return xsize;
+    }
+    
+    private double determineYlength(int numRows){
+    	double ysize=totalHeightOfGrid/numRows;
+    	return ysize;
+    }
+    
+    
 	private void setFill(Rectangle rex,Color blue) {
 		// TODO Auto-generated method stub
 		rex.setFill(Color.BLUE);
 		//return null;
 	}
+	
+	protected Group getRoot(){
+		return root;
+	}
+	protected String getFileName(){
+		return fileName;
+	}
+	protected Stage getPrimaryStage(){
+		return mainStage;
+	}
+	protected int getSpeed(){
+		return speed;
+	}
+	protected Text displayCurrentSpeed(){
+		return speedText;
+	}
+	
+	
+	
 }
