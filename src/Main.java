@@ -12,9 +12,13 @@ public class Main extends Application {
         launch(args);
     }
 
-	@Override
+
 	public void start(Stage primaryStage) throws Exception {
-		myControl = new Controller(new View());
+		myControl = new Controller();
+		myView = new View(myControl);
+		myControl.setView(myView);
+		//TODO: myView.initialize(primaryStage); - shows the default load screen
+		
 		
 		
 	}

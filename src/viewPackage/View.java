@@ -44,8 +44,8 @@ public class View {
 	private String fileName="";
 	private Controller control;
 
-    public View() {
-    	
+    public View(Controller c) {
+    	control = c;
     }
     
 	public Button makeButton(Stage s,double x,int level, String string)
