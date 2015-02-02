@@ -14,7 +14,6 @@ public abstract class Simulation {
 	
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;
-		nextGrid = currentGrid; //setting the next grid a copy of the original
 		colors = attributes.getColorMap(); //stores the state to color map
 	}
 	
@@ -30,18 +29,22 @@ public abstract class Simulation {
 	}
 	//returning the next grid states
 	public Grid makeNextGrid() {
+		nextGrid = new Grid(currentGrid.getRowSize(),currentGrid.getColSize()); //setting the next grid a copy of the original
+		currentGrid.toString();
 		for (int r = 0; r< currentGrid.getRowSize(); r++) {
 			for (int c = 0; c< currentGrid.getColSize(); c++) {
 				CellState newState = calculateNewCellState(r,c);
 				Cell target = new Cell(newState);
-				nextGrid.addCell(target, r, c);
+				nextGrid.putCell(target, r, c);
 			}
 		}
-		currentGrid = nextGrid; //updating the grid stored in the simulation
+		//currentGrid = nextGrid; //updating the grid stored in the simulation
 		return nextGrid;
 	}
 
-	
+	public void updateGrid(Grid x) {
+		currentGrid = x;
+	}
 	//rules logic implemented here
 	public abstract CellState calculateNewCellState(int row, int col);
 	
@@ -51,10 +54,13 @@ public abstract class Simulation {
 		for (int r = 0; r< gridToReturn.getRowSize(); r++) {
 			ArrayList<String> colorRow = new ArrayList<String>();
 			for (int c = 0; c< gridToReturn.getColSize(); c++) {
-				String state = gridToReturn.getCell(r, c).toString();
-				colorRow.add(colors.get(state));
+				String state = gridToReturn.getCell(c, r).toString();
+				colorRow.add(colors.get(state)); //gets the color
+				System.out.println("getRowSize:       "+gridToReturn.getRowSize());
+				System.out.printf("on row %d %d %s \n", c, r, state);
 			}
-			colorGrid.getColorGrid().add(colorRow);
+			System.out.println(colorRow);
+			colorGrid.getColorGrid().add(colorRow); //add to double array list
 		}
 		return colorGrid;
 	}

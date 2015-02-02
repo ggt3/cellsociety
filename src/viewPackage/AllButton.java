@@ -41,8 +41,6 @@ public class AllButton extends Button {
 	private void handle() {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				s.show();
-
 			}
 		});
 	}

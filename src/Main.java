@@ -17,7 +17,10 @@ public class Main extends Application {
 		myControl = new Controller();
 		myView = new View(myControl);
 		myControl.setView(myView);
-		myView.initialize(primaryStage); 
+
+
+		myView.initialize(primaryStage); //- shows the default load screen
+		
 
 		
 	}

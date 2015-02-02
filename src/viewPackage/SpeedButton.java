@@ -11,8 +11,6 @@ public class SpeedButton extends AllButton {
 	private void handle(){
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				s.setTitle("Cell Society");
-    			s.show();
     			speed+=direction;
     			System.out.println(speed);
     			t.setText(""+speed+"");

@@ -16,6 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -38,40 +40,64 @@ public class View {
 	private String fileName="";
 	private Controller control;
 	private Stage mainStage;
-	private Rectangle[][] yo;// = new Rectangle[2][2];
+	private Rectangle[][] yo;// = new Rectangle[20][20];
 	private int totalWidthOfGrid=450;
 	private int totalHeightOfGrid=450;
+	private int currentGeneration=0;
+	private int prac=4;//=control.giveGridSize(3);
 	
+
 
     public View(Controller c) {
     	control = c;
     }
     
-	public Button makeButton(Stage s,double x,int level, String string)
+    public Button makeButton(String string)
+	//public Button makeButton(Stage s,double x,int level, String string)
 	{
-		
-		
 		Button btn = new Button();
         btn.setText(string);
-        btn.setLayoutX(x);
-        btn.setLayoutY(level);
-		if (level==1)
-		{
+	    if (!string.contains("UP")&&!string.contains("DOWN"))
+	    {
 	        btn.setScaleX(2);
-	        btn.setScaleY(2);
-	        btn.setLayoutY(20);
-		}
+		    btn.setScaleY(2);
+	    }
 
         btn.setOnAction(new EventHandler<ActionEvent>() {
  
             @Override
             public void handle(ActionEvent event) {
     			
-    			if(string.equals("   UP   "))
+            	if(string.equals("Play"))
+    			{
+            		
+            		//Color[][] colz=new Color[prac][prac];
+            		//updateGrid(colz);
+            		//call step method in controller
+            		control.playSimulation(speed);
+    			}
+            	if(string.equals("Pause"))
+    			{
+            		
+            		//Color[][] colz=new Color[prac][prac];
+            		//updateGrid(colz);
+            		//call step method in controller
+            		control.pauseSimulation();
+    			}
+            	if(string.equals("Step"))
+    			{
+            		
+            		Color[][] colz=new Color[prac][prac];
+            		//updateGrid(colz);
+            		//call step method in controller
+            		control.stepSimulation();
+    			}
+            	if(string.equals("   UP   "))
     			{
     				speed++;
     				System.out.println(speed);
     				speedText.setText(""+speed+"");
+            		//send new speed to controller to update frames per second
     			}
     			if(string.equals("DOWN"))
     			{
@@ -80,7 +106,7 @@ public class View {
     				System.out.println(speed);
     				speedText.setText(""+speed+"");
     			}
-    			if(string.equals("    Load    "))
+    			if(string.equals("Load"))
     			{
     				
                     Label secondLabel = new Label("Please Enter Your File Name:");
@@ -120,17 +146,16 @@ public class View {
                     	        }
                     	     }
                     	 });
+                    control.setFilePath(fileName);
                     secondStage.setTitle("Load File");
                     secondStage.setScene(secScene);
                      
                     //Set position of second window, related to primary window.
-                    secondStage.setX(s.getX() + 100);
-                    secondStage.setY(s.getY() + 100);
+                    secondStage.setX(mainStage.getX() + 100);
+                    secondStage.setY(mainStage.getY() + 100);
                     secondStage.show();
     				
     			}
-    			
-  
             }
         });
         return btn;
@@ -142,6 +167,15 @@ public class View {
     }
 	
 
+    public Text addText(String s,int size)
+	{
+        Text t = new Text(s);
+        t.setFont(Font.font ("Verdana", size));
+        t.setCache(true);
+        t.setFill(Color.BLACK);
+        return t;
+	}
+    
 
 	public Text addText(String s,int size,int xLoc,int yLoc)
 	{
@@ -154,71 +188,88 @@ public class View {
 
 	//@Override
     public void initialize(Stage primaryStage) {
+    	
+    	primaryStage.setResizable(false);
+    
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
         double currWidth=primaryStage.getWidth();
-        //AllButton btn=new PlayButton();
-        Button play=makeButton(primaryStage,20,1,"Play");
-        Button pause=makeButton(primaryStage,(windowSize/6)+10,1,"Pause");
-        Button load=makeButton(primaryStage,(windowSize/12)*9,1,"    Load    ");
-        Button step=makeButton(primaryStage,(windowSize/6)*2+20,1,"Step");
-        Button speedUp=makeButton(primaryStage,(windowSize/24)*13,8,"   UP   ");
-        Button speedDown=makeButton(primaryStage,(windowSize/24)*13,32,"DOWN");
-        speedText=addText(""+speed+"",40,(windowSize/24)*12,50);
-        t=addText("ERROR",20,0,windowSize-20);
+        HBox hbox=new HBox(50);
+        Button play=makeButton("Play");
+        Button pause=makeButton("Pause");
+        Button step=makeButton("Step");
+        Button load=makeButton("Load");
+        
+        speedText=addText(""+speed+"",20);
+        speedText.setScaleY(2);
+        speedText.setScaleX(2);
+        
+        VBox speedButtons = new VBox();
+        Button up =makeButton("   UP   ");
+        Button down=makeButton("DOWN");
+        speedButtons.getChildren().addAll(up,down);
+        
+        speedButtons.setTranslateY(-11);
+        
+        hbox.setTranslateX(30);
+        hbox.setTranslateY(15);
+        
+        hbox.getChildren().addAll(play,pause,step,speedText,speedButtons,load);
+        hbox.setPrefWidth(windowSize);
         
         
         root = new Group();
 
         //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
-        double x=determineXlength(10);
-        double y=determineYlength(10);
+        double x=determineXlength(prac);
+        double y=determineYlength(prac);
         
-        yo=new Rectangle[10][10];
+        yo=new Rectangle[prac][prac];
         
-        displayGrid(500,550,x,y);
-        root.getChildren().addAll(play,pause,load,speedUp,speedDown,speedText,step,t);
+        displayGrid(525,550,x,y);
+        root.getChildren().add(hbox);
+        //root.getChildren().addAll(play,pause,load,speedUp,speedDown,speedText,step);
 
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
 
+    public void setGridSize(int size){
+    	prac=size;
+    }
+    
+    
     private void updateSprites () {
     	//btn6.setText(""+speed+"");
     }
 
-    private void fix(Text t)
-    {
-    	root.getChildren().remove(t);
-    	t.setText(""+speed+"");
-    	root.getChildren().add(t);
-    	
-    }
-    //TODO: THIS METHOD SHOULD TAKE IN A PACKAGE
     private Rectangle[][] displayGrid(int xtot, int ytot,double x,double y){
     	int xIndex=0;
     	//int yIndex=0;
-    	for(int i=50;i<xtot;i+=x){
+    	for(int i=75;i<=xtot-x;i+=x){
     		int yIndex=0;
-    		for (int j=100;j<ytot;j+=y){
+    		for (int j=100;j<=ytot-y;j+=y){
     			Rectangle rex=new Rectangle(i,j,x,y);
     			//use encapsulated info to determine color like example commented below
     			//rex.setFill(infoFromController[i][j]);
-    			rex.setFill(Color.WHITE);
+    			rex.setFill(Color.SPRINGGREEN);
     			rex.setStroke(Color.BLACK);
     			rex.setStrokeWidth(0.5);
     			root.getChildren().add(rex);
-    			//yo[xIndex][yIndex]=rex;
+    			yo[xIndex][yIndex]=rex;
     			yIndex++;
     		}
     		xIndex++;
     	}
+    	//root.getChildren().addAll(yo);
     	return yo;
+    	
     }
     
+
     public void updateGrid(Packager colorGrid){
-    	for(int i=0;i<10;i++){
-    		for (int j=0;j<10;j++){
+    	for(int i=0;i<prac;i++){
+    		for (int j=0;j<prac;j++){
     			Rectangle rex2=yo[i][j];
     			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(rex2, Color.valueOf(color)); //converting the string to color
@@ -227,19 +278,36 @@ public class View {
     	//return yo;
     }
     private double determineXlength(int numCols){
-    	double xsize=totalWidthOfGrid/numCols;
+    	double xsize=((double)totalWidthOfGrid)/numCols;
     	return xsize;
     }
     
     private double determineYlength(int numRows){
-    	double ysize=totalHeightOfGrid/numRows;
+    	double ysize=((double)totalHeightOfGrid)/numRows;
     	return ysize;
     }
     
+    //this is used to simulate the change of color given by the controller
+    private Color[][] practiceChange(){
+    	Color[][] colorz=new Color[prac][prac];
+    	for (int i=0;i<prac;i++){
+    		for (int j=0;j<prac;j++){
+    			if (i%3==0&&j%3==0)
+    				colorz[i][j]=Color.BLUE;
+    			else if (i%3==0 && j%3!=0)
+    				colorz[i][j]=Color.RED;
+    			else if (j%3==0 && i%3!=0)
+    				colorz[i][j]=Color.YELLOW;
+    		}
+    	}
+    	return colorz;
+    }
     
+
 	private void setFill(Rectangle rex,Color c) {
 		rex.setFill(c);
 	}
+
 	
 	protected Group getRoot(){
 		return root;
@@ -256,7 +324,5 @@ public class View {
 	protected Text displayCurrentSpeed(){
 		return speedText;
 	}
-	
-	
-	
+
 }
