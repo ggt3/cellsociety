@@ -38,8 +38,7 @@ public class Cell {
 	public String toString() {
 		return this.state.toString();
 	}
-	
-	
+
 	//returning the values in the map for thresholds
 	public double getKeyToDouble(String key) {
 		return (double) properties.get(key);
