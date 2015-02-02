@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Packager {
 	private HashMap<String,Object> attributeMap; 
-	private ArrayList<ArrayList<String>> colorGrid;
+	private ArrayList<ArrayList<String>> colorGrid=new ArrayList<ArrayList<String>>();
 	private Map<String, String> colorsMap;
 	
 	public HashMap<String,Object> getMap() {
@@ -21,5 +21,8 @@ public class Packager {
 	
 	public Map<String, String> getColorMap() {
 		return colorsMap;
+	}
+	public void setColorMap(Map<String, String> c) {
+		colorsMap = c;
 	}
 }

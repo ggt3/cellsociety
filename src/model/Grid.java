@@ -24,14 +24,15 @@ public class Grid {
 	//returns 8 neighbors surrounding the cell at (row, col)
 	public List<Cell> getAllNeighbors(int row, int col) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int [][] deltas = {{-1,0}, {-1,-1}, {-1,1}, {0,1}, {0,-1}, {1,0}, {1,1}, {1-1}}; //N, NW, NE, E, W, S, SE, SW
-		for (int i = 0; i < deltas.length; i++) {
+		int [][] deltas = {{-1,0}, {-1,-1}, {-1,1}, {0,1}, {0,-1}, {1,0}, {1,1}, {1,-1}}; //W, NW, SW, S, N, E, SE, NE
+		for (int i = 0; i < deltas.length; i++) {	
 			int newR = row + deltas[i][0];
 			int newC = col + deltas[i][1];
 			if (inBounds(newR, newC)) { //only add neighbor if in bounds
 				neighbors.add(myCells[newR][newC]);
 			}
 		}
+		System.out.println(neighbors.toString() + " me: " + myCells[row][col].toString());
 		return neighbors;	
 	}
 	
@@ -54,7 +55,7 @@ public class Grid {
 		for (int i = 0; i< myCells.length; i++) {
 			for (int j = 0; j<myCells[0].length; j++) {
 				if(getCell(i,j).getState().equals(x)) {
-					stateList.add(new Point(i,j));
+					stateList.add(new Point(j,i));
 				}
 			}
 		}
@@ -67,7 +68,7 @@ public class Grid {
 		return myCells[row][col];
 	}
 
-	public void addCell(Cell target, int row, int col) {
+	public void putCell(Cell target, int row, int col) {
 		myCells[row][col] = target;
 	}
 	
@@ -82,8 +83,11 @@ public class Grid {
 		return myCells[0].length;
 	}
 	
-	public String print() {
-		return Arrays.toString(myCells);
+	public void print() {
+		for(int i = 0; i<myCells.length;i++) {
+			for(int k = 0; k<myCells[0].length; k++)
+			System.out.printf("row %d, %d, %s\n", i, k, myCells[i][k].toString());
+		}
 	}
 
 	

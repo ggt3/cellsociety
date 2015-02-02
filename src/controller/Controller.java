@@ -1,6 +1,8 @@
 package controller;
 
 
+import java.util.HashMap;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,13 +13,44 @@ import model.*;
 
 
 public class Controller {
-	private Simulation rules = new GameLifeSimulation(null, null);
+	private Simulation rules = new GameLifeSimulation(stupidMakeGrid(), createMap(stupidMap()));
 	private View myView;
 	private Timeline myTimeline;
-	private static final int NUM_FRAMES_PER_SECOND = 60;
+	private String myFile;
+	private int NUM_FRAMES_PER_SECOND = 60;
 	//TODO: needs to parse in the simulation type
 	//rules = new SimulationType	
+	public Grid stupidMakeGrid() {
+		Grid newG = new Grid(4,4);
+		Cell s = new Cell(CellState.ALIVE);
+		Cell t=new Cell(CellState.EMPTY);
+		for (int i = 0; i < 4; i++) {
+			for (int k =0; k<4; k++) {
+				if (i==1)
+					newG.putCell(s, i, k);
+				else
+					newG.putCell(t, i, k);
+			}
+		}
+		return newG;
+	}
 	
+	public HashMap<String,String> stupidMap() {
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("ALIVE", "RED");
+		map.put("EMPTY", "BLACK");
+		map.put("TREE", "AQUA");
+		return map;
+	}
+	public Packager createMap(HashMap<String,String> d) {
+		Packager p = new Packager();
+		p.setColorMap(d);
+		return p;
+	}
+	
+	public void giveGridSize(int row) {
+		myView.setGridSize(4);
+	}
 	public void setView(View v){
 		myView = v;
 	}
@@ -26,6 +59,8 @@ public class Controller {
 		return rules.makeNextGrid();
 	}
 
+	//TODO: view.setInitialGrid //given by xml file
+	
 	public void giveViewGrid(Packager colorGrid) {
 		myView.updateGrid(colorGrid);
 	}
@@ -37,9 +72,19 @@ public class Controller {
 	    myTimeline.play();
 	}
 	public void playSimulation(int speed) {
+		
+		stepSimulation();
+		
+	}
+	public void setSpeed(int speed) {
+		NUM_FRAMES_PER_SECOND = speed;
+	}
+	
+	public void stepSimulation() {
 		Grid next = getNextGrid();
+		rules.updateGrid(next); //sets the next grid as the new grid
 		Packager bundle = rules.createColorGrid(next);
-		//myView.displayGrid(bundle);
+		giveViewGrid(bundle);
 	}
 	
 	public void pauseSimulation() {
@@ -50,6 +95,10 @@ public class Controller {
 		myTimeline.stop();
 	}
 
+	
+	public void setFilePath(String fileName){
+		myFile=fileName;
+	}
 
 
 

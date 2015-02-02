@@ -44,7 +44,7 @@ public class View {
 	private int totalWidthOfGrid=450;
 	private int totalHeightOfGrid=450;
 	private int currentGeneration=0;
-	private int prac=10;
+	private int prac=4;//=control.giveGridSize(3);
 	
 
 
@@ -71,9 +71,26 @@ public class View {
             	if(string.equals("Play"))
     			{
             		
+            		//Color[][] colz=new Color[prac][prac];
+            		//updateGrid(colz);
+            		//call step method in controller
+            		control.playSimulation(speed);
+    			}
+            	if(string.equals("Pause"))
+    			{
+            		
+            		//Color[][] colz=new Color[prac][prac];
+            		//updateGrid(colz);
+            		//call step method in controller
+            		control.pauseSimulation();
+    			}
+            	if(string.equals("Step"))
+    			{
+            		
             		Color[][] colz=new Color[prac][prac];
             		//updateGrid(colz);
             		//call step method in controller
+            		control.stepSimulation();
     			}
             	if(string.equals("   UP   "))
     			{
@@ -129,6 +146,7 @@ public class View {
                     	        }
                     	     }
                     	 });
+                    control.setFilePath(fileName);
                     secondStage.setTitle("Load File");
                     secondStage.setScene(secScene);
                      
@@ -138,8 +156,6 @@ public class View {
                     secondStage.show();
     				
     			}
-    			
-  
             }
         });
         return btn;
@@ -218,6 +234,11 @@ public class View {
         primaryStage.show();
     }
 
+    public void setGridSize(int size){
+    	prac=size;
+    }
+    
+    
     private void updateSprites () {
     	//btn6.setText(""+speed+"");
     }
@@ -247,12 +268,11 @@ public class View {
     
 
     public void updateGrid(Packager colorGrid){
-    	for(int i=0;i<10;i++){
-    		for (int j=0;j<10;j++){
+    	for(int i=0;i<prac;i++){
+    		for (int j=0;j<prac;j++){
     			Rectangle rex2=yo[i][j];
     			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(rex2, Color.valueOf(color)); //converting the string to color
-
     		}
     	}
     	//return yo;
