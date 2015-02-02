@@ -1,12 +1,13 @@
 package model;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.List;
 
 
+
 /**
- * general grid structure
+ * general grid structure that contains an array of cells
  * @author GA
  *
  */
@@ -31,8 +32,7 @@ public class Grid {
 				neighbors.add(myCells[newR][newC]);
 			}
 		}
-		return neighbors;
-		
+		return neighbors;	
 	}
 	
 	//returns the neighbors that are NESW of the cell
@@ -49,12 +49,12 @@ public class Grid {
 		return neighbors;
 	}
 	
-	public List<Cell> getCellsWithState(CellState x) {
-		List<Cell> stateList = new ArrayList<Cell>();
+	public ArrayList<Point> getLocationsWithState(CellState x) {
+		ArrayList<Point> stateList = new ArrayList<Point>();
 		for (int i = 0; i< myCells.length; i++) {
 			for (int j = 0; j<myCells[0].length; j++) {
 				if(getCell(i,j).getState().equals(x)) {
-					stateList.add(getCell(i,j));
+					stateList.add(new Point(i,j));
 				}
 			}
 		}
@@ -85,8 +85,6 @@ public class Grid {
 	public String print() {
 		return Arrays.toString(myCells);
 	}
-	public void moveCell(Cell cellToMove, int r, int c) {
-		
-	}
+
 	
 }

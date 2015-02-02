@@ -38,15 +38,12 @@ public class AllButton extends Button {
 	    btn.setScaleY(2);
 	}
 	
-	private void handle(){
+	private void handle() {
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				s.setTitle("Cell Society");
-    			s.show();
-    			
-    			
-    			//hahsjbsjn
-    			}
+				s.show();
+
+			}
 		});
 	}
 	

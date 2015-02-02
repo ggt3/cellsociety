@@ -4,9 +4,6 @@ package controller;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import viewPackage.View;
 import model.*;
@@ -33,7 +30,6 @@ public class Controller {
 		myView.updateGrid(colorGrid);
 	}
 	public void generateTimeline (int frameRate){
-		
 	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate), e -> playSimulation(myView.getSpeed()));
 	    myTimeline = new Timeline();
 	    myTimeline.setCycleCount(Animation.INDEFINITE);

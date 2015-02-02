@@ -17,12 +17,11 @@ public class Cell {
 	//only importing attributes if a cell has other traits
 	public Cell(CellState setState, Packager attributes) {
 		this(setState);
-		properties =attributes.getMap(); 
+		properties = attributes.getMap(); 
 	}
 	
 	public Cell(CellState setState) {
-		state = setState;
-		
+		state = setState;	
 	} 
 
 	public CellState getState() {
@@ -35,17 +34,18 @@ public class Cell {
 	}
 	
 	@Override
+	//if you want to print out a cell, it is the state
 	public String toString() {
 		return this.state.toString();
 	}
 	
 	
-	//for thresholds
+	//returning the values in the map for thresholds
 	public double getKeyToDouble(String key) {
 		return (double) properties.get(key);
 	}
 	
-	//for energy
+	//returning the values in the map for energy
 	public int getKeyToInt(String key) {
 		return (int) properties.get(key);
 	}

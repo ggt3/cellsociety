@@ -19,10 +19,10 @@ public class FireSimulation extends Simulation {
 	
 	//returns the new state of the cell at (row, col)
 	public CellState calculateNewCellState(int row, int col) {
-		List<Cell> neighbors = super.getCurrent().getAllNeighbors(row, col);
-		Cell theCell = super.getCurrent().getCell(row, col);
+		List<Cell> neighbors = super.getCurrentGrid().getAllNeighbors(row, col);
+		Cell theCell = super.getCurrentGrid().getCell(row, col);
 		double myProb;
-		if (super.getCurrent().getCell(row, col).getState().equals(CellState.TREE)) {
+		if (super.getCurrentGrid().getCell(row, col).getState().equals(CellState.TREE)) {
 			for (Cell aCell : neighbors) {
 				if (aCell.getState().equals(CellState.BURNING)) {
 					myProb = myGenerator.nextDouble();
