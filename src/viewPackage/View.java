@@ -6,10 +6,6 @@ import java.util.ResourceBundle;
 
 import controller.Controller;
 import controller.Packager;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -27,16 +23,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 //import org.controlsfx.dialog.Dialogs;
 
 
 public class View {
     private Scene myScene;
-	private Integer frameRate=100;
 	private Integer windowSize=600;
-	private Integer speed=1;
+	private Integer speed = 1;
 	private Text speedText;
 	private Text t;
 	private Group root;
@@ -52,10 +46,10 @@ public class View {
 	private int currentGeneration=0;
 	private int prac=10;
 	
-    public View() {
-    	Stage s=new Stage();
-    	s.setResizable(false);
-    	start(s);
+
+
+    public View(Controller c) {
+    	control = c;
     }
     
     public Button makeButton(String string)
@@ -76,8 +70,9 @@ public class View {
     			
             	if(string.equals("Play"))
     			{
+            		
             		Color[][] colz=new Color[prac][prac];
-            		updateGrid(colz);
+            		//updateGrid(colz);
             		//call step method in controller
     			}
             	if(string.equals("   UP   "))
@@ -176,7 +171,10 @@ public class View {
 	}
 
 	//@Override
-    public void start(Stage primaryStage) {
+    public void initialize(Stage primaryStage) {
+    	
+    	primaryStage.setResizable(false);
+    
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
         double currWidth=primaryStage.getWidth();
@@ -223,7 +221,7 @@ public class View {
     private void updateSprites () {
     	//btn6.setText(""+speed+"");
     }
-    
+
     private Rectangle[][] displayGrid(int xtot, int ytot,double x,double y){
     	int xIndex=0;
     	//int yIndex=0;
@@ -247,12 +245,14 @@ public class View {
     	
     }
     
-    public void updateGrid(Color[][] colorGrid){
-    	for(int i=0;i<prac;i++){
-    		for (int j=0;j<prac;j++){
-    			//String cheese=colorGrid.getColorGrid().get(i).get(j).toUpperCase();
-    			Color updatedColor=practiceChange()[i][j];
-    			yo[i][j].setFill(updatedColor);
+
+    public void updateGrid(Packager colorGrid){
+    	for(int i=0;i<10;i++){
+    		for (int j=0;j<10;j++){
+    			Rectangle rex2=yo[i][j];
+    			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
+    			setFill(rex2, Color.valueOf(color)); //converting the string to color
+
     		}
     	}
     	//return yo;
@@ -283,7 +283,11 @@ public class View {
     	return colorz;
     }
     
-    
+
+	private void setFill(Rectangle rex,Color c) {
+		rex.setFill(c);
+	}
+
 	
 	protected Group getRoot(){
 		return root;
@@ -294,7 +298,7 @@ public class View {
 	protected Stage getPrimaryStage(){
 		return mainStage;
 	}
-	protected int getSpeed(){
+	public int getSpeed(){
 		return speed;
 	}
 	protected Text displayCurrentSpeed(){

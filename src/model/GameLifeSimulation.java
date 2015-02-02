@@ -18,8 +18,8 @@ public class GameLifeSimulation extends Simulation {
 
 	// returns the new state of the cell at (row, col)
 	public CellState calculateNewCellState(int row, int col) {
-		List<Cell> neighbors = super.getCurrent().getAllNeighbors(row, col);
-		CellState currentState = super.getCurrent().getCell(row, col).getState();
+		List<Cell> neighbors = super.getCurrentGrid().getAllNeighbors(row, col);
+		CellState currentState = super.getCurrentGrid().getCell(row, col).getState();
 		
 		int countAlive =0; 
 		for (Cell aCell : neighbors) {

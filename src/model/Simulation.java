@@ -19,10 +19,15 @@ public abstract class Simulation {
 	}
 	
 	
-	public Grid getCurrent() {
+	public Grid getCurrentGrid() {
 		return currentGrid;
+	}	
+	public Grid getNextGrid() {
+		return nextGrid;
 	}
-	
+	public void setNextGrid(Grid x) {
+		nextGrid = x;
+	}
 	//returning the next grid states
 	public Grid makeNextGrid() {
 		for (int r = 0; r< currentGrid.getRowSize(); r++) {
