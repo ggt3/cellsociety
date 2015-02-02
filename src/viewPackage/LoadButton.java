@@ -19,9 +19,6 @@ public class LoadButton extends AllButton {
 	private void handle(){
 		this.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				s.setTitle("Cell Society");
-    			s.show();
-
     			Label secondLabel = new Label("Please Enter Your File Name:");
     	        
     	        GridPane grid = new GridPane();
