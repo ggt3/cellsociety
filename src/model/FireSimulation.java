@@ -16,7 +16,7 @@ public class FireSimulation extends Simulation {
 		super(aGrid, attributes);
 		
 	}
-	
+	//TODO: Make sure all cells contain the same attributes
 	//returns the new state of the cell at (row, col)
 	public CellState calculateNewCellState(int row, int col) {
 		List<Cell> neighbors = super.getCurrentGrid().getAllNeighbors(row, col);
@@ -26,7 +26,7 @@ public class FireSimulation extends Simulation {
 			for (Cell aCell : neighbors) {
 				if (aCell.getState().equals(CellState.BURNING)) {
 					myProb = myGenerator.nextDouble();
-					if (myProb >= theCell.getKeyToInt("THRESHOLD")) {
+					if (myProb >= theCell.getKeyToDouble("THRESHOLD")) {
 						// tree will change state to burning
 						return CellState.BURNING;
 					}
@@ -36,7 +36,6 @@ public class FireSimulation extends Simulation {
 		//else in the case of a burning tree it will become empty
 		return CellState.EMPTY;
 	}
-	
-	
+
 	
 }

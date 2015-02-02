@@ -15,10 +15,21 @@ public abstract class Simulation {
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;
 		colors = attributes.getColorMap(); //stores the state to color map
+		
 	}
-	
-	
-	public Grid getCurrentGrid() {
+	private Grid copyGrid(Grid copy) {
+		Grid newCopy = new Grid(copy.getRowSize(), copy.getColSize());
+		for(int i = 0; i<copy.getRowSize(); i++) {
+			for (int j = 0; j <copy.getColSize(); j++) {
+				 newCopy.putCell(copyCell(copy.getCell(i, j)), i, j); //need to make a copy of the cell not pass the reference
+			}
+		}
+		return newCopy;
+	}
+	private Cell copyCell(Cell copy) {
+		return new Cell(copy.getState()); //TODO: NEED TO COPY PROPERTIES IF TherE IS ANY
+	}
+ 	public Grid getCurrentGrid() {
 		return currentGrid;
 	}	
 	public Grid getNextGrid() {
@@ -29,16 +40,21 @@ public abstract class Simulation {
 	}
 	//returning the next grid states
 	public Grid makeNextGrid() {
-		nextGrid = new Grid(currentGrid.getRowSize(),currentGrid.getColSize()); //setting the next grid a copy of the original
-		currentGrid.toString();
+		nextGrid = copyGrid(currentGrid); //setting the next grid a new grid
 		for (int r = 0; r< currentGrid.getRowSize(); r++) {
 			for (int c = 0; c< currentGrid.getColSize(); c++) {
 				CellState newState = calculateNewCellState(r,c);
-				Cell target = new Cell(newState);
-				nextGrid.putCell(target, r, c);
+				System.out.print("cell changing" + nextGrid.getCell(r,c).toString());
+				nextGrid.getCell(r, c).setState(newState); //changing the cell state in the new grid
+				System.out.print("cell after changing" + nextGrid.getCell(r,c).toString());
+				System.out.print("nextGrid on" + r + " " + c);
+				nextGrid.print();
 			}
 		}
-		//currentGrid = nextGrid; //updating the grid stored in the simulation
+//		System.out.print("curr grid");
+//		currentGrid.print();
+//		System.out.println("nextgrid");
+//		nextGrid.print();
 		return nextGrid;
 	}
 
@@ -56,10 +72,7 @@ public abstract class Simulation {
 			for (int c = 0; c< gridToReturn.getColSize(); c++) {
 				String state = gridToReturn.getCell(c, r).toString();
 				colorRow.add(colors.get(state)); //gets the color
-				System.out.println("getRowSize:       "+gridToReturn.getRowSize());
-				System.out.printf("on row %d %d %s \n", c, r, state);
 			}
-			System.out.println(colorRow);
 			colorGrid.getColorGrid().add(colorRow); //add to double array list
 		}
 		return colorGrid;

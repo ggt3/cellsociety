@@ -44,7 +44,7 @@ public class View {
 	private int totalWidthOfGrid=450;
 	private int totalHeightOfGrid=450;
 	private int currentGeneration=0;
-	private int prac=4;//=control.giveGridSize(3);
+	private int prac;
 	
 
 
@@ -221,10 +221,10 @@ public class View {
         root = new Group();
 
         //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
-        double x=determineXlength(prac);
-        double y=determineYlength(prac);
+        double x=determineXlength(4);
+        double y=determineYlength(4);
         
-        yo=new Rectangle[prac][prac];
+        yo=new Rectangle[4][4];
         
         displayGrid(525,550,x,y);
         root.getChildren().add(hbox);
@@ -235,13 +235,9 @@ public class View {
     }
 
     public void setGridSize(int size){
-    	prac=size;
+    	prac = size;
     }
     
-    
-    private void updateSprites () {
-    	//btn6.setText(""+speed+"");
-    }
 
     private Rectangle[][] displayGrid(int xtot, int ytot,double x,double y){
     	int xIndex=0;
@@ -268,8 +264,8 @@ public class View {
     
 
     public void updateGrid(Packager colorGrid){
-    	for(int i=0;i<prac;i++){
-    		for (int j=0;j<prac;j++){
+    	for(int i=0;i < prac;i++){
+    		for (int j=0;j < prac;j++){
     			Rectangle rex2=yo[i][j];
     			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(rex2, Color.valueOf(color)); //converting the string to color
@@ -287,23 +283,6 @@ public class View {
     	return ysize;
     }
     
-    //this is used to simulate the change of color given by the controller
-    private Color[][] practiceChange(){
-    	Color[][] colorz=new Color[prac][prac];
-    	for (int i=0;i<prac;i++){
-    		for (int j=0;j<prac;j++){
-    			if (i%3==0&&j%3==0)
-    				colorz[i][j]=Color.BLUE;
-    			else if (i%3==0 && j%3!=0)
-    				colorz[i][j]=Color.RED;
-    			else if (j%3==0 && i%3!=0)
-    				colorz[i][j]=Color.YELLOW;
-    		}
-    	}
-    	return colorz;
-    }
-    
-
 	private void setFill(Rectangle rex,Color c) {
 		rex.setFill(c);
 	}

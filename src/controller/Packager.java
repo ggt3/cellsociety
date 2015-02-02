@@ -11,7 +11,7 @@ public class Packager {
 	private ArrayList<ArrayList<String>> colorGrid=new ArrayList<ArrayList<String>>();
 	private Map<String, String> colorsMap;
 	
-	public HashMap<String,Object> getMap() {
+	public HashMap<String,Object> getPropertiesMap() {
 		return attributeMap;
 	}
 	
@@ -24,5 +24,8 @@ public class Packager {
 	}
 	public void setColorMap(Map<String, String> c) {
 		colorsMap = c;
+	}
+	public void setPropertiesMap(HashMap<String, Object> s) {
+		attributeMap = s;
 	}
 }

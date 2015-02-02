@@ -1,7 +1,6 @@
 package model;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -55,7 +54,7 @@ public class Grid {
 		for (int i = 0; i< myCells.length; i++) {
 			for (int j = 0; j<myCells[0].length; j++) {
 				if(getCell(i,j).getState().equals(x)) {
-					stateList.add(new Point(j,i));
+					stateList.add(new Point(j,i)); //adding col, row
 				}
 			}
 		}

@@ -20,7 +20,6 @@ public class GameLifeSimulation extends Simulation {
 	public CellState calculateNewCellState(int row, int col) {
 		List<Cell> neighbors = getCurrentGrid().getAllNeighbors(row, col);
 		CellState currentState = getCurrentGrid().getCell(row, col).getState();
-		
 		int countAlive = 0; //how many neighbors you have alive
 		for (Cell aCell : neighbors) {
 			if (aCell.getState().equals(CellState.ALIVE)) {

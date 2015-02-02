@@ -17,7 +17,7 @@ public class Cell {
 	//only importing attributes if a cell has other traits
 	public Cell(CellState setState, Packager attributes) {
 		this(setState);
-		properties = attributes.getMap(); 
+		properties = attributes.getPropertiesMap(); 
 	}
 	
 	public Cell(CellState setState) {
@@ -27,12 +27,10 @@ public class Cell {
 	public CellState getState() {
 		return state;
 	}
-	
-	//for if cell needs extra traits
-	public void addProperty(String key, Object value) {
-		properties.put(key, value);
+	public void setState(CellState cs) {
+		state = cs;
 	}
-	
+
 	@Override
 	//if you want to print out a cell, it is the state
 	public String toString() {

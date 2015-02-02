@@ -1,5 +1,4 @@
 package controller;
-import java.util.HashMap;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -11,43 +10,23 @@ import model.*;
 
 
 public class Controller {
-	private Simulation rules = new GameLifeSimulation(stupidMakeGrid(), createMap(stupidMap()));
+	private Simulation rules;
 	private View myView;
 	private Timeline myTimeline;
 	private String myFile;
 	private int NUM_FRAMES_PER_SECOND = 60;
 	//TODO: needs to parse in the simulation type
-	//rules = new SimulationType	
-	public Grid stupidMakeGrid() {
-		Grid newG = new Grid(4,4);
-		Cell s = new Cell(CellState.ALIVE);
-		Cell t=new Cell(CellState.EMPTY);
-		for (int i = 0; i < 4; i++) {
-			for (int k =0; k<4; k++) {
-				if (i==1)
-					newG.putCell(s, i, k);
-				else
-					newG.putCell(t, i, k);
-			}
-		}
-		return newG;
-	}
+
+	public void testGrid() {
+		TestSimulations t = new TestSimulations();
+		rules = new GameLifeSimulation(t.stupidMakeLifeGrid(), t.createMap(t.stupidMap()));
+		giveGridSize(4);
 	
-	public HashMap<String,String> stupidMap() {
-		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("ALIVE", "RED");
-		map.put("EMPTY", "BLACK");
-		map.put("TREE", "AQUA");
-		return map;
-	}
-	public Packager createMap(HashMap<String,String> d) {
-		Packager p = new Packager();
-		p.setColorMap(d);
-		return p;
-	}
+		
+	} 
 	
-	public void giveGridSize(int row) {
-		myView.setGridSize(4);
+	public void giveGridSize(int size) {
+		myView.setGridSize(size);
 	}
 	public void setView(View v){
 		myView = v;
@@ -79,7 +58,7 @@ public class Controller {
 	}
 	
 	public void stepSimulation() {
-		Grid next = getNextGrid();
+		Grid next = rules.makeNextGrid();
 		rules.updateGrid(next); //sets the next grid as the new grid
 		Packager bundle = rules.createColorGrid(next);
 		giveViewGrid(bundle);
@@ -95,7 +74,7 @@ public class Controller {
 
 	
 	public void setFilePath(String fileName){
-		myFile=fileName;
+		myFile = fileName;
 	}
 
 
