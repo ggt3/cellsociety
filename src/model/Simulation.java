@@ -17,18 +17,8 @@ public abstract class Simulation {
 		colors = attributes.getColorMap(); //stores the state to color map
 		
 	}
-	private Grid copyGrid(Grid copy) {
-		Grid newCopy = new Grid(copy.getRowSize(), copy.getColSize());
-		for(int i = 0; i<copy.getRowSize(); i++) {
-			for (int j = 0; j <copy.getColSize(); j++) {
-				 newCopy.putCell(copyCell(copy.getCell(i, j)), i, j); //need to make a copy of the cell not pass the reference
-			}
-		}
-		return newCopy;
-	}
-	private Cell copyCell(Cell copy) {
-		return new Cell(copy.getState()); //TODO: NEED TO COPY PROPERTIES IF TherE IS ANY
-	}
+
+
  	public Grid getCurrentGrid() {
 		return currentGrid;
 	}	
@@ -40,7 +30,7 @@ public abstract class Simulation {
 	}
 	//returning the next grid states
 	public Grid makeNextGrid() {
-		nextGrid = copyGrid(currentGrid); //setting the next grid a new grid
+		nextGrid = currentGrid.copyGrid(); //setting the next grid a new grid
 		for (int r = 0; r< currentGrid.getRowSize(); r++) {
 			for (int c = 0; c< currentGrid.getColSize(); c++) {
 				CellState newState = calculateNewCellState(r,c);

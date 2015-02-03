@@ -16,14 +16,18 @@ public class Cell {
 	
 	//only importing attributes if a cell has other traits
 	public Cell(CellState setState, Packager attributes) {
-		this(setState);
+		state = setState;
 		properties = attributes.getPropertiesMap(); 
 	}
 	
-	public Cell(CellState setState) {
-		state = setState;	
-	} 
-
+	public Cell copyCell() {
+		Packager p = new Packager();
+		p.setPropertiesMap(this.getProperties());
+		return new Cell(this.getState(), p); //TODO: NEED TO COPY PROPERTIES IF TherE IS ANY
+	}
+	public Map<String, Object> getProperties() {
+		return properties;
+	}
 	public CellState getState() {
 		return state;
 	}

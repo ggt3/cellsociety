@@ -61,6 +61,15 @@ public class Grid {
 		return stateList;
 	}
 	
+	public Grid copyGrid() {
+		Grid newCopy = new Grid(this.getRowSize(), this.getColSize());
+		for(int i = 0; i<this.getRowSize(); i++) {
+			for (int j = 0; j <this.getColSize(); j++) {
+				 newCopy.putCell(this.getCell(i,j).copyCell(), i, j); //need to make a copy of the cell not pass the reference
+			}
+		}
+		return newCopy;
+	}
 
 	
 	public Cell getCell(int row, int col) {

@@ -32,19 +32,18 @@ public class View {
 	private Integer windowSize=600;
 	private Integer speed = 1;
 	private Text speedText;
-	private Text t;
 	private Group root;
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-    public static final Dimension DEFAULT_SIZE = new Dimension(600, 600);
+    public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
 	private ResourceBundle myResources;
 	private String fileName="";
 	private Controller control;
 	private Stage mainStage;
-	private Rectangle[][] yo;// = new Rectangle[20][20];
-	private int totalWidthOfGrid=450;
-	private int totalHeightOfGrid=450;
+	private Rectangle[][] gridView;// = new Rectangle[20][20];
+	private final int totalWidthOfGrid= 450;
+	private final int totalHeightOfGrid= 450;
 	private int currentGeneration=0;
-	private int prac;
+	private int numSquareX, numSquareY;
 	
 
 
@@ -67,47 +66,29 @@ public class View {
  
             @Override
             public void handle(ActionEvent event) {
-    			
-            	if(string.equals("Play"))
-    			{
-            		
-            		//Color[][] colz=new Color[prac][prac];
-            		//updateGrid(colz);
-            		//call step method in controller
-            		control.playSimulation(speed);
-    			}
-            	if(string.equals("Pause"))
-    			{
-            		
-            		//Color[][] colz=new Color[prac][prac];
-            		//updateGrid(colz);
-            		//call step method in controller
-            		control.pauseSimulation();
-    			}
-            	if(string.equals("Step"))
-    			{
-            		
-            		Color[][] colz=new Color[prac][prac];
-            		//updateGrid(colz);
-            		//call step method in controller
-            		control.stepSimulation();
-    			}
-            	if(string.equals("   UP   "))
-    			{
-    				speed++;
-    				System.out.println(speed);
-    				speedText.setText(""+speed+"");
-            		//send new speed to controller to update frames per second
-    			}
-    			if(string.equals("DOWN"))
-    			{
-    				if (speed>0)
-    					speed--;
-    				System.out.println(speed);
-    				speedText.setText(""+speed+"");
-    			}
-    			if(string.equals("Load"))
-    			{
+
+				if (string.equals("Play")) {
+					control.playSimulation(speed);
+				}
+				if (string.equals("Pause")) {
+					control.pauseSimulation();
+				}
+				if (string.equals("Step")) {
+					control.stepSimulation();
+				}
+				if (string.equals("   UP   ")) {
+					speed++;
+					System.out.println(speed);
+					speedText.setText("" + speed + "");
+					// send new speed to controller to update frames per second
+				}
+				if (string.equals("DOWN")) {
+					if (speed > 0)
+						speed--;
+					System.out.println(speed);
+					speedText.setText("" + speed + "");
+				}
+				if (string.equals("Load")) {
     				
                     Label secondLabel = new Label("Please Enter Your File Name:");
                     
@@ -146,7 +127,7 @@ public class View {
                     	        }
                     	     }
                     	 });
-                    control.setFilePath(fileName);
+                    control.loadFile(fileName);
                     secondStage.setTitle("Load File");
                     secondStage.setScene(secScene);
                      
@@ -176,7 +157,7 @@ public class View {
         return t;
 	}
     
-
+    
 	public Text addText(String s,int size,int xLoc,int yLoc)
 	{
         Text t = new Text(xLoc,yLoc,s);
@@ -186,14 +167,12 @@ public class View {
         return t;
 	}
 
-	//@Override
+	//beginning screen with no grid
     public void initialize(Stage primaryStage) {
-    	
     	primaryStage.setResizable(false);
     
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
-        double currWidth=primaryStage.getWidth();
         HBox hbox=new HBox(50);
         Button play=makeButton("Play");
         Button pause=makeButton("Pause");
@@ -221,25 +200,30 @@ public class View {
         root = new Group();
 
         //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
-        double x=determineXlength(4);
-        double y=determineYlength(4);
+        double x=determineXlength(numSquareX);
+        double y=determineYlength(numSquareY);
         
-        yo=new Rectangle[4][4];
+        gridView=new Rectangle[numSquareX][numSquareY];
         
-        displayGrid(525,550,x,y);
+        displayGrid(525,550,x,y); //offset in the screen
         root.getChildren().add(hbox);
         //root.getChildren().addAll(play,pause,load,speedUp,speedDown,speedText,step);
 
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
-
-    public void setGridSize(int size){
-    	prac = size;
+    
+    public void setGridSize(int sizeX, int sizeY){
+    	 numSquareX = sizeX;
+    	 numSquareY = sizeY;
+    	 double x=determineXlength(numSquareX);
+         double y=determineYlength(numSquareY);
+    	 displayGrid(525,550,x,y);
     }
     
+    //public 
 
-    private Rectangle[][] displayGrid(int xtot, int ytot,double x,double y){
+    private void displayGrid(int xtot, int ytot,double x,double y){
     	int xIndex=0;
     	//int yIndex=0;
     	for(int i=75;i<=xtot-x;i+=x){
@@ -252,27 +236,28 @@ public class View {
     			rex.setStroke(Color.BLACK);
     			rex.setStrokeWidth(0.5);
     			root.getChildren().add(rex);
-    			yo[xIndex][yIndex]=rex;
+    			gridView[xIndex][yIndex]=rex;
     			yIndex++;
     		}
     		xIndex++;
     	}
     	//root.getChildren().addAll(yo);
-    	return yo;
+    	//return gridView;
     	
     }
     
-
-    public void updateGrid(Packager colorGrid){
-    	for(int i=0;i < prac;i++){
-    		for (int j=0;j < prac;j++){
-    			Rectangle rex2=yo[i][j];
+    //changes color of existing rectangles according to colors
+    public void updateRectangle(Packager colorGrid){
+    	for(int i=0;i < numSquareX;i++){
+    		for (int j=0;j < numSquareY;j++){
+    			//Rectangle rex2 = gridView[i][j];
     			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
-    			setFill(rex2, Color.valueOf(color)); //converting the string to color
+    			setFill(gridView[i][j], Color.valueOf(color)); //converting the string to color
     		}
     	}
-    	//return yo;
+
     }
+    //account for dynamic change of grid
     private double determineXlength(int numCols){
     	double xsize=((double)totalWidthOfGrid)/numCols;
     	return xsize;

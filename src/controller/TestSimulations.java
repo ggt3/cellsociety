@@ -9,11 +9,11 @@ import model.Grid;
 public class TestSimulations {
 	
 	public Grid stupidMakeLifeGrid() {
-		Grid newG = new Grid(4,4);
-		Cell s = new Cell(CellState.ALIVE);
-		Cell t=new Cell(CellState.EMPTY);
-		for (int i = 0; i < 4; i++) {
-			for (int k =0; k<4; k++) {
+		Grid newG = new Grid(8,8);
+		Cell s = new Cell(CellState.ALIVE,new Packager());
+		Cell t=new Cell(CellState.EMPTY, new Packager());
+		for (int i = 0; i < 8; i++) {
+			for (int k =0; k<8; k++) {
 				if (i==1)
 					newG.putCell(s, i, k);
 				else
@@ -46,11 +46,11 @@ public class TestSimulations {
 		return p;
 	}
 	public Grid stupidMakeFireGrid() {
-		Grid newG = new Grid(4,4);
+		Grid newG = new Grid(8,8);
 		Cell s = new Cell(CellState.BURNING, createProperties());
 		Cell t=new Cell(CellState.TREE, createProperties());
-		for (int i = 0; i < 4; i++) {
-			for (int k =0; k<4; k++) {
+		for (int i = 0; i < 8; i++) {
+			for (int k =0; k<8; k++) {
 				if (i==1)
 					newG.putCell(s, i, k);
 				else

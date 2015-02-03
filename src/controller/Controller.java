@@ -13,14 +13,14 @@ public class Controller {
 	private Simulation rules;
 	private View myView;
 	private Timeline myTimeline;
-	private String myFile;
-	private int NUM_FRAMES_PER_SECOND = 60;
+
+	private int NUM_FRAMES_PER_SECOND = 1;
 	//TODO: needs to parse in the simulation type
 
 	public void testGrid() {
 		TestSimulations t = new TestSimulations();
 		rules = new FireSimulation(t.stupidMakeFireGrid(), t.createMap(t.stupidMap()));
-		giveGridSize(4);
+		giveGridSize(8);
 	
 		
 	} 
@@ -39,7 +39,7 @@ public class Controller {
 	//TODO: view.setInitialGrid //given by xml file
 	
 	public void giveViewGrid(Packager colorGrid) {
-		myView.updateGrid(colorGrid);
+		myView.updateRectangle(colorGrid);
 	}
 	public void generateTimeline (int frameRate){
 	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate), e -> playSimulation(myView.getSpeed()));
@@ -48,8 +48,9 @@ public class Controller {
 	    myTimeline.getKeyFrames().add(frame);
 	    myTimeline.play();
 	}
+	
 	public void playSimulation(int speed) {
-		
+		generateTimeline(NUM_FRAMES_PER_SECOND);
 		stepSimulation();
 		
 	}
@@ -73,10 +74,13 @@ public class Controller {
 	}
 
 	
-	public void setFilePath(String fileName){
-		myFile = fileName;
+	public void loadFile(String fileName) {
+		XMLParser xml = new XMLParser();
+		xml.parseXMlFile(fileName);
+		String simName = xml.parseSimulationName();
+		int[] xySize = xml.parseGridSize();
+		ArrayList<ArrayList<CellState>> grid
 	}
-
 
 
 }
