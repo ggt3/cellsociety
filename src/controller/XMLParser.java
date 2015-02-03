@@ -7,6 +7,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.CellState;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -31,23 +33,26 @@ public class XMLParser {
 
 
 	}
-	public ArrayList<ArrayList<String>> parseGrid(){
+	public ArrayList<ArrayList<CellState>> parseGrid(){
 		//Root
-		ArrayList<ArrayList<String>>colorGrid = new ArrayList();
+		ArrayList<ArrayList<CellState>>colorGrid = new ArrayList();
 		NodeList grid = root.getElementsByTagName("grid").item(0).getChildNodes();
 		for(int i=0; i<grid.getLength();i++){
 			NodeList row = grid.item(i).getChildNodes();
-			ArrayList<String> rowgrid = new ArrayList();
+			ArrayList<CellState> rowgrid = new ArrayList();
 			for(int j=0; j<row.getLength(); j++){
-				rowgrid.add(row.item(j).getTextContent());
+				rowgrid.add(CellState.valueOf(row.item(j).getTextContent()));
 			}
 			colorGrid.add(rowgrid);
 		}
 
 		return colorGrid;
 	}
-	public  int parseGridSize() {
-		return Integer.parseInt(root.getElementsByTagName("size").item(0).getTextContent());
+	public  int[] parseGridSize() {
+		int[] size = new int[2];
+		size[0] = Integer.parseInt(root.getElementsByTagName("size").item(0).getTextContent());
+		size[1] = Integer.parseInt(root.getElementsByTagName("size").item(1).getTextContent());
+		return size;
 	}
 	public String parseSimulationName() {
 		return root.getElementsByTagName("name").item(0).getTextContent();
