@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<root>
+	<name>Game of Life</name>
+	<title>My Simulation</title>
+	<author>Rob Vann</author>
+	<xsize>5</xsize>
+	<ysize>5</ysize>
+	<settings><parameter>THRESHOLD,.5</parameter><parameter>ENERGY,.75</parameter></settings>
+	<map><color>ALIVE,RED</color><color>DEAD,BLUE</color></map>
+	<grid>
+		<row>
+			<cell>ALIVE</cell>
+			<cell>DEAD</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+		</row>
+		<row>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+			<cell>DEAD</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+		</row>
+		<row>
+			<cell>DEAD</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+		</row>
+		<row>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+			<cell>DEAD</cell>
+			<cell>DEAD</cell>
+		</row>
+		<row>
+			<cell>ALIVE</cell>
+			<cell>DEAD</cell>
+			<cell>DEAD</cell>
+			<cell>ALIVE</cell>
+			<cell>ALIVE</cell>
+		</row>
+	</grid>
+</root>
