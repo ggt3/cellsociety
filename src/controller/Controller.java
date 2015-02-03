@@ -1,5 +1,14 @@
 package controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,20 +23,14 @@ public class Controller {
 	private View myView;
 	private Timeline myTimeline;
 
-	private int NUM_FRAMES_PER_SECOND = 1;
-	//TODO: needs to parse in the simulation type
 
 	public void testGrid() {
 		TestSimulations t = new TestSimulations();
-		rules = new FireSimulation(t.stupidMakeFireGrid(), t.createMap(t.stupidMap()));
-		giveGridSize(8);
-	
-		
+		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
+		myView.setGridSize(10,10);
+		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
 	} 
 	
-	public void giveGridSize(int size) {
-		myView.setGridSize(size);
-	}
 	public void setView(View v){
 		myView = v;
 	}
@@ -35,34 +38,40 @@ public class Controller {
 	public Grid getNextGrid() { //asks for the next grid of color to give to view
 		return rules.makeNextGrid();
 	}
-
-	//TODO: view.setInitialGrid //given by xml file
 	
-	public void giveViewGrid(Packager colorGrid) {
-		myView.updateRectangle(colorGrid);
+	private Packager createColorMap() {
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("ALIVE", "WHITE");
+		map.put("EMPTY", "BLACK");
+		map.put("TREE", "SPRINGGREEN");
+		map.put("BURNING", "RED");
+		map.put("SHARK", "GRAY");
+		map.put("FISH", "YELLOW");
+		map.put("X", "BLUE");
+		map.put("Y", "RED");
+		Packager p = new Packager();
+		p.setColorMap(map);
+		return p;
 	}
 	public void generateTimeline (int frameRate){
-	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate), e -> playSimulation(myView.getSpeed()));
+	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate *2), e -> playSimulation()); //max frames is 20fps
 	    myTimeline = new Timeline();
 	    myTimeline.setCycleCount(Animation.INDEFINITE);
 	    myTimeline.getKeyFrames().add(frame);
 	    myTimeline.play();
 	}
 	
-	public void playSimulation(int speed) {
-		generateTimeline(NUM_FRAMES_PER_SECOND);
+	public void playSimulation() {
+		generateTimeline(myView.getSpeed());
 		stepSimulation();
 		
-	}
-	public void setSpeed(int speed) {
-		NUM_FRAMES_PER_SECOND = speed;
 	}
 	
 	public void stepSimulation() {
 		Grid next = rules.makeNextGrid();
 		rules.updateGrid(next); //sets the next grid as the new grid
 		Packager bundle = rules.createColorGrid(next);
-		giveViewGrid(bundle);
+		myView.updateRectangle(bundle);
 	}
 	
 	public void pauseSimulation() {
@@ -73,14 +82,37 @@ public class Controller {
 		myTimeline.stop();
 	}
 
-	
-	public void loadFile(String fileName) {
+	//parse xml, give view size and init grid
+	public void loadFile(String fileName) throws ParserConfigurationException, SAXException, IOException {
 		XMLParser xml = new XMLParser();
-		xml.parseXMlFile(fileName);
+		xml.parseXMLFile(fileName);
 		String simName = xml.parseSimulationName();
 		int[] xySize = xml.parseGridSize();
-		ArrayList<ArrayList<CellState>> grid
+		ArrayList<ArrayList<CellState>> initGrid = xml.parseGrid();
+		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
+		myView.updateRectangle(translateStateToColor(initGrid));
+		setSimulationType(simName);
 	}
-
+	
+	private void setSimulationType(String name) {
+		
+			rules = new SegregationSimulation()
+		
+	}
+	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Object> properties) {
+		Grid init = new Grid(given.size(), given.get(0).size());
+		for (int i = 0; i<given.size();i++) {
+			for (int k = 0; k<given.get(0).size(); k++) {
+				Packager p = new Packager();
+				p.setPropertiesMap(properties);
+				init.putCell(new Cell(given.get(i).get(k), p), i, k);
+			}
+		}
+		return init;
+	}
+	private Packager translateStateToColor(ArrayList<ArrayList<CellState>> grid) {
+		
+		
+	}
 
 }

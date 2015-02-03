@@ -31,7 +31,7 @@ public class Grid {
 				neighbors.add(myCells[newR][newC]);
 			}
 		}
-		System.out.println(neighbors.toString() + " me: " + myCells[row][col].toString());
+		//System.out.println(neighbors.toString() + " me: " + myCells[row][col].toString());
 		return neighbors;	
 	}
 	

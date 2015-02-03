@@ -26,7 +26,6 @@ public class FireSimulation extends Simulation {
 			for (Cell aCell : neighbors) {
 				if (aCell.getState().equals(CellState.BURNING)) {
 					myProb = myGenerator.nextDouble();
-					System.out.printf("my threshold %f, random double %f",theCell.getKeyToDouble("THRESHOLD"), myProb );
 					if (myProb >= theCell.getKeyToDouble("THRESHOLD")) {
 						
 						// tree will change state to burning
@@ -34,7 +33,7 @@ public class FireSimulation extends Simulation {
 					}
 				}
 			}
-			return theCell.getState();
+			return theCell.getState(); //tree stays tree if not past threshold
 		} 
 		//else in the case of a burning tree it will become empty
 		return CellState.EMPTY;

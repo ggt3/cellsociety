@@ -7,6 +7,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import model.CellState;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -16,38 +18,45 @@ import org.xml.sax.SAXException;
 
 
 public class XMLParser {
-	private static ArrayList<ArrayList<String>> colorGrid;
-//	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException{
-//		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	
-//
-//		DocumentBuilder builder = factory.newDocumentBuilder();
-//		Document dom = builder.parse("test.xml");
-//		dom.normalize();
-//		parseDocument(dom);
-//
-//	}
-
-	private static void parseDocument(Document dom) {
-		// Root
-		colorGrid = new ArrayList();
-		Element root = dom.getDocumentElement();
+	private Element root;
+	public void parseXMLFile(String file) throws ParserConfigurationException, SAXException, IOException{
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document dom = builder.parse(file);
+		dom.normalize();
+		root = dom.getDocumentElement();
 		clean(root);
-		String name = root.getElementsByTagName("name").item(0).getTextContent();
-		int size = Integer.parseInt(root.getElementsByTagName("size").item(0).getTextContent());
+		
+	}
+	
+	public ArrayList<ArrayList<CellState>> parseGrid(){
+		//Root
+		ArrayList<ArrayList<CellState>>colorGrid = new ArrayList();
 		NodeList grid = root.getElementsByTagName("grid").item(0).getChildNodes();
 		for (int i = 0; i < grid.getLength(); i++) {
 			NodeList row = grid.item(i).getChildNodes();
-			ArrayList<String> rowgrid = new ArrayList();
-			for (int j = 0; j < row.getLength(); j++) {
-				rowgrid.add(row.item(j).getTextContent());
+			ArrayList<CellState> rowgrid = new ArrayList();
+			for(int j=0; j<row.getLength(); j++){
+				rowgrid.add(CellState.valueOf(row.item(j).getTextContent()));
+
 			}
 			colorGrid.add(rowgrid);
 		}
 
-		System.out.println();
+		return colorGrid;
+	}
+	public int[] parseGridSize() {
+		int[] size = new int[2];
+		size[0] = Integer.parseInt(root.getElementsByTagName("size").item(0).getTextContent());
+		size[1] = Integer.parseInt(root.getElementsByTagName("size").item(1).getTextContent());
+		return size;
+	}
+	public String parseSimulationName() {
+		return root.getElementsByTagName("name").item(0).getTextContent();
 	}
 
-	public static void clean(Node node) {
+	private void clean(Node node)
+	{
 		NodeList childNodes = node.getChildNodes();
 		for (int n = 0; n < childNodes.getLength(); n++) {
 			Node child = childNodes.item(n);

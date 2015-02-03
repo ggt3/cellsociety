@@ -2,7 +2,12 @@ package viewPackage;
 
 
 import java.awt.Dimension;
+import java.io.IOException;
 import java.util.ResourceBundle;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import controller.Controller;
 import controller.Packager;
@@ -68,7 +73,7 @@ public class View {
             public void handle(ActionEvent event) {
 
 				if (string.equals("Play")) {
-					control.playSimulation(speed);
+					control.playSimulation();
 				}
 				if (string.equals("Pause")) {
 					control.pauseSimulation();
@@ -117,7 +122,7 @@ public class View {
                     	    public void handle(ActionEvent e) {
                     	        if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField.getText().endsWith("xml"))) {
                     	        	fileName=textField.getText();
-                    	        	System.out.println(fileName);
+                    	        	
                     	        	secondStage.close();
                     	            Text texty=addText(fileName,20,0,90);
                     	            root.getChildren().add(texty);
@@ -127,7 +132,17 @@ public class View {
                     	        }
                     	     }
                     	 });
-                    control.loadFile(fileName);
+                    try {
+						control.loadFile(fileName);
+					} catch (ParserConfigurationException e1) {
+			
+						e1.printStackTrace();
+					} catch (SAXException e1) {
+
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
                     secondStage.setTitle("Load File");
                     secondStage.setScene(secScene);
                      
@@ -199,13 +214,13 @@ public class View {
         
         root = new Group();
 
-        //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
-        double x=determineXlength(numSquareX);
-        double y=determineYlength(numSquareY);
-        
-        gridView=new Rectangle[numSquareX][numSquareY];
-        
-        displayGrid(525,550,x,y); //offset in the screen
+//        //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
+//        double x=determineXlength(numSquareX);
+//        double y=determineYlength(numSquareY);
+//        
+//        gridView=new Rectangle[numSquareX][numSquareY];
+//        
+//        displayGrid(525,550,x,y); //offset in the screen
         root.getChildren().add(hbox);
         //root.getChildren().addAll(play,pause,load,speedUp,speedDown,speedText,step);
 
@@ -216,27 +231,23 @@ public class View {
     public void setGridSize(int sizeX, int sizeY){
     	 numSquareX = sizeX;
     	 numSquareY = sizeY;
+    	 gridView= new Rectangle[numSquareX][numSquareY];
     	 double x=determineXlength(numSquareX);
          double y=determineYlength(numSquareY);
     	 displayGrid(525,550,x,y);
     }
-    
-    //public 
 
-    private void displayGrid(int xtot, int ytot,double x,double y){
+
+    public void displayGrid(int xtot, int ytot,double x,double y){
     	int xIndex=0;
-    	//int yIndex=0;
     	for(int i=75;i<=xtot-x;i+=x){
     		int yIndex=0;
     		for (int j=100;j<=ytot-y;j+=y){
     			Rectangle rex=new Rectangle(i,j,x,y);
-    			//use encapsulated info to determine color like example commented below
-    			//rex.setFill(infoFromController[i][j]);
-    			rex.setFill(Color.SPRINGGREEN);
     			rex.setStroke(Color.BLACK);
     			rex.setStrokeWidth(0.5);
     			root.getChildren().add(rex);
-    			gridView[xIndex][yIndex]=rex;
+    			gridView[xIndex][yIndex] = rex;
     			yIndex++;
     		}
     		xIndex++;
@@ -250,7 +261,6 @@ public class View {
     public void updateRectangle(Packager colorGrid){
     	for(int i=0;i < numSquareX;i++){
     		for (int j=0;j < numSquareY;j++){
-    			//Rectangle rex2 = gridView[i][j];
     			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(gridView[i][j], Color.valueOf(color)); //converting the string to color
     		}
@@ -259,13 +269,12 @@ public class View {
     }
     //account for dynamic change of grid
     private double determineXlength(int numCols){
-    	double xsize=((double)totalWidthOfGrid)/numCols;
-    	return xsize;
+    	return ((double)totalWidthOfGrid)/numCols;
+    	
     }
     
     private double determineYlength(int numRows){
-    	double ysize=((double)totalHeightOfGrid)/numRows;
-    	return ysize;
+    	return ((double)totalHeightOfGrid)/numRows;
     }
     
 	private void setFill(Rectangle rex,Color c) {
