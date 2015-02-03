@@ -19,7 +19,7 @@ public class Controller {
 
 	public void testGrid() {
 		TestSimulations t = new TestSimulations();
-		rules = new GameLifeSimulation(t.stupidMakeLifeGrid(), t.createMap(t.stupidMap()));
+		rules = new FireSimulation(t.stupidMakeFireGrid(), t.createMap(t.stupidMap()));
 		giveGridSize(4);
 	
 		

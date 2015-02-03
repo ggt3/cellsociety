@@ -51,10 +51,7 @@ public abstract class Simulation {
 				nextGrid.print();
 			}
 		}
-//		System.out.print("curr grid");
-//		currentGrid.print();
-//		System.out.println("nextgrid");
-//		nextGrid.print();
+
 		return nextGrid;
 	}
 
@@ -72,6 +69,7 @@ public abstract class Simulation {
 			for (int c = 0; c< gridToReturn.getColSize(); c++) {
 				String state = gridToReturn.getCell(c, r).toString();
 				colorRow.add(colors.get(state)); //gets the color
+
 			}
 			colorGrid.getColorGrid().add(colorRow); //add to double array list
 		}
