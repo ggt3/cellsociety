@@ -39,12 +39,13 @@ public class XMLParser {
 			NodeList row = grid.item(i).getChildNodes();
 			ArrayList<CellState> rowgrid = new ArrayList();
 			for(int j=0; j<row.getLength(); j++){
+				System.out.println(row.item(j).getTextContent());
 				rowgrid.add(CellState.valueOf(row.item(j).getTextContent()));
 
 			}
 			colorGrid.add(rowgrid);
 		}
-
+	
 		return colorGrid;
 	}
 	public int[] parseGridSize() {
@@ -53,13 +54,14 @@ public class XMLParser {
 		size[1] = Integer.parseInt(root.getElementsByTagName("ysize").item(0).getTextContent());
 		return size;
 	}
-	public HashMap<String, Object> parseGlobalParameters(){
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	public HashMap<String, Integer> parseGlobalParameters(){
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		NodeList params = root.getElementsByTagName("settings").item(0).getChildNodes();
 		for(int i=0; i<params.getLength(); i++){
 			String name = params.item(i).getTextContent().split(",")[0];
-			Object value = params.item(i).getTextContent().split(",")[1];
+			Integer value = Integer.parseInt(params.item(i).getTextContent().split(",")[1]);
 			map.put(name, value);
+			System.out.println(name+ " " +value);
 		}
 		return map;
 	}

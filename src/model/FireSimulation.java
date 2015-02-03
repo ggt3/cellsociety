@@ -25,8 +25,8 @@ public class FireSimulation extends Simulation {
 		if (super.getCurrentGrid().getCell(row, col).getState().equals(CellState.TREE)) {
 			for (Cell aCell : neighbors) {
 				if (aCell.getState().equals(CellState.BURNING)) {
-					myProb = myGenerator.nextDouble();
-					if (myProb >= theCell.getKeyToDouble("THRESHOLD")) {
+					myProb = myGenerator.nextInt(101);
+					if (myProb >= theCell.getKey("THRESHOLD")) {
 						
 						// tree will change state to burning
 						return CellState.BURNING;

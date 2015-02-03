@@ -11,6 +11,7 @@ public class WatorSimulation extends Simulation {
 	private ArrayList<Point> allSharks, allFish;
 	private Random myRand = new Random(1234);
 	private Packager properties;
+	
 	public WatorSimulation(Grid aGrid, Packager attributes) {
 		super(aGrid, attributes);
 		properties = attributes;
@@ -24,7 +25,7 @@ public class WatorSimulation extends Simulation {
 	@Override
 	public Grid makeNextGrid() {
 		setNextGrid(getCurrentGrid().copyGrid());
-
+		getCurrentGrid().print();
 		allSharks = getCurrentGrid().getCellsWithState(CellState.SHARK); //keeps reference to the current grid
 		allFish = getCurrentGrid().getCellsWithState(CellState.FISH);
 		sharkAction();
@@ -33,13 +34,15 @@ public class WatorSimulation extends Simulation {
 	}
 	private void sharkAction() {
 		for (Point loc : allSharks) {
-			if (getCurrentGrid().getCell(loc.y, loc.x).getKeyToInt("ENERGY") == 0) {
+			System.out.println("cell " + loc.toString());
+			if (getCurrentGrid().getCell(loc.y, loc.x).getKey("ENERGY") == 0) {
 				removeCreature(allSharks, loc);
 			} else {
 				List<Point> fishNeighbors = getCurrentGrid().getNeighborsWithType(loc, CellState.FISH);
 				if (fishNeighbors.size() >= 1) {
 					Point fish = fishNeighbors.get(myRand.nextInt(fishNeighbors.size())); // eat fish and move shark to place
 					removeCreature(allFish, loc);
+					allFish.remove(loc);
 					boolean reproduce = canReproduce(loc);
 					moveCreature(loc.y, loc.x, fish.y, fish.x);
 					if (reproduce) {
@@ -99,7 +102,7 @@ public class WatorSimulation extends Simulation {
 		}
 	}
 	private void increaseBreedingTime(int row, int col) {
-		getNextGrid().getCell(row, col).getProperties().put("BREEDCYCLE", getNextGrid().getCell(row, col).getKeyToInt("BREEDCYCLE") + 1);
+		getNextGrid().getCell(row, col).getProperties().put("BREEDCYCLE", getNextGrid().getCell(row, col).getKey("BREEDCYCLE") + 1);
 		
 	}
 
@@ -111,13 +114,13 @@ public class WatorSimulation extends Simulation {
 	}
 
 	private void decreaseEnergy(int row, int col) {
-		getNextGrid().getCell(row, col).getProperties().put("ENERGY", getNextGrid().getCell(row, col).getKeyToInt("ENERGY") - 1);
+		getNextGrid().getCell(row, col).getProperties().put("ENERGY", getNextGrid().getCell(row, col).getKey("ENERGY") - 1);
 		
 	}
 
 	private void removeCreature(List<Point> l, Point p) {
 		getNextGrid().putCell(new Cell(CellState.EMPTY, properties), p.y, p.x);
-		l.remove(p);
+		
 		
 	}
 	private void resetBreedTime(int row, int col) {
@@ -131,7 +134,7 @@ public class WatorSimulation extends Simulation {
 	}
 	private boolean canReproduce(Point creature) {
 		Cell c= getCurrentGrid().getCell(creature.y, creature.x);
-		return c.getKeyToInt("BREEDTHRESHOLD") <= c.getKeyToInt("BREEDCYCLE");
+		return c.getKey("BREEDTHRESHOLD") <= c.getKey("BREEDCYCLE");
 	}
 
 }

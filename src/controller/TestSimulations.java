@@ -41,8 +41,8 @@ public class TestSimulations {
 	}
 	//fire burning
 	public Packager createProperties() {
-		HashMap<String, Object> d = new HashMap<String, Object>();
-		d.put("THRESHOLD", 0.4);
+		HashMap<String, Integer> d = new HashMap<String, Integer>();
+		d.put("THRESHOLD", 40);
 		Packager p = new Packager();
 		p.setPropertiesMap(d);
 		return p;

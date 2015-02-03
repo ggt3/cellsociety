@@ -76,8 +76,12 @@ public class Grid {
 		 for (int i = 0; i < deltas.length; i++) {
 			int newR = p.y + deltas[i][0];
 			int newC = p.x + deltas[i][1];
-			if (myCells[newR][newC].getState().equals(c)) { //only add neighbor if in bounds
-				neighbors.add(new Point(newC, newR));
+			if (inBounds(newR, newC)) {
+				if (myCells[newR][newC].getState().equals(c)) { // only add
+																// neighbor if
+																// in bounds
+					neighbors.add(new Point(newC, newR));
+				}
 			}
 		}
 		return neighbors;

@@ -126,23 +126,24 @@ public class View {
                     	        	secondStage.close();
                     	            Text texty=addText(fileName,20,0,90);
                     	            root.getChildren().add(texty);
+                    	            try {
+                						control.loadFile(fileName);
+                					} catch (ParserConfigurationException e1) {
+                			
+                						e1.printStackTrace();
+                					} catch (SAXException e1) {
+
+                						e1.printStackTrace();
+                					} catch (IOException e1) {
+                						e1.printStackTrace();
+                					}
                     	        } else {
                     	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
                     	        	System.out.println("File Name entered is not a valid name");
                     	        }
                     	     }
                     	 });
-                    try {
-						control.loadFile(fileName);
-					} catch (ParserConfigurationException e1) {
-			
-						e1.printStackTrace();
-					} catch (SAXException e1) {
-
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+                  
                     secondStage.setTitle("Load File");
                     secondStage.setScene(secScene);
                      
@@ -214,15 +215,8 @@ public class View {
         
         root = new Group();
 
-//        //instead of arbitrary 20, use a getMethod from controller to figure out how many rows and columns
-//        double x=determineXlength(numSquareX);
-//        double y=determineYlength(numSquareY);
-//        
-//        gridView=new Rectangle[numSquareX][numSquareY];
-//        
-//        displayGrid(525,550,x,y); //offset in the screen
         root.getChildren().add(hbox);
-        //root.getChildren().addAll(play,pause,load,speedUp,speedDown,speedText,step);
+        
 
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
@@ -252,9 +246,7 @@ public class View {
     		}
     		xIndex++;
     	}
-    	//root.getChildren().addAll(yo);
-    	//return gridView;
-    	
+
     }
     
     //changes color of existing rectangles according to colors

@@ -12,7 +12,7 @@ import controller.Packager;
 
 public class Cell {
 	private CellState state;
-	private Map<String, Object> properties;
+	private Map<String, Integer> properties;
 	
 	//only importing attributes if a cell has other traits
 	public Cell(CellState setState, Packager attributes) {
@@ -25,7 +25,7 @@ public class Cell {
 		p.setPropertiesMap(this.getProperties());
 		return new Cell(this.getState(), p); //TODO: NEED TO COPY PROPERTIES IF TherE IS ANY
 	}
-	public Map<String, Object> getProperties() {
+	public Map<String, Integer> getProperties() {
 		return properties;
 	}
 	public CellState getState() {
@@ -47,8 +47,8 @@ public class Cell {
 	}
 	
 	//returning the values in the map for energy
-	public int getKeyToInt(String key) {
-		return (int) properties.get(key);
+	public Integer getKey(String key) {
+		return properties.get(key);
 	}
 	
 }

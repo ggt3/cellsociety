@@ -7,11 +7,11 @@ import java.util.Map;
 
 
 public class Packager {
-	private Map<String,Object> attributeMap; 
+	private Map<String,Integer> attributeMap; 
 	private ArrayList<ArrayList<String>> colorGrid=new ArrayList<ArrayList<String>>();
 	private Map<String, String> colorsMap;
 	
-	public Map<String,Object> getPropertiesMap() {
+	public Map<String,Integer> getPropertiesMap() {
 		return attributeMap;
 	}
 	
@@ -25,7 +25,7 @@ public class Packager {
 	public void setColorMap(Map<String, String> c) {
 		colorsMap = c;
 	}
-	public void setPropertiesMap(Map<String, Object> s) {
+	public void setPropertiesMap(Map<String, Integer> s) {
 		attributeMap = s;
 	}
 }

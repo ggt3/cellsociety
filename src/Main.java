@@ -17,10 +17,11 @@ public class Main extends Application {
 		myControl = new Controller();
 		myView = new View(myControl);
 		myControl.setView(myView);
-		myView.initialize(primaryStage); //- shows the default load screen
+		myView.initialize(primaryStage); // shows the default load screen
 		
-		myControl.testGrid(); //setting predefined grid for TEST
+		//myControl.testGrid(); //setting predefined grid for TEST
 		
 	}
 	
+    
 }

@@ -24,13 +24,13 @@ public class Controller {
 	private Timeline myTimeline;
 
 
-	public void testGrid() {
-		TestSimulations t = new TestSimulations();
-		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
-		myView.setGridSize(10,10);
-		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
-	} 
-	
+//	public void testGrid() {
+//		TestSimulations t = new TestSimulations();
+//		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
+//		myView.setGridSize(10,10);
+//		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
+//	} 
+//	
 	public void setView(View v){
 		myView = v;
 	}
@@ -54,7 +54,7 @@ public class Controller {
 		return p;
 	}
 	public void generateTimeline (int frameRate){
-	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate *2), e -> playSimulation()); //max frames is 20fps
+	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max frames is 20fps
 	    myTimeline = new Timeline();
 	    myTimeline.setCycleCount(Animation.INDEFINITE);
 	    myTimeline.getKeyFrames().add(frame);
@@ -97,18 +97,20 @@ public class Controller {
 		setSimulationType(simName, p, init);
 		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
 		myView.updateRectangle(rules.createColorGrid(init));
+		
 
 	}
 	
 	private void setSimulationType(String name, Packager p, Grid g) {
-			rules = new WatorSimulation(g,p);
+			rules = new FireSimulation(g,p);
 		
 	}
 	
-	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Object> properties) {
+	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Integer> properties) {
 		Grid init = new Grid(given.size(), given.get(0).size());
 		for (int i = 0; i<given.size();i++) {
 			for (int k = 0; k<given.get(0).size(); k++) {
+				
 				Packager p = new Packager();
 				p.setPropertiesMap(properties);
 				init.putCell(new Cell(given.get(i).get(k), p), i, k);
