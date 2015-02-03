@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,14 +20,15 @@ import org.xml.sax.SAXException;
 
 public class XMLParser {
 	private Element root;
+
 	public void parseXMLFile(String file) throws ParserConfigurationException, SAXException, IOException{
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();	
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document dom = builder.parse(file);
 		dom.normalize();
 		root = dom.getDocumentElement();
 		clean(root);
-		
+
 	}
 	
 	public ArrayList<ArrayList<CellState>> parseGrid(){
@@ -47,14 +49,40 @@ public class XMLParser {
 	}
 	public int[] parseGridSize() {
 		int[] size = new int[2];
-		size[0] = Integer.parseInt(root.getElementsByTagName("size").item(0).getTextContent());
-		size[1] = Integer.parseInt(root.getElementsByTagName("size").item(1).getTextContent());
+		size[0] = Integer.parseInt(root.getElementsByTagName("xsize").item(0).getTextContent());
+		size[1] = Integer.parseInt(root.getElementsByTagName("ysize").item(0).getTextContent());
 		return size;
+	}
+	public HashMap<String, Object> parseGlobalParameters(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		NodeList params = root.getElementsByTagName("settings").item(0).getChildNodes();
+		for(int i=0; i<params.getLength(); i++){
+			String name = params.item(i).getTextContent().split(",")[0];
+			Object value = params.item(i).getTextContent().split(",")[1];
+			map.put(name, value);
+		}
+		return map;
+	}
+	public HashMap<String, String> parseColorMap(){
+		HashMap<String, String> map = new HashMap<String, String>();
+		NodeList params = root.getElementsByTagName("map").item(0).getChildNodes();
+		for(int i=0; i<params.getLength(); i++){
+			String state = params.item(i).getTextContent().split(",")[0];
+			String color = params.item(i).getTextContent().split(",")[1];
+			map.put(state, color);
+		}
+		return map;
 	}
 	public String parseSimulationName() {
 		return root.getElementsByTagName("name").item(0).getTextContent();
 	}
 
+	public String parseSimulationTitle() {
+		return root.getElementsByTagName("title").item(0).getTextContent();
+	}
+	public String parseSimulationAuthor() {
+		return root.getElementsByTagName("author").item(0).getTextContent();
+	}
 	private void clean(Node node)
 	{
 		NodeList childNodes = node.getChildNodes();
@@ -69,8 +97,8 @@ public class XMLParser {
 					node.removeChild(child);
 				else
 					child.setNodeValue(trimmedNodeVal);
-			} else if (nodeType == Node.COMMENT_NODE)
-				node.removeChild(child);
+
+			}
 		}
 	}
 
