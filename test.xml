@@ -1,47 +1,40 @@
 <?xml version="1.0"?>
 <root>
-	<name>Game of Life</name>
+	<name>Wator</name>
 	<title>My Simulation</title>
 	<author>Rob Vann</author>
 	<xsize>5</xsize>
 	<ysize>5</ysize>
-	<settings><parameter>THRESHOLD,.5</parameter><parameter>ENERGY,.75</parameter></settings>
-	<map><color>ALIVE,RED</color><color>DEAD,BLUE</color></map>
+	<settings><parameter>BREEDCYCLE,3</parameter><parameter>BREEDTHRESHOLD,3</parameter><parameter>ENERGY,3</parameter></settings>
+	<map><color>SHARK,RED</color><color>FISH,GREEN</color><color>EMPTY,BLUE</color></map>
 	<grid>
 		<row>
-			<cell>ALIVE</cell>
-			<cell>DEAD</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-		</row>
+			<cell>SHARK</cell>
+			<cell>SHARK</cell>
+			<cell>EMPTY</cell>
+			<cell>FISH</cell>
+			<cell>FISH</cell></row>
 		<row>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-			<cell>DEAD</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-		</row>
+			<cell>FISH</cell>
+			<cell>FISH</cell>
+			<cell>SHARK</cell>
+			<cell>FISH</cell>
+			<cell>FISH</cell></row>
+        <row>
+			<cell>SHARK</cell>
+			<cell>FISH</cell>
+			<cell>EMPTY</cell>
+			<cell>FISH</cell>
+			<cell>FISH</cell></row>
 		<row>
-			<cell>DEAD</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-		</row>
+			<cell>FISH</cell>
+			<cell>FISH</cell>
+			<cell>FISH</cell>
+			<cell>SHARK</cell>
+			<cell>SHARK</cell></row>
 		<row>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-			<cell>DEAD</cell>
-			<cell>DEAD</cell>
-		</row>
-		<row>
-			<cell>ALIVE</cell>
-			<cell>DEAD</cell>
-			<cell>DEAD</cell>
-			<cell>ALIVE</cell>
-			<cell>ALIVE</cell>
-		</row>
-	</grid>
-</root>
+			<cell>FISH</cell>
+			<cell>SHARK</cell>
+			<cell>SHARK</cell>
+			<cell>FISH</cell>
+			<cell>FISH</cell></row></grid></root>
