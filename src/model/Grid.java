@@ -39,7 +39,7 @@ public class Grid {
 	public List<Cell> getDirectNeighbors(int row, int col) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int[][] deltas = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}; //E S W N
-		for (int i = 0; i < deltas.length; i++) {
+		 for (int i = 0; i < deltas.length; i++) {
 			int newR = row + deltas[i][0];
 			int newC = col + deltas[i][1];
 			if (inBounds(newR, newC)) { //only add neighbor if in bounds
@@ -48,7 +48,17 @@ public class Grid {
 		}
 		return neighbors;
 	}
-	
+	public ArrayList<Point> getCellsWithState(CellState x) {
+		ArrayList<Point> stateList = new ArrayList<Point>();
+		for (int i = 0; i< myCells.length; i++) {
+			for (int j = 0; j<myCells[0].length; j++) {
+				if(getCell(i,j).getState().equals(x)) {
+					stateList.add(new Point(j,i)); //adding col, row
+				}
+			}
+		}
+		return stateList;
+	}
 	public ArrayList<Point> getLocationsWithState(CellState x) {
 		ArrayList<Point> stateList = new ArrayList<Point>();
 		for (int i = 0; i< myCells.length; i++) {
@@ -59,6 +69,20 @@ public class Grid {
 			}
 		}
 		return stateList;
+	}
+	public List<Point> getNeighborsWithType(Point p, CellState c) {
+		List<Point> neighbors = new ArrayList<Point>();
+		int[][] deltas = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}; //E S W N
+		 for (int i = 0; i < deltas.length; i++) {
+			int newR = p.y + deltas[i][0];
+			int newC = p.x + deltas[i][1];
+			if (myCells[newR][newC].getState().equals(c)) { //only add neighbor if in bounds
+				neighbors.add(new Point(newC, newR));
+			}
+		}
+		return neighbors;
+	
+		
 	}
 	
 	public Grid copyGrid() {

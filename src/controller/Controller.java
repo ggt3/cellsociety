@@ -87,18 +87,24 @@ public class Controller {
 		XMLParser xml = new XMLParser();
 		xml.parseXMLFile(fileName);
 		String simName = xml.parseSimulationName();
+		Packager p = new Packager();
+		p.setColorMap(xml.parseColorMap());
+
 		int[] xySize = xml.parseGridSize();
-		ArrayList<ArrayList<CellState>> initGrid = xml.parseGrid();
+		
+		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
+		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
+		setSimulationType(simName, p, init);
 		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
-		myView.updateRectangle(translateStateToColor(initGrid));
-		setSimulationType(simName);
+		myView.updateRectangle(rules.createColorGrid(init));
+
 	}
 	
-	private void setSimulationType(String name) {
-		
-			rules = new SegregationSimulation()
+	private void setSimulationType(String name, Packager p, Grid g) {
+			rules = new WatorSimulation(g,p);
 		
 	}
+	
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Object> properties) {
 		Grid init = new Grid(given.size(), given.get(0).size());
 		for (int i = 0; i<given.size();i++) {
@@ -110,9 +116,6 @@ public class Controller {
 		}
 		return init;
 	}
-	private Packager translateStateToColor(ArrayList<ArrayList<CellState>> grid) {
-		
-		
-	}
+
 
 }
