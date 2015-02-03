@@ -24,13 +24,13 @@ public class Controller {
 	private Timeline myTimeline;
 
 
-//	public void testGrid() {
-//		TestSimulations t = new TestSimulations();
-//		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
-//		myView.setGridSize(10,10);
-//		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
-//	} 
-//	
+	public void testGrid() {
+		TestSimulations t = new TestSimulations();
+		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
+		myView.setGridSize(10,10);
+		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
+	} 
+	
 	public void setView(View v){
 		myView = v;
 	}
@@ -39,20 +39,6 @@ public class Controller {
 		return rules.makeNextGrid();
 	}
 	
-	private Packager createColorMap() {
-		HashMap<String,String> map = new HashMap<String, String>();
-		map.put("ALIVE", "WHITE");
-		map.put("EMPTY", "BLACK");
-		map.put("TREE", "SPRINGGREEN");
-		map.put("BURNING", "RED");
-		map.put("SHARK", "GRAY");
-		map.put("FISH", "YELLOW");
-		map.put("X", "BLUE");
-		map.put("Y", "RED");
-		Packager p = new Packager();
-		p.setColorMap(map);
-		return p;
-	}
 	public void generateTimeline (int frameRate){
 	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max frames is 20fps
 	    myTimeline = new Timeline();

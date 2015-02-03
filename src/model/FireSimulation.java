@@ -16,7 +16,7 @@ public class FireSimulation extends Simulation {
 		super(aGrid, attributes);
 		
 	}
-	//TODO: Make sure all cells contain the same attributes
+	
 	//returns the new state of the cell at (row, col)
 	public CellState calculateNewCellState(int row, int col) {
 		List<Cell> neighbors = super.getCurrentGrid().getAllNeighbors(row, col);

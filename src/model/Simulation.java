@@ -34,11 +34,8 @@ public abstract class Simulation {
 		for (int r = 0; r< currentGrid.getRowSize(); r++) {
 			for (int c = 0; c< currentGrid.getColSize(); c++) {
 				CellState newState = calculateNewCellState(r,c);
-				//System.out.print("cell changing" + nextGrid.getCell(r,c).toString());
 				nextGrid.getCell(r, c).setState(newState); //changing the cell state in the new grid
-//				System.out.print("cell after changing" + nextGrid.getCell(r,c).toString());
-//				System.out.print("nextGrid on" + r + " " + c);
-//				nextGrid.print();
+
 			}
 		}
 

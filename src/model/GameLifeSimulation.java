@@ -6,7 +6,6 @@ import controller.Packager;
 /**
  * this class obtains a grid and applies the game of life simulation rules 
  * @author GA
- *
  */
 
 public class GameLifeSimulation extends Simulation {
