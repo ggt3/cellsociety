@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,7 +38,7 @@ public class View {
 	private Integer windowSize=600;
 	private Integer speed = 1;
 	private Text speedText;
-	private Group root;
+	private Group root=new Group();
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
 	private ResourceBundle myResources;
@@ -49,129 +50,28 @@ public class View {
 	private final int totalHeightOfGrid= 450;
 	private int currentGeneration=0;
 	private int numSquareX, numSquareY;
-	
+	private Stage stagenumba2;
 
 
     public View(Controller c) {
     	control = c;
     }
     
-    public Button makeButton(String string)
-	//public Button makeButton(Stage s,double x,int level, String string)
-	{
-		Button btn = new Button();
-        btn.setText(string);
-	    if (!string.contains("UP")&&!string.contains("DOWN"))
-	    {
-	        btn.setScaleX(2);
-		    btn.setScaleY(2);
-	    }
 
-        btn.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-
-				if (string.equals("Play")) {
-					control.playSimulation();
-				}
-				if (string.equals("Pause")) {
-					control.pauseSimulation();
-				}
-				if (string.equals("Step")) {
-					control.stepSimulation();
-				}
-				if (string.equals("   UP   ")) {
-					speed++;
-					System.out.println(speed);
-					speedText.setText("" + speed + "");
-					// send new speed to controller to update frames per second
-				}
-				if (string.equals("DOWN")) {
-					if (speed > 0)
-						speed--;
-					System.out.println(speed);
-					speedText.setText("" + speed + "");
-				}
-				if (string.equals("Load")) {
-    				
-                    Label secondLabel = new Label("Please Enter Your File Name:");
-                    
-                    GridPane grid = new GridPane();
-                    grid.setAlignment(Pos.CENTER);
-                    grid.setHgap(10);
-                    grid.setVgap(10);
-                    grid.setPadding(new Insets(25, 25, 25, 25));
-                    
-                    TextField textField = new TextField();
-                    grid.add(textField, 0, 1);
-                    grid.getChildren().add(secondLabel);
-
-                    Scene secScene = new Scene(grid, 400, 400);
-                    
-                    Button hitBtn = new Button("Go");
-                    hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
-                    grid.add(hitBtn, 1, 4);
-                    
-                    
-                    
-                    Stage secondStage = new Stage();
-                    hitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-                    	@Override
-                    	    public void handle(ActionEvent e) {
-                    	        if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField.getText().endsWith("xml"))) {
-                    	        	fileName=textField.getText();
-                    	        	
-                    	        	secondStage.close();
-                    	            Text texty=addText(fileName,20,0,90);
-                    	            root.getChildren().add(texty);
-                    	            try {
-                						control.loadFile(fileName);
-                					} catch (ParserConfigurationException e1) {
-                			
-                						e1.printStackTrace();
-                					} catch (SAXException e1) {
-
-                						e1.printStackTrace();
-                					} catch (IOException e1) {
-                						e1.printStackTrace();
-                					}
-                    	        } else {
-                    	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
-                    	        	System.out.println("File Name entered is not a valid name");
-                    	        }
-                    	     }
-                    	 });
-                  
-                    secondStage.setTitle("Load File");
-                    secondStage.setScene(secScene);
-                     
-                    //Set position of second window, related to primary window.
-                    secondStage.setX(mainStage.getX() + 100);
-                    secondStage.setY(mainStage.getY() + 100);
-                    secondStage.show();
-    				
-    			}
-            }
-        });
-        return btn;
-	}
-	
     public void showError (String message) {
         //Object myResources;
 		//Dialogs.create().title(myResources.getString("ErrorTitle")).message(message).showError();
     }
 	
 
-    public Text addText(String s,int size)
-	{
-        Text t = new Text(s);
-        t.setFont(Font.font ("Verdana", size));
-        t.setCache(true);
-        t.setFill(Color.BLACK);
-        return t;
-	}
+//    public Text addText222(String s,int size)
+//	{
+//        Text t = new Text(s);
+//        t.setFont(Font.font ("Verdana", size));
+//        t.setCache(true);
+//        t.setFill(Color.BLACK);
+//        return t;
+//	}
     
     
 	public Text addText(String s,int size,int xLoc,int yLoc)
@@ -186,22 +86,151 @@ public class View {
 	//beginning screen with no grid
     public void initialize(Stage primaryStage) {
     	primaryStage.setResizable(false);
-    
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
         HBox hbox=new HBox(50);
-        Button play=makeButton("Play");
-        Button pause=makeButton("Pause");
-        Button step=makeButton("Step");
-        Button load=makeButton("Load");
+//        ButtonBox buttons = new ButtonBox();
+  //      HBox hbox=buttons.makeButtonBox();
         
-        speedText=addText(""+speed+"",20);
+        
+//        Button play=makeButton("Play");
+//        Button pause=makeButton("Pause");
+//        Button step=makeButton("Step");
+//        Button load=makeButton("Load");
+        
+        Button play=new Button("Play");
+        play.setScaleX(2);
+	    play.setScaleY(2);
+	    
+	    play.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {
+            	control.playSimulation();
+            }
+	    });
+	    
+	    Button pause=new Button("Pause");
+        pause.setScaleX(2);
+	    pause.setScaleY(2);
+	    
+	    pause.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {
+            	control.pauseSimulation();
+            }
+	    });
+	    
+        Button step=new Button("STEP");
+        step.setScaleX(2);
+	    step.setScaleY(2);
+	    
+	    step.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {
+            	control.stepSimulation();
+            }
+	    });
+	    
+        Button load=new Button("LOAD");
+        load.setScaleX(2);
+	    load.setScaleY(2);
+	    
+	    load.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {
+            	Label secondLabel = new Label("Please Enter Your File Name:");
+                
+                GridPane grid = new GridPane();
+                grid.setAlignment(Pos.CENTER);
+                grid.setHgap(10);
+                grid.setVgap(10);
+                grid.setPadding(new Insets(25, 25, 25, 25));
+                
+                TextField textField = new TextField();
+                grid.add(textField, 0, 1);
+                grid.getChildren().add(secondLabel);
+
+                Scene secScene = new Scene(grid, 400, 400);
+                
+                Button hitBtn = new Button("Go");
+                hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
+                grid.add(hitBtn, 1, 4);
+                
+                
+                
+                Stage secondStage = new Stage();
+                hitBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+                	@Override
+                	    public void handle(ActionEvent e) {
+                	        if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField.getText().endsWith("xml"))) {
+                	        	fileName=textField.getText();
+                	        	
+                	        	secondStage.close();
+                	            Text texty=addText(fileName,20,0,90);
+                	            root.getChildren().add(texty);
+                	            try {
+            						control.loadFile(fileName);
+            					} catch (ParserConfigurationException e1) {
+            			
+            						e1.printStackTrace();
+            					} catch (SAXException e1) {
+
+            						e1.printStackTrace();
+            					} catch (IOException e1) {
+            						e1.printStackTrace();
+            					}
+                	        } else {
+                	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
+                	        	System.out.println("File Name entered is not a valid name");
+                	        }
+                	     }
+                	 });
+              
+                secondStage.setTitle("Load File");
+                secondStage.setScene(secScene);
+                 
+                //Set position of second window, related to primary window.
+                secondStage.setX(mainStage.getX() + 100);
+                secondStage.setY(mainStage.getY() + 100);
+                secondStage.show();
+				
+			}
+        });
+        
+        speedText=addText(""+speed+"",20,0,0);
         speedText.setScaleY(2);
         speedText.setScaleX(2);
         
         VBox speedButtons = new VBox();
-        Button up =makeButton("   UP   ");
-        Button down=makeButton("DOWN");
+        //Button up =makeButton("   UP   ");
+        Button up =new Button("   UP   ");
+        //Button down=makeButton("DOWN");
+        Button down=new Button("DOWN");
+        up.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {
+            	speed++;
+    			System.out.println(speed);
+    			speedText.setText("" + speed + "");
+            }
+	    });
+        down.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {
+    			if (speed > 0)
+    				speed--;
+    			System.out.println(speed);
+    			speedText.setText("" + speed + "");
+            }
+	    });
+
         speedButtons.getChildren().addAll(up,down);
         
         speedButtons.setTranslateY(-11);
@@ -237,6 +266,7 @@ public class View {
     	for(int i=75;i<=xtot-x;i+=x){
     		int yIndex=0;
     		for (int j=100;j<=ytot-y;j+=y){
+
     			Rectangle rex=new Rectangle(i,j,x,y);
     			rex.setStroke(Color.BLACK);
     			rex.setStrokeWidth(0.5);
@@ -273,7 +303,9 @@ public class View {
 		rex.setFill(c);
 	}
 
-	
+	protected void addToRoot(Node n){
+		root.getChildren().add(n);
+	}
 	protected Group getRoot(){
 		return root;
 	}
@@ -286,8 +318,29 @@ public class View {
 	public int getSpeed(){
 		return speed;
 	}
+	protected void addToSpeed(int s){
+		speed+=s;
+	}
 	protected Text displayCurrentSpeed(){
 		return speedText;
 	}
+	
+	protected void setFileName(String file){
+		fileName=file;
+	}
+	protected int getWindowSize(){
+		return windowSize;
+	}
 
+	protected double popUpLocation(){
+		return mainStage.getX()+100;
+	}
+	protected void setSecondStage(Stage s2){
+		stagenumba2=s2;
+		stagenumba2.show();
+	}
+	protected Controller getControl(){
+		return control;
+	}
+	
 }

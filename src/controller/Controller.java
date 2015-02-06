@@ -81,7 +81,10 @@ public class Controller {
 		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
 		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 		setSimulationType(simName, p, init);
-		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
+		System.out.println("SIZE: "+xySize[0]);
+		System.out.println(xySize[0]);
+		System.out.println("SIZE: "+xySize[1]);
+		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls display grid
 		myView.updateRectangle(rules.createColorGrid(init));
 		
 
