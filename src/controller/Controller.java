@@ -12,43 +12,43 @@ import org.xml.sax.SAXException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import viewPackage.View;
 import model.*;
-
-
 
 public class Controller {
 	private Simulation rules;
 	private View myView;
 	private Timeline myTimeline;
 
-
+	public Controller(Stage primaryStage) {
+		myView = new View(this);
+		myView.initialize(primaryStage);
+	    myTimeline = new Timeline();
+	}
+	//for hardcoded tests
 	public void testGrid() {
 		TestSimulations t = new TestSimulations();
 		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
-		myView.setGridSize(10,10);
+		myView.calculateDynamicSize(10,10);
 		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
 	} 
 	
-	public void setView(View v){
-		myView = v;
-	}
 	
 	public Grid getNextGrid() { //asks for the next grid of color to give to view
 		return rules.makeNextGrid();
 	}
 	
-	public void generateTimeline (int frameRate){
-	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max frames is 20fps
-	    myTimeline = new Timeline();
+	public void generateTimeline (KeyFrame frame){
 	    myTimeline.setCycleCount(Animation.INDEFINITE);
 	    myTimeline.getKeyFrames().add(frame);
-	    myTimeline.play();
 	}
 	
+	private KeyFrame speedFrame(int frameRate) {
+		return new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max frames is 20fps
+	}
 	public void playSimulation() {
-		generateTimeline(myView.getSpeed());
 		stepSimulation();
 		
 	}
@@ -79,17 +79,31 @@ public class Controller {
 		int[] xySize = xml.parseGridSize();
 		
 		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
-		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
-		setSimulationType(simName, p, init);
-		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
+		Grid init = listToGrid(initGridArray, new HashMap<String, Integer>() ); //creating initial grid
+		setSimulationType(simName, p, init); //p contains the encoded color hashmap, init is the initial grid
+		myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
 		myView.updateRectangle(rules.createColorGrid(init));
 		
 
 	}
 	
 	private void setSimulationType(String name, Packager p, Grid g) {
-			rules = new FireSimulation(g,p);
-		
+			if (name.equals("FIRE")) {
+				rules = new FireSimulation(g, p);
+				return;
+			}
+			if(name.equals("LIFE")) {
+				rules= new GameLifeSimulation(g,p);
+				return;
+			}
+			if (name.equals("WATOR")) {
+				rules = new WatorSimulation(g, p);
+				return;
+			}
+			if (name.equals("SEGREGATION")) {
+				rules = new SegregationSimulation(g, p);
+				return;
+			}
 	}
 	
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Integer> properties) {

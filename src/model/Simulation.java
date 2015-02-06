@@ -1,6 +1,8 @@
 package model;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.Random;
+
 import controller.Packager;
 /**
  * this abstract class will define a general structure for any type of simulation
@@ -11,6 +13,7 @@ import controller.Packager;
 public abstract class Simulation {
 	private Grid currentGrid, nextGrid;
 	private Map<String, String> colors;
+	public static final Random myGenerator = new Random(1234);
 	
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;

@@ -10,7 +10,6 @@ import controller.Packager;
  */
 
 public class FireSimulation extends Simulation {
-	private Random myGenerator = new Random(1234);
 	
 	public FireSimulation(Grid aGrid, Packager attributes) {
 		super(aGrid, attributes);

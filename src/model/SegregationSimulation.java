@@ -9,7 +9,6 @@ import controller.Packager;
 
 
 public class SegregationSimulation extends Simulation {
-	private Random myGenerator = new Random(1234);
 	private ArrayList<Cell> cellsToMove;
 	private ArrayList<Point> emptyPlaces;
 	

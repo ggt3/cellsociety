@@ -127,6 +127,7 @@ public class View {
                     	            Text texty=addText(fileName,20,0,90);
                     	            root.getChildren().add(texty);
                     	            try {
+                    	            	control.stopSimulation();
                 						control.loadFile(fileName);
                 					} catch (ParserConfigurationException e1) {
                 			
@@ -212,17 +213,14 @@ public class View {
         hbox.getChildren().addAll(play,pause,step,speedText,speedButtons,load);
         hbox.setPrefWidth(windowSize);
         
-        
         root = new Group();
 
         root.getChildren().add(hbox);
-        
-
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
     
-    public void setGridSize(int sizeX, int sizeY){
+    public void calculateDynamicSize(int sizeX, int sizeY){
     	 numSquareX = sizeX;
     	 numSquareY = sizeY;
     	 gridView= new Rectangle[numSquareX][numSquareY];
@@ -273,21 +271,10 @@ public class View {
 		rex.setFill(c);
 	}
 
-	
-	protected Group getRoot(){
-		return root;
-	}
-	protected String getFileName(){
-		return fileName;
-	}
-	protected Stage getPrimaryStage(){
-		return mainStage;
-	}
+
 	public int getSpeed(){
 		return speed;
 	}
-	protected Text displayCurrentSpeed(){
-		return speedText;
-	}
+
 
 }
