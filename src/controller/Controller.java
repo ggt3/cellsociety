@@ -48,7 +48,9 @@ public class Controller {
 	
 	public void changeSpeed(int frameRate) {
 		System.out.println(myTimeline.getKeyFrames());
-		KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max fps is 20
+		int totalSpeed = frameRate*10;
+		KeyFrame frame = new KeyFrame(Duration.millis(1000 / totalSpeed), e -> playSimulation()); //max fps is 20
+		System.out.println(totalSpeed);
 		if (!myTimeline.getKeyFrames().isEmpty()) {
 			myTimeline.getKeyFrames().remove(0);
 		}
@@ -57,6 +59,7 @@ public class Controller {
 	}
 	
 	public void playSimulation() {
+		
 		stepSimulation();
 	}
 	

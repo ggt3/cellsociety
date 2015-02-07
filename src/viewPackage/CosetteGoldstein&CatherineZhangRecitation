@@ -1,0 +1,21 @@
+Catherine Zhang ycz2
+Cosette Goldstein cmg64
+
+##Peer Code Review Recitation
+
+* I worked with Cat (Team 3) to determine which part of the code to refactor. I worked a lot on the 
+View, so I decided to refactor a method from that class that I hadn't refactored yet. Many of the sections
+with duplicated code were between the View method and ButtonBox, which is because I am in the process of moving
+the creation of buttons from being created in the View class to an outside class called ButtonBox (so at this point
+it is almost identical, but code from both won't be used in the end). The section in my code that I decided to refactor
+was 2 methods that added and formatted text when it was added to the Scene.
+
+* There were two methods in the View class with different parameters called addText()-- one of which allows the user to addText 
+and put it in a specific location in the grid and the other one that did not take a location. The initial reasoning for this was 
+that when adding to the main scene, I needed to specify location. However, within the popUp window to load a file, the text was already 
+set in the grid pane, making it unnecessary to to set a location.
+
+* Cat and I considered the idea of making 1 method, and extracting the line that altered the location of the text (since the 
+methods were otherwise identical). After discussing more, we realized that we could put the locations as (0,0) for when we didn't want to
+relocate, and we could completely delete the method with no location parameters. This way it will be more convenient to add text 
+in the future.

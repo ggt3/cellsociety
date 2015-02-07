@@ -28,6 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,33 +41,25 @@ public class View {
 	private Integer windowSize=600;
 	private Integer speed = 1;
 	private Text speedText;
-	private Group root=new Group();
+	private Group root;//=new Group();
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
     public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
 	private ResourceBundle myResources;
 	private String fileName="";
 	private Controller control;
 	private Stage mainStage;
-	protected Rectangle[][] gridView;// = new Rectangle[20][20];
-	protected Polygon[][] gridView2;
-	private final int totalWidthOfGrid= 450;
-	private final int totalHeightOfGrid= 450;
+
 	private int currentGeneration=0;
-	private int numSquareX, numSquareY;
 	private Stage stagenumba2;
-	
-	
 	private ButtonBox buttons;
 	private DisplayGrid griddy;//=new DisplayGrid();
 
     public View(Controller c) {
     	control = c;
-    	griddy=new DisplayGrid();
+    	griddy=new DisplayGrid(this);
     }
-    public View(){
-    	
-    }
-    
+
+
 
     public void showError (String message) {
         //Object myResources;
@@ -91,157 +84,29 @@ public class View {
         HBox slide=buttons.makeSlider();
         slide.setLayoutY(windowSize-40);
         
-        //slide.setLayoutY(200);
+        
         root = new Group();
         root.getChildren().addAll(hbox,slide);
 
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
-    
-    public void drawGrid(Rectangle r){
-    	root.getChildren().add(r);
-    }
-    
-   // public void setGridSize(int sizeX, int sizeY,boolean shape){
+
 
     public void calculateDynamicSize(int sizeX, int sizeY,boolean shape){
-    	 numSquareX = sizeX;
-    	 numSquareY = sizeY;
-    	 double x=determineXlength(numSquareX);
-         double y=determineYlength(numSquareY);
-    	 if (shape){
-    		 gridView= new Rectangle[numSquareX][numSquareY];
-    		 displayGrid(525,550,x,y);
-    	 }
-    	 else{
-    		 gridView2= new Polygon[numSquareX][numSquareY];
-    		 displayGrid2(525,550,x,y);
-    	 }
-    	 //displayGrid(525,550,x,y);
-    	//griddy.setGridSize(sizeX, sizeY);
+    	griddy.setGridSize(sizeX, sizeY);
     }
-//
-//
-    public void displayGrid(int xtot, int ytot,double x,double y){
-    	int xIndex=0;
-    	for(int i=75;i<=xtot-x;i+=x){
-    		int yIndex=0;
-    		for (int j=100;j<=ytot-y;j+=y){
-    			Rectangle rex=new Rectangle(i,j,x,y);
-    			rex.setStroke(Color.BLACK);
-    			rex.setStrokeWidth(0.5);
-    			root.getChildren().add(rex);
-    			gridView[xIndex][yIndex] = rex;
-    			yIndex++;
-    		}
-    		xIndex++;
-    	}
-
-    }
-    public void displayGrid2(int xtot, int ytot,double x,double y){
-    	int xIndex=0;
-    	for(int i=75;i<=xtot-x;i+=x){
-    		int yIndex=0;
-    		for (int j=100;j<=ytot-y;j+=y){
-    			//Rectangle rex=new Rectangle(i,j,x,y);
-    			Polygon p=new Polygon();
-    			p.getPoints().addAll(new Double[]{
-    				    i+x/2, j+0.0,
-    				    i+x+x/2, j+0.0,
-    				    i+x, j+y });
-    			p.setStroke(Color.BLACK);
-    			p.setStrokeWidth(0.5);
-    			//rex.setStroke(Color.BLACK);
-    			//rex.setStrokeWidth(0.5);
-    			//root.getChildren().add(rex);
-    			root.getChildren().add(p);
-    			//gridView[xIndex][yIndex] = rex;
-    			gridView2[xIndex][yIndex] = p;
-    			yIndex++;
-    		}
-    		xIndex++;
-    	}
-
-    }
-//    
-//    //changes color of existing rectangles according to colors
+    
+    //changes color of existing rectangles according to colors
     public void updateRectangle(Packager colorGrid,boolean bool){
-    	for(int i=0;i < numSquareX;i++){
-    		for (int j=0;j < numSquareY;j++){
-    			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
-    			if (bool){
-    				setFill(gridView[i][j], Color.valueOf(color)); //converting the string to color
-    			}
-    			else
-    				setFill2(gridView2[i][j], Color.valueOf(color));
-    		}
-    	}
+    	griddy.updateRectangle(colorGrid);
 
     }
-//    //account for dynamic change of grid
-    private double determineXlength(int numCols){
-    	return ((double)totalWidthOfGrid)/numCols;
-    	
-    }
     
-    private double determineYlength(int numRows){
-    	return ((double)totalHeightOfGrid)/numRows;
-    }
-    
-    protected void giveToView(Rectangle[][] ro){
-    	gridView=ro;
-    	for (Rectangle[] r: gridView){
-			for (Rectangle t: r){
-				root.getChildren().add(t);
-				//System.out.println(t);
-			}
-			
-		}
-    }
-    
-    
-	protected void setFill(Rectangle gridView3,Color c) {
-		gridView3.setFill(c);
-	}
-	protected void setFill2(Polygon gridView3,Color c) {
-		gridView3.setFill(c);
-	}
-
-	protected void setMyGrid(Rectangle[][] grid){
-		gridView=grid;
-		for (Rectangle[] r: gridView){
-			for (Rectangle t: r){
-				//root.getChildren().add(t);
-				//System.out.println(t);
-			}
-			
-		}
-		//root.getChildren().addAll(gridView);
-	}
-	
-	protected void instantGrid(Rectangle[][] r){
-		gridView= r;
-	}
-	
-	protected void addToGrid(int x,int y,Rectangle p){
-		//System.out.print
-		gridView[x][y]=p;
-	}
-	
 	protected void addToRoot(Node n){
-		root.getChildren().addAll(n,addText("POOz",20,30,30));
-		addText("POOz",20,400,400);
-		root.getChildren().remove(0);
-		System.out.println("here ya go poop");
+		root.getChildren().addAll(n);
 	}
-	
-	public void callDisplayPLZ(){
-		griddy.showmedamoney();
-	}
-	protected Group getRoot(){
-		return root;
-	}
+
 	protected String getFileName(){
 		return fileName;
 	}
@@ -249,6 +114,7 @@ public class View {
 		return mainStage;
 	}
 	public int getSpeed(){
+		System.out.println("SPEED IS HERE:"+speed);
 		return speed;
 	}
 	protected void addToSpeed(int s){
