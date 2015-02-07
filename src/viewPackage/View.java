@@ -20,11 +20,13 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -45,16 +47,24 @@ public class View {
 	private String fileName="";
 	private Controller control;
 	private Stage mainStage;
-	private Rectangle[][] gridView;// = new Rectangle[20][20];
+	protected Rectangle[][] gridView;// = new Rectangle[20][20];
+	protected Polygon[][] gridView2;
 	private final int totalWidthOfGrid= 450;
 	private final int totalHeightOfGrid= 450;
 	private int currentGeneration=0;
 	private int numSquareX, numSquareY;
 	private Stage stagenumba2;
-
+	
+	
+	private ButtonBox buttons;
+	private DisplayGrid griddy;//=new DisplayGrid();
 
     public View(Controller c) {
     	control = c;
+    	griddy=new DisplayGrid();
+    }
+    public View(){
+    	
     }
     
 
@@ -62,20 +72,8 @@ public class View {
         //Object myResources;
 		//Dialogs.create().title(myResources.getString("ErrorTitle")).message(message).showError();
     }
-	
-
-//    public Text addText222(String s,int size)
-//	{
-//        Text t = new Text(s);
-//        t.setFont(Font.font ("Verdana", size));
-//        t.setCache(true);
-//        t.setFill(Color.BLACK);
-//        return t;
-//	}
     
-    
-	public Text addText(String s,int size,int xLoc,int yLoc)
-	{
+	public Text addText(String s,int size,int xLoc,int yLoc){
         Text t = new Text(xLoc,yLoc,s);
         t.setFont(Font.font ("Verdana", size));
         t.setCache(true);
@@ -88,185 +86,50 @@ public class View {
     	primaryStage.setResizable(false);
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
-        HBox hbox=new HBox(50);
-//        ButtonBox buttons = new ButtonBox();
-  //      HBox hbox=buttons.makeButtonBox();
+        buttons = new ButtonBox(control);
+        HBox hbox=buttons.makeButtonBox();
+        HBox slide=buttons.makeSlider();
+        slide.setLayoutY(windowSize-40);
         
-        
-//        Button play=makeButton("Play");
-//        Button pause=makeButton("Pause");
-//        Button step=makeButton("Step");
-//        Button load=makeButton("Load");
-        
-        Button play=new Button("Play");
-        play.setScaleX(2);
-	    play.setScaleY(2);
-	    
-	    play.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {
-            	control.playSimulation();
-            }
-	    });
-	    
-	    Button pause=new Button("Pause");
-        pause.setScaleX(2);
-	    pause.setScaleY(2);
-	    
-	    pause.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {
-            	control.pauseSimulation();
-            }
-	    });
-	    
-        Button step=new Button("STEP");
-        step.setScaleX(2);
-	    step.setScaleY(2);
-	    
-	    step.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {
-            	control.stepSimulation();
-            }
-	    });
-	    
-        Button load=new Button("LOAD");
-        load.setScaleX(2);
-	    load.setScaleY(2);
-	    
-	    load.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {
-            	Label secondLabel = new Label("Please Enter Your File Name:");
-                
-                GridPane grid = new GridPane();
-                grid.setAlignment(Pos.CENTER);
-                grid.setHgap(10);
-                grid.setVgap(10);
-                grid.setPadding(new Insets(25, 25, 25, 25));
-                
-                TextField textField = new TextField();
-                grid.add(textField, 0, 1);
-                grid.getChildren().add(secondLabel);
-
-                Scene secScene = new Scene(grid, 400, 400);
-                
-                Button hitBtn = new Button("Go");
-                hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
-                grid.add(hitBtn, 1, 4);
-                
-                
-                
-                Stage secondStage = new Stage();
-                hitBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-                	@Override
-                	    public void handle(ActionEvent e) {
-                	        if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField.getText().endsWith("xml"))) {
-                	        	fileName=textField.getText();
-                	        	
-                	        	secondStage.close();
-                	            Text texty=addText(fileName,20,0,90);
-                	            root.getChildren().add(texty);
-                	            try {
-            						control.loadFile(fileName);
-            					} catch (ParserConfigurationException e1) {
-            			
-            						e1.printStackTrace();
-            					} catch (SAXException e1) {
-
-            						e1.printStackTrace();
-            					} catch (IOException e1) {
-            						e1.printStackTrace();
-            					}
-                	        } else {
-                	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
-                	        	System.out.println("File Name entered is not a valid name");
-                	        }
-                	     }
-                	 });
-              
-                secondStage.setTitle("Load File");
-                secondStage.setScene(secScene);
-                 
-                //Set position of second window, related to primary window.
-                secondStage.setX(mainStage.getX() + 100);
-                secondStage.setY(mainStage.getY() + 100);
-                secondStage.show();
-				
-			}
-        });
-        
-        speedText=addText(""+speed+"",20,0,0);
-        speedText.setScaleY(2);
-        speedText.setScaleX(2);
-        
-        VBox speedButtons = new VBox();
-        //Button up =makeButton("   UP   ");
-        Button up =new Button("   UP   ");
-        //Button down=makeButton("DOWN");
-        Button down=new Button("DOWN");
-        up.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {
-            	speed++;
-    			System.out.println(speed);
-    			speedText.setText("" + speed + "");
-            }
-	    });
-        down.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {
-    			if (speed > 0)
-    				speed--;
-    			System.out.println(speed);
-    			speedText.setText("" + speed + "");
-            }
-	    });
-
-        speedButtons.getChildren().addAll(up,down);
-        
-        speedButtons.setTranslateY(-11);
-        
-        hbox.setTranslateX(30);
-        hbox.setTranslateY(15);
-        
-        hbox.getChildren().addAll(play,pause,step,speedText,speedButtons,load);
-        hbox.setPrefWidth(windowSize);
-        
-        
+        //slide.setLayoutY(200);
         root = new Group();
-
-        root.getChildren().add(hbox);
-        
-
+        root.getChildren().addAll(hbox,slide);
+//        Rectangle poop=new Rectangle(20,20,300,300);
+//        poop.setFill(Color.SPRINGGREEN);
+//        poop.setX(300);
+//        poop.setY(300);
+        //root.getChildren().addAll(griddy.tryMe(20,20,300,300));
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
     
-    public void setGridSize(int sizeX, int sizeY){
+    public void drawGrid(Rectangle r){
+    	root.getChildren().add(r);
+    }
+    
+    public void setGridSize(int sizeX, int sizeY,boolean shape){
     	 numSquareX = sizeX;
     	 numSquareY = sizeY;
-    	 gridView= new Rectangle[numSquareX][numSquareY];
     	 double x=determineXlength(numSquareX);
          double y=determineYlength(numSquareY);
-    	 displayGrid(525,550,x,y);
+    	 if (shape){
+    		 gridView= new Rectangle[numSquareX][numSquareY];
+    		 displayGrid(525,550,x,y);
+    	 }
+    	 else{
+    		 gridView2= new Polygon[numSquareX][numSquareY];
+    		 displayGrid2(525,550,x,y);
+    	 }
+    	 //displayGrid(525,550,x,y);
+    	//griddy.setGridSize(sizeX, sizeY);
     }
-
-
+//
+//
     public void displayGrid(int xtot, int ytot,double x,double y){
     	int xIndex=0;
     	for(int i=75;i<=xtot-x;i+=x){
     		int yIndex=0;
     		for (int j=100;j<=ytot-y;j+=y){
-
     			Rectangle rex=new Rectangle(i,j,x,y);
     			rex.setStroke(Color.BLACK);
     			rex.setStrokeWidth(0.5);
@@ -278,18 +141,47 @@ public class View {
     	}
 
     }
-    
-    //changes color of existing rectangles according to colors
-    public void updateRectangle(Packager colorGrid){
+    public void displayGrid2(int xtot, int ytot,double x,double y){
+    	int xIndex=0;
+    	for(int i=75;i<=xtot-x;i+=x){
+    		int yIndex=0;
+    		for (int j=100;j<=ytot-y;j+=y){
+    			//Rectangle rex=new Rectangle(i,j,x,y);
+    			Polygon p=new Polygon();
+    			p.getPoints().addAll(new Double[]{
+    				    i+x/2, j+0.0,
+    				    i+x+x/2, j+0.0,
+    				    i+x, j+y });
+    			p.setStroke(Color.BLACK);
+    			p.setStrokeWidth(0.5);
+    			//rex.setStroke(Color.BLACK);
+    			//rex.setStrokeWidth(0.5);
+    			//root.getChildren().add(rex);
+    			root.getChildren().add(p);
+    			//gridView[xIndex][yIndex] = rex;
+    			gridView2[xIndex][yIndex] = p;
+    			yIndex++;
+    		}
+    		xIndex++;
+    	}
+
+    }
+//    
+//    //changes color of existing rectangles according to colors
+    public void updateRectangle(Packager colorGrid,boolean bool){
     	for(int i=0;i < numSquareX;i++){
     		for (int j=0;j < numSquareY;j++){
     			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
-    			setFill(gridView[i][j], Color.valueOf(color)); //converting the string to color
+    			if (bool){
+    				setFill(gridView[i][j], Color.valueOf(color)); //converting the string to color
+    			}
+    			else
+    				setFill2(gridView2[i][j], Color.valueOf(color));
     		}
     	}
 
     }
-    //account for dynamic change of grid
+//    //account for dynamic change of grid
     private double determineXlength(int numCols){
     	return ((double)totalWidthOfGrid)/numCols;
     	
@@ -299,12 +191,55 @@ public class View {
     	return ((double)totalHeightOfGrid)/numRows;
     }
     
-	private void setFill(Rectangle rex,Color c) {
-		rex.setFill(c);
+    protected void giveToView(Rectangle[][] ro){
+    	gridView=ro;
+    	for (Rectangle[] r: gridView){
+			for (Rectangle t: r){
+				root.getChildren().add(t);
+				//System.out.println(t);
+			}
+			
+		}
+    }
+    
+    
+	protected void setFill(Rectangle gridView3,Color c) {
+		gridView3.setFill(c);
+	}
+	protected void setFill2(Polygon gridView3,Color c) {
+		gridView3.setFill(c);
 	}
 
+	protected void setMyGrid(Rectangle[][] grid){
+		gridView=grid;
+		for (Rectangle[] r: gridView){
+			for (Rectangle t: r){
+				//root.getChildren().add(t);
+				//System.out.println(t);
+			}
+			
+		}
+		//root.getChildren().addAll(gridView);
+	}
+	
+	protected void instantGrid(Rectangle[][] r){
+		gridView= r;
+	}
+	
+	protected void addToGrid(int x,int y,Rectangle p){
+		//System.out.print
+		gridView[x][y]=p;
+	}
+	
 	protected void addToRoot(Node n){
-		root.getChildren().add(n);
+		root.getChildren().addAll(n,addText("POOz",20,30,30));
+		addText("POOz",20,400,400);
+		root.getChildren().remove(0);
+		System.out.println("here ya go poop");
+	}
+	
+	public void callDisplayPLZ(){
+		griddy.showmedamoney();
 	}
 	protected Group getRoot(){
 		return root;
@@ -319,7 +254,8 @@ public class View {
 		return speed;
 	}
 	protected void addToSpeed(int s){
-		speed+=s;
+		speed=s;
+		//speedText.setText(""+s+"");
 	}
 	protected Text displayCurrentSpeed(){
 		return speedText;
@@ -343,4 +279,25 @@ public class View {
 		return control;
 	}
 	
+	protected void tryLoad(String s){
+		try {
+			control.loadFile(s);
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	protected DisplayGrid callToGridMethod(){
+		return griddy;
+	}
+	
+	protected Scene getScene(){
+		return myScene;
+	}
 }

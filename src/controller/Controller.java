@@ -13,6 +13,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import viewPackage.DisplayGrid;
 import viewPackage.View;
 import model.*;
 
@@ -57,6 +58,8 @@ public class Controller {
 		Grid next = rules.makeNextGrid();
 		rules.updateGrid(next); //sets the next grid as the new grid
 		Packager bundle = rules.createColorGrid(next);
+		//DisplayGrid grif=new DisplayGrid(this);
+		//grif.updateRectangle(bundle);
 		myView.updateRectangle(bundle);
 	}
 	
@@ -84,8 +87,12 @@ public class Controller {
 		System.out.println("SIZE: "+xySize[0]);
 		System.out.println(xySize[0]);
 		System.out.println("SIZE: "+xySize[1]);
-		myView.setGridSize(xySize[0], xySize[1]); //sets grid size and calls display grid
-		myView.updateRectangle(rules.createColorGrid(init));
+		//DisplayGrid grif=new DisplayGrid();
+		//grif.setGridSize(xySize[0], xySize[1]);
+		//grif.updateRectangle(rules.createColorGrid(init));
+		//myView.callDisplayPLZ();
+		myView.setGridSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
+		myView.updateRectangle(rules.createColorGrid(init),false);
 		
 
 	}

@@ -3,8 +3,8 @@
 	<name>Fire</name>
 	<title>My Simulation</title>
 	<author>Rob Vann</author>
-	<xsize>5</xsize>
-	<ysize>5</ysize>
-	<settings><parameter>THRESHOLD,70</parameter></settings>
+	<xsize>6</xsize>
+	<ysize>6</ysize>
+	<settings><parameter>THRESHOLD,20</parameter></settings>
 	<map><color>BURNING,RED</color><color>TREE,GREEN</color><color>EMPTY,BLUE</color></map>
-	<grid><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>BURNING</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell></row></grid></root>
+	<grid><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell></row><row><cell>TREE</cell><cell>BURNING</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell></row></grid></root>
