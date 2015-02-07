@@ -54,16 +54,16 @@ public class XMLParser {
 		size[1] = Integer.parseInt(root.getElementsByTagName("ysize").item(0).getTextContent());
 		return size;
 	}
-//	public HashMap<String, Integer> parseGlobalParameters(){
-//		HashMap<String, Integer> map = new HashMap<String, Integer>();
-//		NodeList params = root.getElementsByTagName("settings").item(0).getChildNodes();
-//		for(int i=0; i<params.getLength(); i++){
-//			String name = params.item(i).getTextContent().split(",")[0];
-//			Integer value = Integer.parseInt(params.item(i).getTextContent().split(",")[1]);
-//			map.put(name, value);
-//		}
-//		return map;
-//	}
+	public HashMap<String, Integer> parseGlobalParameters(){
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		NodeList params = root.getElementsByTagName("settings").item(0).getChildNodes();
+		for(int i=0; i<params.getLength(); i++){
+			String name = params.item(i).getTextContent().split(",")[0];
+			Integer value = Integer.parseInt(params.item(i).getTextContent().split(",")[1]);
+			map.put(name, value);
+		}
+		return map;
+	}
 	public HashMap<String, String> parseColorMap(){
 		HashMap<String, String> map = new HashMap<String, String>();
 		NodeList params = root.getElementsByTagName("map").item(0).getChildNodes();

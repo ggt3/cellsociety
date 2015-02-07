@@ -72,13 +72,14 @@ public class View {
             @Override
             public void handle(ActionEvent event) {
 
-				if (string.equals("Play")) {
-					control.playSimulation();
+				if (string.equals("PLAY")) {
+					control.changeSpeed(speed);
+					
 				}
-				if (string.equals("Pause")) {
+				if (string.equals("PAUSE")) {
 					control.pauseSimulation();
 				}
-				if (string.equals("Step")) {
+				if (string.equals("STEP")) {
 					control.stepSimulation();
 				}
 				if (string.equals("   UP   ")) {
@@ -93,7 +94,7 @@ public class View {
 					System.out.println(speed);
 					speedText.setText("" + speed + "");
 				}
-				if (string.equals("Load")) {
+				if (string.equals("LOAD")) {
     				
                     Label secondLabel = new Label("Please Enter Your File Name:");
                     
@@ -129,6 +130,7 @@ public class View {
                     	            try {
                     	            	control.stopSimulation();
                 						control.loadFile(fileName);
+                						
                 					} catch (ParserConfigurationException e1) {
                 			
                 						e1.printStackTrace();
@@ -191,10 +193,10 @@ public class View {
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
         HBox hbox=new HBox(50);
-        Button play=makeButton("Play");
-        Button pause=makeButton("Pause");
-        Button step=makeButton("Step");
-        Button load=makeButton("Load");
+        Button play=makeButton("PLAY");
+        Button pause=makeButton("PAUSE");
+        Button step=makeButton("STEP");
+        Button load=makeButton("LOAD");
         
         speedText=addText(""+speed+"",20);
         speedText.setScaleY(2);

@@ -23,7 +23,7 @@ public class Cell {
 	public Cell copyCell() {
 		Packager p = new Packager();
 		p.setPropertiesMap(this.getProperties());
-		return new Cell(this.getState(), p); //TODO: NEED TO COPY PROPERTIES IF TherE IS ANY
+		return new Cell(this.getState(), p); //for copying all properties of the cell
 	}
 	public Map<String, Integer> getProperties() {
 		return properties;

@@ -3,7 +3,6 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import controller.Packager;
 
@@ -25,8 +24,8 @@ public class WatorSimulation extends Simulation {
 	public Grid makeNextGrid() {
 		setNextGrid(getCurrentGrid().copyGrid());
 		getCurrentGrid().print();
-		allSharks = getCurrentGrid().getCellsWithState(CellState.SHARK); //keeps reference to the current grid
-		allFish = getCurrentGrid().getCellsWithState(CellState.FISH);
+		allSharks = getCurrentGrid().getLocationsWithState(CellState.SHARK); //keeps reference to the current grid
+		allFish = getCurrentGrid().getLocationsWithState(CellState.FISH);
 		sharkAction();
 		fishAction();
 		return getNextGrid();
@@ -37,7 +36,7 @@ public class WatorSimulation extends Simulation {
 			if (getCurrentGrid().getCell(loc.y, loc.x).getKey("ENERGY") == 0) {
 				removeCreature(allSharks, loc);
 			} else { //shark did not die, want to find all the fish
-				List<Point> fishNeighbors = getCurrentGrid().getNeighborsWithType(loc, CellState.FISH); 
+				List<Point> fishNeighbors = getCurrentGrid().getDirectNeighborsWithType(loc, CellState.FISH); 
 				Point fish = fishNeighbors.get(myGenerator.nextInt(fishNeighbors.size()));
 				if (fishNeighbors.size() >= 1) { //if there is at least one fish, eat it
 					removeCreature(allFish, loc); 
@@ -52,7 +51,7 @@ public class WatorSimulation extends Simulation {
 	}
 	
 	private void moveIfEmptyAndCheckBaby(Point loc, CellState babyType) {
-		List<Point> emptyNeighbors = getCurrentGrid().getNeighborsWithType(loc, CellState.EMPTY);
+		List<Point> emptyNeighbors = getCurrentGrid().getDirectNeighborsWithType(loc, CellState.EMPTY);
 		decreaseEnergy(loc.y, loc.x);
 		if (!emptyNeighbors.isEmpty()) { // want to move to empty spot
 			Point empty = emptyNeighbors.get(myGenerator.nextInt(emptyNeighbors.size()));

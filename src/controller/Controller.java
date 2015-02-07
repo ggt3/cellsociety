@@ -25,7 +25,7 @@ public class Controller {
 	public Controller(Stage primaryStage) {
 		myView = new View(this);
 		myView.initialize(primaryStage);
-	    myTimeline = new Timeline();
+	    generateTimeline();
 	}
 	//for hardcoded tests
 	public void testGrid() {
@@ -40,17 +40,23 @@ public class Controller {
 		return rules.makeNextGrid();
 	}
 	
-	public void generateTimeline (KeyFrame frame){
-	    myTimeline.setCycleCount(Animation.INDEFINITE);
-	    myTimeline.getKeyFrames().add(frame);
+	private void generateTimeline (){
+		myTimeline = new Timeline();
+		myTimeline.setCycleCount(Animation.INDEFINITE);
 	}
 	
-	private KeyFrame speedFrame(int frameRate) {
-		return new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max frames is 20fps
+	public void changeSpeed(int frameRate) {
+		System.out.println(myTimeline.getKeyFrames());
+		KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max fps is 20
+		if (!myTimeline.getKeyFrames().isEmpty()) {
+			myTimeline.getKeyFrames().remove(0);
+		}
+		myTimeline.getKeyFrames().add(frame);
+		myTimeline.play();
 	}
+	
 	public void playSimulation() {
 		stepSimulation();
-		
 	}
 	
 	public void stepSimulation() {
@@ -66,6 +72,7 @@ public class Controller {
 	//used for when loading in another simulation
 	public void stopSimulation() {
 		myTimeline.stop();
+
 	}
 
 	//parse xml, give view size and init grid
@@ -79,7 +86,7 @@ public class Controller {
 		int[] xySize = xml.parseGridSize();
 		
 		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
-		Grid init = listToGrid(initGridArray, new HashMap<String, Integer>() ); //creating initial grid
+		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 		setSimulationType(simName, p, init); //p contains the encoded color hashmap, init is the initial grid
 		myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls displaygrid
 		myView.updateRectangle(rules.createColorGrid(init));
@@ -106,6 +113,7 @@ public class Controller {
 			}
 	}
 	
+	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Integer> properties) {
 		Grid init = new Grid(given.size(), given.get(0).size());
 		for (int i = 0; i<given.size();i++) {
