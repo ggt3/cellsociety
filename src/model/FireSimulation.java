@@ -1,6 +1,6 @@
 package model;
 import java.util.List;
-import java.util.Random;
+
 
 import controller.Packager;
 /**
@@ -10,7 +10,6 @@ import controller.Packager;
  */
 
 public class FireSimulation extends Simulation {
-	private Random myGenerator = new Random(1234);
 	
 	public FireSimulation(Grid aGrid, Packager attributes) {
 		super(aGrid, attributes);

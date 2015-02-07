@@ -22,8 +22,8 @@ public class Grid {
 	
 	//returns 8 neighbors surrounding the cell at (row, col)
 	public List<Cell> getAllNeighbors(int row, int col) {
-		List<Cell> neighbors = new ArrayList<Cell>();
-		int [][] deltas = {{-1,0}, {-1,-1}, {-1,1}, {0,1}, {0,-1}, {1,0}, {1,1}, {1,-1}}; //W, NW, SW, S, N, E, SE, NE
+		List<Cell> neighbors = getDirectNeighbors(row,col);
+		int [][] deltas = {{-1,-1}, {-1,1}, {1,1}, {1,-1}}; //W, NW, SW, S, N, E, SE, NE
 		for (int i = 0; i < deltas.length; i++) {	
 			int newR = row + deltas[i][0];
 			int newC = col + deltas[i][1];
@@ -48,17 +48,7 @@ public class Grid {
 		}
 		return neighbors;
 	}
-	public ArrayList<Point> getCellsWithState(CellState x) {
-		ArrayList<Point> stateList = new ArrayList<Point>();
-		for (int i = 0; i< myCells.length; i++) {
-			for (int j = 0; j<myCells[0].length; j++) {
-				if(getCell(i,j).getState().equals(x)) {
-					stateList.add(new Point(j,i)); //adding col, row
-				}
-			}
-		}
-		return stateList;
-	}
+
 	public ArrayList<Point> getLocationsWithState(CellState x) {
 		ArrayList<Point> stateList = new ArrayList<Point>();
 		for (int i = 0; i< myCells.length; i++) {
@@ -70,7 +60,7 @@ public class Grid {
 		}
 		return stateList;
 	}
-	public List<Point> getNeighborsWithType(Point p, CellState c) {
+	public List<Point> getDirectNeighborsWithType(Point p, CellState c) {
 		List<Point> neighbors = new ArrayList<Point>();
 		int[][] deltas = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}; //E S W N
 		 for (int i = 0; i < deltas.length; i++) {
@@ -88,7 +78,7 @@ public class Grid {
 	
 		
 	}
-	
+	//make a deep copy of this Grid
 	public Grid copyGrid() {
 		Grid newCopy = new Grid(this.getRowSize(), this.getColSize());
 		for(int i = 0; i<this.getRowSize(); i++) {

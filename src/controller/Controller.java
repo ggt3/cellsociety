@@ -12,46 +12,52 @@ import org.xml.sax.SAXException;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import viewPackage.DisplayGrid;
 import viewPackage.View;
 import model.*;
-
-
 
 public class Controller {
 	private Simulation rules;
 	private View myView;
 	private Timeline myTimeline;
 
-
+	public Controller(Stage primaryStage) {
+		myView = new View(this);
+		myView.initialize(primaryStage);
+	    generateTimeline();
+	}
+	//for hardcoded tests
 	public void testGrid() {
 		TestSimulations t = new TestSimulations();
 		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
-		myView.setGridSize(10,10);
-		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)));
+		myView.calculateDynamicSize(10,10,false);
+		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)),false);
 	} 
 	
-	public void setView(View v){
-		myView = v;
-	}
 	
 	public Grid getNextGrid() { //asks for the next grid of color to give to view
 		return rules.makeNextGrid();
 	}
 	
-	public void generateTimeline (int frameRate){
-	    KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max frames is 20fps
-	    myTimeline = new Timeline();
-	    myTimeline.setCycleCount(Animation.INDEFINITE);
-	    myTimeline.getKeyFrames().add(frame);
-	    myTimeline.play();
+	private void generateTimeline (){
+		myTimeline = new Timeline();
+		myTimeline.setCycleCount(Animation.INDEFINITE);
+	}
+	
+	public void changeSpeed(int frameRate) {
+		System.out.println(myTimeline.getKeyFrames());
+		KeyFrame frame = new KeyFrame(Duration.millis(1000 / frameRate*2), e -> playSimulation()); //max fps is 20
+		if (!myTimeline.getKeyFrames().isEmpty()) {
+			myTimeline.getKeyFrames().remove(0);
+		}
+		myTimeline.getKeyFrames().add(frame);
+		myTimeline.play();
 	}
 	
 	public void playSimulation() {
-		generateTimeline(myView.getSpeed());
 		stepSimulation();
-		
 	}
 	
 	public void stepSimulation() {
@@ -60,7 +66,7 @@ public class Controller {
 		Packager bundle = rules.createColorGrid(next);
 		//DisplayGrid grif=new DisplayGrid(this);
 		//grif.updateRectangle(bundle);
-		myView.updateRectangle(bundle);
+		myView.updateRectangle(bundle,false);
 	}
 	
 	public void pauseSimulation() {
@@ -69,6 +75,7 @@ public class Controller {
 	//used for when loading in another simulation
 	public void stopSimulation() {
 		myTimeline.stop();
+
 	}
 
 	//parse xml, give view size and init grid
@@ -84,24 +91,32 @@ public class Controller {
 		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
 		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 		setSimulationType(simName, p, init);
-		System.out.println("SIZE: "+xySize[0]);
-		System.out.println(xySize[0]);
-		System.out.println("SIZE: "+xySize[1]);
-		//DisplayGrid grif=new DisplayGrid();
-		//grif.setGridSize(xySize[0], xySize[1]);
-		//grif.updateRectangle(rules.createColorGrid(init));
-		//myView.callDisplayPLZ();
-		myView.setGridSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
+		myView.calculateDynamicSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
 		myView.updateRectangle(rules.createColorGrid(init),false);
 		
 
 	}
 	
 	private void setSimulationType(String name, Packager p, Grid g) {
-			rules = new FireSimulation(g,p);
-		
+			if (name.equals("FIRE")) {
+				rules = new FireSimulation(g, p);
+				return;
+			}
+			if(name.equals("LIFE")) {
+				rules= new GameLifeSimulation(g,p);
+				return;
+			}
+			if (name.equals("WATOR")) {
+				rules = new WatorSimulation(g, p);
+				return;
+			}
+			if (name.equals("SEGREGATION")) {
+				rules = new SegregationSimulation(g, p);
+				return;
+			}
 	}
 	
+	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Integer> properties) {
 		Grid init = new Grid(given.size(), given.get(0).size());
 		for (int i = 0; i<given.size();i++) {

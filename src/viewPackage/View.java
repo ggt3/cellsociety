@@ -94,11 +94,7 @@ public class View {
         //slide.setLayoutY(200);
         root = new Group();
         root.getChildren().addAll(hbox,slide);
-//        Rectangle poop=new Rectangle(20,20,300,300);
-//        poop.setFill(Color.SPRINGGREEN);
-//        poop.setX(300);
-//        poop.setY(300);
-        //root.getChildren().addAll(griddy.tryMe(20,20,300,300));
+
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
     }
@@ -107,7 +103,9 @@ public class View {
     	root.getChildren().add(r);
     }
     
-    public void setGridSize(int sizeX, int sizeY,boolean shape){
+   // public void setGridSize(int sizeX, int sizeY,boolean shape){
+
+    public void calculateDynamicSize(int sizeX, int sizeY,boolean shape){
     	 numSquareX = sizeX;
     	 numSquareY = sizeY;
     	 double x=determineXlength(numSquareX);
