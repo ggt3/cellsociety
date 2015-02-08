@@ -50,102 +50,99 @@ public class ButtonBox {
 	//private Controller control=view.getControl();
 	//private String fileName="";
 	
-	protected HBox makeButtonBox(){
-        HBox hbox=new HBox(50);
-      Button play=new Button(myResources.getString("PlayCommand"));
-      play.setScaleX(2);
-	    play.setScaleY(2);
-	    
-	    play.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-          @Override
-          public void handle(ActionEvent event) {
-        	control.changeSpeed(view.getSpeed());
-          	control.playSimulation();
-          }
-	    });
-	    
-	    Button pause=new Button(myResources.getString("PauseCommand"));
-      pause.setScaleX(2);
-	    pause.setScaleY(2);
-	    
-	    pause.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-          @Override
-          public void handle(ActionEvent event) {
-          	control.pauseSimulation();
-          }
-	    });
-	    
-      Button step=new Button(myResources.getString("StepCommand"));
-      step.setScaleX(2);
-	    step.setScaleY(2);
-	    
-	    step.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-          @Override
-          public void handle(ActionEvent event) {
-          	control.stepSimulation();
-          }
-	    });
-	    
-      Button load=new Button(myResources.getString("LoadCommand"));
-      load.setScaleX(2);
-	    load.setScaleY(2);
-	    
-	    load.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-          @Override
-          public void handle(ActionEvent event) {
-          	Label secondLabel = new Label("Please Enter Your File Name:");
-              
-              GridPane grid = new GridPane();
-              grid.setAlignment(Pos.CENTER);
-              grid.setHgap(10);
-              grid.setVgap(10);
-              grid.setPadding(new Insets(25, 25, 25, 25));
-              
-              TextField textField = new TextField();
-              grid.add(textField, 0, 1);
-              grid.getChildren().add(secondLabel);
+	protected HBox makeButtonBox() {
+		HBox hbox = new HBox(50);
+		Button play = new Button(myResources.getString("PlayCommand"));
+		play.setScaleX(2);
+		play.setScaleY(2);
 
-              Scene secScene = new Scene(grid, 400, 400);
-              
-              Button hitBtn = new Button(myResources.getString("GoCommand"));
-              hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
-              grid.add(hitBtn, 1, 4);
-              
-              
-              
-              Stage secondStage = new Stage();
-              hitBtn.setOnAction(new EventHandler<ActionEvent>() {
+		play.setOnAction(new EventHandler<ActionEvent>() {
 
-              	@Override
-              	    public void handle(ActionEvent e) {
-              	        if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField.getText().endsWith("xml"))) {
-              	        	fileName=textField.getText();
-              	        	view.setFileName(fileName);
-              	        	
-              	        	secondStage.close();
-              	            Text texty=view.addText(fileName,20,0,90);
-              	            //view.addToRoot(texty);//.getChildren().add(texty);
-              	            view.tryLoad(fileName);
-              	        } else {
-              	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
-              	        	System.out.println("File Name entered is not a valid name");
-              	        }
-              	     }
-              	 });
-            
-              secondStage.setTitle("Load File");
-              secondStage.setScene(secScene);
-
-              view.setSecondStage(secondStage);
-              //secondStage.show();
-				
+			@Override
+			public void handle(ActionEvent event) {
+				control.changeSpeed(view.getSpeed());
+				control.playSimulation();
 			}
-      });
-      
+		});
+	    
+		Button pause = new Button(myResources.getString("PauseCommand"));
+		pause.setScaleX(2);
+		pause.setScaleY(2);
+
+		pause.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				control.stopSimulation();
+			}
+		});
+
+		Button step = new Button(myResources.getString("StepCommand"));
+		step.setScaleX(2);
+		step.setScaleY(2);
+
+		step.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				control.stepSimulation();
+			}
+		});
+
+		Button load = new Button(myResources.getString("LoadCommand"));
+		load.setScaleX(2);
+		load.setScaleY(2);
+
+		load.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Label secondLabel = new Label("Please Enter Your File Name:");
+
+				GridPane grid = new GridPane();
+				grid.setAlignment(Pos.CENTER);
+				grid.setHgap(10);
+				grid.setVgap(10);
+				grid.setPadding(new Insets(25, 25, 25, 25));
+
+				TextField textField = new TextField();
+				grid.add(textField, 0, 1);
+				grid.getChildren().add(secondLabel);
+
+				Scene secScene = new Scene(grid, 400, 400);
+
+				Button hitBtn = new Button(myResources.getString("GoCommand"));
+				hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
+				grid.add(hitBtn, 1, 4);
+
+				Stage secondStage = new Stage();
+				hitBtn.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent e) {
+						if ((textField.getText().trim() != null && !textField.getText().isEmpty() && textField
+								.getText().endsWith("xml"))) {
+							fileName = textField.getText();
+							view.setFileName(fileName);
+
+							secondStage.close();
+
+							view.tryLoad(fileName);
+						} else {
+							// grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
+							System.out.println("File Name entered is not a valid name");
+						}
+					}
+				});
+
+				secondStage.setTitle("Load File");
+				secondStage.setScene(secScene);
+
+				secondStage.show();
+
+			}
+		});
+
       speedText=view.addText(""+view.getSpeed()+"",20,0,0);
       speedText.setScaleY(2);
       speedText.setScaleX(2);

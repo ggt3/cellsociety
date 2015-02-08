@@ -32,7 +32,7 @@ public class SegregationSimulation extends Simulation {
 		if (count/neighbors.size() > theCell.getKeyToDouble("THRESHOLD") || theCell.getState() == CellState.EMPTY) { 
 			return theCell.getState();
 		} else {
-			cellsToMove.add(theCell);
+			cellsToMove.add(theCell); //adding the cell to a list to move
 		}
 		return CellState.EMPTY;
 	}
@@ -43,12 +43,10 @@ public class SegregationSimulation extends Simulation {
 	public Grid makeNextGrid() {
 		Grid next = super.makeNextGrid(); //at this point cells that will move are empty state
 		//adding a move cell method
-		emptyPlaces.addAll(getCurrentGrid().getLocationsWithState(CellState.EMPTY));
-		System.out.print(cellsToMove.toString());
+		emptyPlaces.addAll(next.getLocationsWithState(CellState.EMPTY)); //getting locations of the old grid that are empty
+		System.out.print(emptyPlaces.toString());
 		for (Cell move: cellsToMove) {
-	//		if(emptyPlaces.size()> 0)
-		//	{
-			System.out.println(emptyPlaces.size());
+
 			Point newLoc = emptyPlaces.get(myGenerator.nextInt(emptyPlaces.size())); // getting a random empty place
 			next.putCell(move, newLoc.y, newLoc.x); //move the person to the new place
 			emptyPlaces.remove(newLoc);

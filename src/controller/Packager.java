@@ -12,7 +12,14 @@ public class Packager {
 	private Map<String, String> colorsMap;
 	
 	public Map<String,Integer> getPropertiesMap() {
-		return attributeMap;
+		HashMap<String, Integer> m = new HashMap<String,Integer>();
+//		System.out.print(attributeMap.toString());
+//		m.putAll(attributeMap);
+		for (Map.Entry<String,Integer> entry : attributeMap.entrySet()) {
+			  m.put(entry.getKey(), entry.getValue());
+		}
+		return m;
+
 	}
 	
 	public ArrayList<ArrayList<String>> getColorGrid() {

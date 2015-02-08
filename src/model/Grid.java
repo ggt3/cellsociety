@@ -166,7 +166,7 @@ public class Grid {
 	public void print() {
 		for(int i = 0; i<myCells.length;i++) {
 			for(int k = 0; k<myCells[0].length; k++)
-			System.out.printf("row %d, %d, %s\n", i, k, myCells[i][k].toString());
+			System.out.printf("row %d, %d, %s map: %s\n", i, k, myCells[i][k].toString(), myCells[i][k].getProperties().toString());
 		}
 	}
 

@@ -13,7 +13,7 @@ import controller.Packager;
 public abstract class Simulation {
 	private Grid currentGrid, nextGrid;
 	private Map<String, String> colors;
-	public static final Random myGenerator = new Random(1234);
+	public static final Random myGenerator = new Random(1234); //seeding the random so we get consistent results
 	
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;
