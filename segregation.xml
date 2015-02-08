@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root>
+	<name>SEGREGATION</name>
+	<title>My Simulation</title>
+	<author>Rob Vann</author>
+	<xsize>10</xsize>
+	<ysize>10</ysize>
+	<settings><parameter>THRESHOLD,40</parameter></settings>
+	<map><color>X,RED</color><color>Y,BLUE</color><color>EMPTY,WHITE</color></map>
+	<grid><row><cell>X</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>Y</cell><cell>X</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>X</cell><cell>Y</cell><cell>Y</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>Y</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>X</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell></row><row><cell>X</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>X</cell><cell>X</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell><cell>Y</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell><cell>X</cell><cell>EMPTY</cell></row><row><cell>X</cell><cell>Y</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell><cell>Y</cell><cell>EMPTY</cell></row></grid>
+</root>

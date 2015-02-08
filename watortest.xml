@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root>
+	<name>WATOR</name>
+	<title>My Simulation</title>
+	<author>Rob Vann</author>
+	<xsize>3</xsize>
+	<ysize>3</ysize>
+	<settings><parameter>BREEDCYCLE,0</parameter><parameter>BREEDTHRESHOLD,3</parameter><parameter>ENERGY,3</parameter></settings>
+	<map><color>SHARK,RED</color><color>FISH,GREEN</color><color>EMPTY,BLUE</color></map>
+	<grid><row><cell>SHARK</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>FISH</cell><cell>EMPTY</cell></row><row><cell>SHARK</cell><cell>EMPTY</cell><cell>EMPTY</cell></row></grid>
+</root>
