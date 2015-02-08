@@ -83,9 +83,12 @@ public class View {
         HBox slide=buttons.makeSlider();
         slide.setLayoutY(windowSize-40);
         
+        VBox toggle=buttons.makeToggles();
+        //toggle.set
+        toggle.setLayoutY(windowSize/2);
         
         root = new Group();
-        root.getChildren().addAll(hbox,slide);
+        root.getChildren().addAll(hbox,slide,toggle);
 
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();

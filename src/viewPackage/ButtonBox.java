@@ -12,6 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -20,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import javax.swing.event.ChangeListener;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -151,7 +155,7 @@ public class ButtonBox {
       Button down=new Button(myResources.getString("DownCommand"));
       Button up =new Button(myResources.getString("UpCommand"));
       //up.setLayoutX(down.getLayoutX());
-      up.setMaxWidth(down.getMaxWidth());
+      up.setMinWidth(down.getMinWidth());
       //Button down=new Button(myResources.getString("DownCommand"));
       up.setOnAction(new EventHandler<ActionEvent>() {
 	    	 
@@ -203,6 +207,10 @@ public class ButtonBox {
 		slider.setBlockIncrement(1);
 		//slider.getOnDragDetected();
 		slider.setSnapToTicks(true);
+		
+		
+		view.addToSpeed((int)slider.getValue());
+		speedText.setText("" + view.getSpeed() + "");
 		//return slider;
 		HBox hbox=new HBox(10);
 		Text t=view.addText("Adjust Speed:", 20,(int) hbox.getLayoutX(),(int) hbox.getLayoutY());
@@ -241,6 +249,41 @@ public class ButtonBox {
 		
 		
 	}
+	
+	
+	protected VBox makeToggles(){
+		VBox vbox=new VBox();
+		
 
+		ToggleGroup edgeType = new ToggleGroup();
+
+		ToggleButton tb1 = new ToggleButton("Finite");
+		tb1.setToggleGroup(edgeType);
+		tb1.setSelected(true);
+
+		ToggleButton tb2 = new ToggleButton("Toroidal");
+		tb2.setToggleGroup(edgeType);
+		
+		//tb2.getLabelPadding()
+		
+		
+		ToggleGroup cellShape = new ToggleGroup();
+
+		ToggleButton tb11 = new ToggleButton("Square");
+		tb11.setToggleGroup(cellShape);
+		tb11.setSelected(true);
+
+		ToggleButton tb12 = new ToggleButton("Triangle");
+		tb12.setToggleGroup(cellShape);
+
+		tb1.setStyle("-fx-base: lightgreen;");
+		tb2.setStyle("-fx-base: lightblue;");
+		tb11.setStyle("-fx-base: salmon;");
+		
+		
+		//ToggleButton tb1 = new ToggleButton();
+		vbox.getChildren().addAll(tb1,tb2,tb11,tb12);
+		return vbox;
+	}
 	
 }

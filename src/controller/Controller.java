@@ -47,7 +47,7 @@ public class Controller {
 	
 	public void changeSpeed(int frameRate) {
 		System.out.println(myTimeline.getKeyFrames());
-		int totalSpeed = frameRate*10;
+		int totalSpeed = frameRate*4;
 		KeyFrame frame = new KeyFrame(Duration.millis(1000 / totalSpeed), e -> playSimulation()); //max fps is 20
 		System.out.println(totalSpeed);
 		if (!myTimeline.getKeyFrames().isEmpty()) {
@@ -78,6 +78,7 @@ public class Controller {
 
 	//parse xml, give view size and init grid
 	public void loadFile(String fileName) throws ParserConfigurationException, SAXException, IOException {
+		stopSimulation();
 		XMLParser xml = new XMLParser();
 		xml.parseXMLFile(fileName);
 		String simName = xml.parseSimulationName();
