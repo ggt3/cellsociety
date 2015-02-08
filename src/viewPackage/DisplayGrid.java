@@ -5,14 +5,15 @@ import java.util.ResourceBundle;
 import controller.Controller;
 import controller.Packager;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class DisplayGrid {
 
 
-	private final int totalWidthOfGrid= 450;
-	private final int totalHeightOfGrid= 450;
+	private final int totalWidthOfGrid= 350;
+	private final int totalHeightOfGrid= 350;
 	private int numSquareX=0;
 	private int numSquareY=0;
 	private View view;
@@ -30,7 +31,7 @@ public class DisplayGrid {
 		
 		double x=determineXlength(numSquareX);
 		double y=determineYlength(numSquareY);
-		displayGrid(525,550,x,y);
+		displayGrid(425,450,x,y);
 	}
 
 	private double determineXlength(int numCols){
@@ -57,6 +58,39 @@ public class DisplayGrid {
     		xIndex++;
     	}
     }
+//        public void displayGrid(int xtot, int ytot,double x,double y){
+//        	boolean even=true;//=false;
+//        	boolean start=even;
+//        	int xIndex=0;
+//        	for(int i=75;i<=xtot-x;i+=x){
+//        		int yIndex=0;
+//        		even=start;
+//        		for (int j=100;j<=ytot-y;j+=y){
+//        			//Rectangle rex=new Rectangle(i,j,x,y);
+//        			Polygon p=new Polygon();
+//        			if (even){
+//        				p.getPoints().addAll(new Double[]{
+//            					i+0.0, j+0.0,
+//            					i+x+x, j+0.0,
+//            					i+x, j+y });
+//        			}
+//        			else{
+//        			p.getPoints().addAll(new Double[]{
+//        					i+x, j+0.0,
+//        					i+0.0, j+y,
+//        					i+x+x, j+y });
+//        			}
+//        			p.setStroke(Color.BLACK);
+//        			p.setStrokeWidth(0.5);
+//        			view.addToRoot(p);//root.getChildren().add(rex);
+//        			myGrid[xIndex][yIndex]=p;
+//        			yIndex++;
+//        			even=!even;
+//        		}
+//        		start=!start;
+//        		xIndex++;
+//        	}
+//    }
 	
     public void updateRectangle(Packager colorGrid){
     	for(int i=0;i < numSquareX;i++){
