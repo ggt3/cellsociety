@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root>
+	<name>FIRE</name>
+	<title>My Simulation</title>
+	<author>Rob Vann</author>
+	<xsize>2</xsize>
+	<ysize>2</ysize>
+	<settings><parameter>THRESHOLD,70</parameter></settings>
+	<map><color>BURNING,RED</color><color>TREE,GREEN</color><color>EMPTY,YELLOW</color></map>
+	<grid><row><cell>BURNING</cell><cell>TREE</cell></row><row><cell>BURNING</cell><cell>EMPTY</cell></row></grid>
+</root>
