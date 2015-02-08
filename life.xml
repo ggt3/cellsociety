@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<root>
+	<name>LIFE</name>
+	<title>My Simulation</title>
+	<author>Rob Vann</author>
+	<xsize>10</xsize>
+	<ysize>10</ysize>
+	<settings></settings>
+	<map><color>ALIVE,BLACK</color><color>EMPTY,WHITE</color></map>
+	<grid><row><cell>ALIVE</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>ALIVE</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>ALIVE</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>ALIVE</cell><cell>ALIVE</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row></grid>
+</root>
