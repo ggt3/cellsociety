@@ -1,6 +1,7 @@
 package viewPackage;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,9 +37,14 @@ public class ButtonBox {
 	private TextField text;
 	private int input;
 	private Text speedText;
+	
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
+	private ResourceBundle myResources;
 	public ButtonBox(Controller c){
 		control=c;
 		view=new View(c);
+		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
+		
 	}
 	//private View view=new View(new Controller());
 	//private Controller control=view.getControl();
@@ -46,7 +52,7 @@ public class ButtonBox {
 	
 	protected HBox makeButtonBox(){
         HBox hbox=new HBox(50);
-      Button play=new Button("Play");
+      Button play=new Button(myResources.getString("PlayCommand"));
       play.setScaleX(2);
 	    play.setScaleY(2);
 	    
@@ -59,7 +65,7 @@ public class ButtonBox {
           }
 	    });
 	    
-	    Button pause=new Button("Pause");
+	    Button pause=new Button(myResources.getString("PauseCommand"));
       pause.setScaleX(2);
 	    pause.setScaleY(2);
 	    
@@ -71,7 +77,7 @@ public class ButtonBox {
           }
 	    });
 	    
-      Button step=new Button("STEP");
+      Button step=new Button(myResources.getString("StepCommand"));
       step.setScaleX(2);
 	    step.setScaleY(2);
 	    
@@ -83,7 +89,7 @@ public class ButtonBox {
           }
 	    });
 	    
-      Button load=new Button("LOAD");
+      Button load=new Button(myResources.getString("LoadCommand"));
       load.setScaleX(2);
 	    load.setScaleY(2);
 	    
@@ -105,7 +111,7 @@ public class ButtonBox {
 
               Scene secScene = new Scene(grid, 400, 400);
               
-              Button hitBtn = new Button("Go");
+              Button hitBtn = new Button(myResources.getString("GoCommand"));
               hitBtn.setAlignment(Pos.BOTTOM_RIGHT);
               grid.add(hitBtn, 1, 4);
               
@@ -124,20 +130,6 @@ public class ButtonBox {
               	            Text texty=view.addText(fileName,20,0,90);
               	            //view.addToRoot(texty);//.getChildren().add(texty);
               	            view.tryLoad(fileName);
-//              	            try {
-//              	            	//System.out.println("WHYWHWYHWY");
-//              	            	System.out.println(control.equals(null));
-//          						control.loadFile(fileName);
-//          					
-//          					} catch (ParserConfigurationException e1) {
-//          			
-//          						e1.printStackTrace();
-//          					} catch (SAXException e1) {
-//
-//          						e1.printStackTrace();
-//          					} catch (IOException e1) {
-//          						e1.printStackTrace();
-//          					}
               	        } else {
               	        	//grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
               	        	System.out.println("File Name entered is not a valid name");
@@ -147,10 +139,7 @@ public class ButtonBox {
             
               secondStage.setTitle("Load File");
               secondStage.setScene(secScene);
-               
-              //Set position of second window, related to primary window.
-              //secondStage.setX(view.popUpLocation());
-              //secondStage.setY(view.popUpLocation());
+
               view.setSecondStage(secondStage);
               //secondStage.show();
 				
@@ -162,8 +151,11 @@ public class ButtonBox {
       speedText.setScaleX(2);
       
       VBox speedButtons = new VBox();
-      Button up =new Button("   UP   ");
-      Button down=new Button("DOWN");
+      Button down=new Button(myResources.getString("DownCommand"));
+      Button up =new Button(myResources.getString("UpCommand"));
+      //up.setLayoutX(down.getLayoutX());
+      up.setMaxWidth(down.getMaxWidth());
+      //Button down=new Button(myResources.getString("DownCommand"));
       up.setOnAction(new EventHandler<ActionEvent>() {
 	    	 
           @Override
@@ -226,7 +218,7 @@ public class ButtonBox {
 //	        	view.addToSpeed(view.getSpeed()+input);//speed=textField.getText();
 		//view.getScene().setOnKeyPressed(e -> handleKeyInput(e));
 		
-		Button setBtn = new Button("Set Speed");
+		Button setBtn = new Button(myResources.getString("SetSpeedCommand"));
 		
 		setBtn.setOnAction(new EventHandler<ActionEvent>() {
 

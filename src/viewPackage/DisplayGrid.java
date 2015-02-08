@@ -1,5 +1,7 @@
 package viewPackage;
 
+import java.util.ResourceBundle;
+
 import controller.Controller;
 import controller.Packager;
 import javafx.scene.paint.Color;
@@ -15,6 +17,8 @@ public class DisplayGrid {
 	private int numSquareY=0;
 	private View view;
 	private Shape[][] myGrid;
+	
+	
 	public DisplayGrid(View mainView){
 		view = mainView;
 	}
