@@ -27,14 +27,6 @@ public class Controller {
 		myView.initialize(primaryStage);
 	    generateTimeline();
 	}
-	//for hardcoded tests
-	public void testGrid() {
-		TestSimulations t = new TestSimulations();
-		rules = new SegregationSimulation(t.stupidMakeSegGrid(10), t.createMap(t.stupidMap()));
-		myView.calculateDynamicSize(10,10,false);
-		myView.updateRectangle(rules.createColorGrid(t.stupidMakeSegGrid(10)),false);
-	} 
-	
 	
 	public Grid getNextGrid() { //asks for the next grid of color to give to view
 		return rules.makeNextGrid();
@@ -47,7 +39,7 @@ public class Controller {
 	
 	public void changeSpeed(int frameRate) {
 		System.out.println(myTimeline.getKeyFrames());
-		int totalSpeed = frameRate*10;
+		int totalSpeed = frameRate*4;
 		KeyFrame frame = new KeyFrame(Duration.millis(1000 / totalSpeed), e -> playSimulation()); //max fps is 20
 		System.out.println(totalSpeed);
 		if (!myTimeline.getKeyFrames().isEmpty()) {
@@ -58,7 +50,6 @@ public class Controller {
 	}
 	
 	public void playSimulation() {
-		
 		stepSimulation();
 	}
 	
@@ -78,6 +69,7 @@ public class Controller {
 
 	//parse xml, give view size and init grid
 	public void loadFile(String fileName) throws ParserConfigurationException, SAXException, IOException {
+		stopSimulation();
 		XMLParser xml = new XMLParser();
 		xml.parseXMLFile(fileName);
 		String simName = xml.parseSimulationName();
@@ -89,8 +81,6 @@ public class Controller {
 		setSimulationType(simName, xml.parseColorMap(), init);
 		myView.calculateDynamicSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
 		myView.updateRectangle(rules.createColorGrid(init),false);
-		
-
 	}
 	
 	private void setSimulationType(String name, Packager p, Grid g) {

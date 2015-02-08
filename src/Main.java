@@ -16,8 +16,6 @@ public class Main extends Application {
 		Controller myControl = new Controller(primaryStage);
 		
 		
-		//myControl.testGrid(); //setting predefined grid for TEST
-		
 	}
 	
     
