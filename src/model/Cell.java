@@ -25,6 +25,10 @@ public class Cell {
 		p.setPropertiesMap(this.getProperties());
 		return new Cell(this.getState(), p); //for copying all properties of the cell
 	}
+	public void changeToEmptyCell(){
+		this.state = CellState.EMPTY;
+	}
+	
 	public Map<String, Integer> getProperties() {
 		return properties;
 	}

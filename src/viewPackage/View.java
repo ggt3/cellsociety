@@ -50,7 +50,6 @@ public class View {
 	private Stage mainStage;
 
 	private int currentGeneration=0;
-	private Stage stagenumba2;
 	private ButtonBox buttons;
 	private DisplayGrid griddy;//=new DisplayGrid();
 
@@ -135,10 +134,7 @@ public class View {
 	protected double popUpLocation(){
 		return mainStage.getX()+100;
 	}
-	protected void setSecondStage(Stage s2){
-		stagenumba2=s2;
-		stagenumba2.show();
-	}
+	
 	protected Controller getControl(){
 		return control;
 	}

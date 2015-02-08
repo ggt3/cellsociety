@@ -14,7 +14,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import viewPackage.DisplayGrid;
 import viewPackage.View;
 import model.*;
 
@@ -67,15 +66,11 @@ public class Controller {
 		Grid next = rules.makeNextGrid();
 		rules.updateGrid(next); //sets the next grid as the new grid
 		Packager bundle = rules.createColorGrid(next);
-		//DisplayGrid grif=new DisplayGrid(this);
-		//grif.updateRectangle(bundle);
 		myView.updateRectangle(bundle,false);
 	}
 	
-	public void pauseSimulation() {
-		myTimeline.pause();
-	}
-	//used for when loading in another simulation
+
+	//used for when loading in another simulation and pause
 	public void stopSimulation() {
 		myTimeline.stop();
 
@@ -86,14 +81,12 @@ public class Controller {
 		XMLParser xml = new XMLParser();
 		xml.parseXMLFile(fileName);
 		String simName = xml.parseSimulationName();
-		Packager p = new Packager();
-		p.setColorMap(xml.parseColorMap());
-
 		int[] xySize = xml.parseGridSize();
 		
 		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
 		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
-		setSimulationType(simName, p, init);
+		
+		setSimulationType(simName, xml.parseColorMap(), init);
 		myView.calculateDynamicSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
 		myView.updateRectangle(rules.createColorGrid(init),false);
 		
@@ -120,14 +113,11 @@ public class Controller {
 	}
 	
 	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
-	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Map<String, Integer> properties) {
+	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Packager properties) {
 		Grid init = new Grid(given.size(), given.get(0).size());
 		for (int i = 0; i<given.size();i++) {
 			for (int k = 0; k<given.get(0).size(); k++) {
-				
-				Packager p = new Packager();
-				p.setPropertiesMap(properties);
-				init.putCell(new Cell(given.get(i).get(k), p), i, k);
+				init.putCell(new Cell(given.get(i).get(k), properties), i, k);
 			}
 		}
 		return init;
