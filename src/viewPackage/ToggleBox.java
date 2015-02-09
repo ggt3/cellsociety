@@ -11,12 +11,10 @@ import javafx.scene.layout.VBox;
 
 public class ToggleBox {
 
-	private ToggleGroup edgeType, cellShape, outline,randomized;
-	private boolean isTriangleShape;
+	private ToggleGroup edgeType, cellShape, outline;
+	boolean isTriangleShape;
 	private boolean isToroidalEdgeType;
 	private boolean isNoStroke;
-
-	
 	
 	private ToggleButton createToggleButton(String name, ToggleGroup group, boolean depressed) {
 		ToggleButton tb = new ToggleButton(name);
@@ -42,18 +40,14 @@ public class ToggleBox {
 		ToggleButton tb22 = createToggleButton("No Stroke", outline, false);
 		setToggleProperty(outline, tb21, tb22);
 		
-		randomized = new ToggleGroup();
-		ToggleButton tb31 = createToggleButton("Not Random", randomized, true);
-		ToggleButton tb32 = createToggleButton("Random", randomized, false);
-		setToggleProperty(randomized, tb31, tb32);
-		
-		
+				
 		VBox vbox1=assignToVBox(tb1,tb2);
 		VBox vbox2=assignToVBox(tb11,tb12);
 		VBox vbox3=assignToVBox(tb21,tb22);
-		VBox vbox4=assignToVBox(tb31,tb32);
+		
+
 	
-		hbox.getChildren().addAll(vbox1,vbox2,vbox3,vbox4);
+		hbox.getChildren().addAll(vbox1,vbox2,vbox3);
 		return hbox;
 	}
 
@@ -77,7 +71,6 @@ public class ToggleBox {
 					setToggleChangeMethod(group, true);
 				}
 			}
-
 		});
 	}
 	
