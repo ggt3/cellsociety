@@ -38,6 +38,7 @@ public class View {
 	private ToggleBox toggles;
 	private DisplayGrid myGridDisplayed;
 	private PopulationGraph myGraph;
+	private int generation;
 	
     public View(Controller c) {
     	control = c;
@@ -81,11 +82,15 @@ public class View {
 
     public void calculateDynamicSize(int sizeX, int sizeY){
     	myGridDisplayed.setGridSize(sizeX, sizeY);
+    	generation=0;
     }
     
     //changes color of existing rectangles according to colors
     public void updateGridView(ViewPackager colorGrid){
+    	//generation++;
     	myGridDisplayed.updateGrid(colorGrid);
+    	myGraph.updateGraph(colorGrid);
+    	generation++;
     }
     
     protected void createGraphWindow(){
@@ -150,6 +155,9 @@ public class View {
 	}
 	public ResourceBundle getResourceBundle(){
 		return myResources;
+	}
+	protected int getGeneration(){
+		return generation;
 	}
 	
 	protected void tryLoad(String s){

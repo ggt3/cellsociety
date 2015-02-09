@@ -60,7 +60,7 @@ public class Controller {
 	}
 	private ViewPackager bundleViewPackager(Grid next) {
 		ViewPackager p = new ViewPackager();
-		p.setGenerationCount(frameCounter);
+		//p.setGenerationCount(frameCounter);
 		p.setStateTotalMap(updateStateTotals(next));
 		p.setColorGrid(createColorGrid(next));
 		return p;

@@ -21,12 +21,12 @@ public class ViewPackager {
 	public ArrayList<ArrayList<String>> getColorGrid() {
 		return colorGrid;
 	}
-	public int getGenerationCount() {
-		return generationCount;
-	}
-	public void setGenerationCount(int count) {
-		generationCount = count;
-	}
+//	public int getGenerationCount() {
+//		return generationCount;
+//	}
+//	public void setGenerationCount(int count) {
+//		generationCount = count;
+//	}
 	
 	public Map<String, Integer> getStateTotals() {
 		return Collections.unmodifiableMap(stateTotals);
