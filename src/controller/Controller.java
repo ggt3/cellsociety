@@ -25,19 +25,19 @@ public class Controller {
 	private int frameCounter;
 	private Map<String, String> stateColorMap;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/English");
-	
+
 	public Controller(Stage primaryStage) {
 		myView = new View(this);
 		myView.initialize(primaryStage);
-	    generateTimeline();
-	    frameCounter = 0;
+		generateTimeline();
+		frameCounter = 0;
 	}
-	
+
 	private void generateTimeline (){
 		myTimeline = new Timeline();
 		myTimeline.setCycleCount(Animation.INDEFINITE);
 	}
-	
+
 	public void changeSpeed(int frameRate) {
 		int totalSpeed = frameRate*4;
 		KeyFrame frame = new KeyFrame(Duration.millis(1000 / totalSpeed), e -> playSimulation()); //max fps is 20
@@ -48,17 +48,17 @@ public class Controller {
 		myTimeline.getKeyFrames().add(frame);
 		myTimeline.play();
 	}
-	
+
 	public void playSimulation() {
 		stepSimulation();
 	}
-	
+
 	public void stepSimulation() {
 		Grid next = rules.makeNextGrid();
 		frameCounter++; //updating the generation
 		rules.updateGrid(next); //sets the next grid as the new grid
 		myView.updateGridView(bundleViewPackager(next));
-		
+
 	}
 	private ViewPackager bundleViewPackager(Grid next) {
 		ViewPackager p = new ViewPackager();
@@ -115,8 +115,10 @@ public class Controller {
 			stateColorMap = xml.parseColorMap().getColorMap();
 			try{
 				ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid(xySize[0], xySize[1]);
-				Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
-				setSimulationType(simName, xml.parseGlobalParameters(), init);
+				Packager params = xml.parseGlobalParameters();
+				validateParameters(simName, params);
+				Grid init = listToGrid(initGridArray, params); //creating initial grid
+				setSimulationType(simName, params, init);
 				myView.createDisplayView(xySize[0], xySize[1]); //sets grid size and calls display grid
 				myView.updateGridView(bundleViewPackager(init));
 			}
@@ -126,33 +128,62 @@ public class Controller {
 			catch(IndexOutOfBoundsException e){
 				myView.createErrorWindow(myResources.getString("CellLocationsOutOfBounds"));
 			}
-			
+
 		}
 		catch(NullPointerException e){
 			myView.createErrorWindow(myResources.getString("InvalidSimulation"));
 		}
 	}
-	
+
+	private Packager validateParameters(String simName,
+			Packager Pack) {
+		if (simName.equals("FIRE")) {
+			ResourceBundle defs = ResourceBundle.getBundle("resources/FireDefaults");
+			for(String key:defs.keySet()){
+				if (!Pack.getPropertiesMap().containsKey(key)){
+					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
+				}
+			}
+		}
+		if (simName.equals("WATOR")) {
+			ResourceBundle defs = ResourceBundle.getBundle("resources/WatorDefaults");
+			for(String key:defs.keySet()){
+				if (!Pack.getPropertiesMap().containsKey(key)){
+					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
+				}
+			}
+		}
+		if (simName.equals("SEGREGATION")) {
+			ResourceBundle defs = ResourceBundle.getBundle("resources/SegregationDefaults");
+			for(String key:defs.keySet()){
+				if (!Pack.getPropertiesMap().containsKey(key)){
+					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
+				}
+			}
+		}
+		return Pack;
+	}
+
 	//depending on the string, create a simulation rule with initial states and a initial grid
 	private void setSimulationType(String name, Packager p, Grid g) {
-			if (name.equals("FIRE")) {
-				rules = new FireSimulation(g, p);
-				return;
-			}
-			if(name.equals("LIFE")) {
-				rules= new GameLifeSimulation(g,p);
-				return;
-			}
-			if (name.equals("WATOR")) {
-				rules = new WatorSimulation(g, p);
-				return;
-			}
-			if (name.equals("SEGREGATION")) {
-				rules = new SegregationSimulation(g, p);
-				return;
-			}
+		if (name.equals("FIRE")) {
+			rules = new FireSimulation(g, p);
+			return;
+		}
+		if(name.equals("LIFE")) {
+			rules= new GameLifeSimulation(g,p);
+			return;
+		}
+		if (name.equals("WATOR")) {
+			rules = new WatorSimulation(g, p);
+			return;
+		}
+		if (name.equals("SEGREGATION")) {
+			rules = new SegregationSimulation(g, p);
+			return;
+		}
 	}
-	
+
 	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Packager properties) {
 		Grid init = new Grid(given.size(), given.get(0).size());
