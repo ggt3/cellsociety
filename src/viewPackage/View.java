@@ -27,7 +27,9 @@ public class View {
 	private Integer windowSize=600;
 	private Group root;
     public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
-	private String fileName="";
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
+	private ResourceBundle myResources;
+    private String fileName="";
 	private Controller control;
 	private ButtonBox buttons;
 	private ToggleBox toggles;
@@ -36,7 +38,9 @@ public class View {
 	
     public View(Controller c) {
     	control = c;
-    	
+    	myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
+		
+
     }
     
 	public Text addText(String s,int size,int xLocation,int yLocation){
@@ -91,7 +95,7 @@ public class View {
     	additionalStage.show();
     }
     
-    protected void createErrorWindow(String st){
+    public void createErrorWindow(String st){
     	ErrorDisplay showError=new ErrorDisplay();
     	Scene s=showError.display(st);
     	Stage newStage=new Stage();
@@ -117,6 +121,11 @@ public class View {
 	protected void setFileName(String file){
 		fileName=file;
 	}
+
+	public ResourceBundle getResourceBundle(){
+		return myResources;
+	}
+
 	
 	protected void tryLoad(String s){
 		try {
