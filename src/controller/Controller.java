@@ -24,6 +24,7 @@ public class Controller {
 	private Timeline myTimeline;
 	private int frameCounter;
 	private Map<String, String> stateColorMap;
+
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/English");
 
 	public Controller(Stage primaryStage) {
@@ -62,7 +63,6 @@ public class Controller {
 	}
 	private ViewPackager bundleViewPackager(Grid next) {
 		ViewPackager p = new ViewPackager();
-		p.setGenerationCount(frameCounter);
 		p.setStateTotalMap(updateStateTotals(next));
 		p.setColorGrid(createColorGrid(next));
 		return p;

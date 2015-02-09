@@ -57,7 +57,6 @@ public abstract class DisplayGrid {
     		for (int j=0;j < numSquareY;j++){
     			String color=viewPackager.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(myGrid[i][j], Color.valueOf(color));
-    
     		}
     	}
   
