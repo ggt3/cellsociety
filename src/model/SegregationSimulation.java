@@ -20,7 +20,6 @@ public class SegregationSimulation extends Simulation {
 	
 	//returns the new state of the cell at (row, col)
 	public CellState calculateNewCellState(int row, int col) {
-		
 		Cell theCell = super.getCurrentGrid().getCell(row, col);
 		List<Cell> myType = getCurrentGrid().getDirectNeighborsWithType(row, col, theCell.getState());
 		float count = 0;
@@ -30,7 +29,7 @@ public class SegregationSimulation extends Simulation {
 			}
 		}
 	
-		if (100*(count/myType.size()) >= theCell.getKeyToDouble("THRESHOLD") || theCell.getState() == CellState.EMPTY) { 
+		if (100*(count/myType.size()) >= theCell.getKey("THRESHOLD") || theCell.getState() == CellState.EMPTY) { 
 			return theCell.getState();
 		} else {
 			cellsToMove.add(theCell); //adding the cell to a list to move

@@ -18,9 +18,7 @@ public abstract class Simulation {
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;
 		initialState = attributes.getPropertiesMap(); //stores the state to color map
-		
 	}
-
 
  	public Grid getCurrentGrid() {
 		return currentGrid;

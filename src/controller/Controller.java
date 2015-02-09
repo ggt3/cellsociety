@@ -93,6 +93,7 @@ public class Controller {
 			}
 		}
 		return mapTotal;
+
 	}
 
 	//used for when loading in another simulation and pause
@@ -112,8 +113,9 @@ public class Controller {
 		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
 		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 		setSimulationType(simName, xml.parseGlobalParameters(), init);
-		myView.calculateDynamicSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
+		myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls display grid
 		myView.updateGridView(bundleViewPackager(init));
+		
 	}
 	
 	//depending on the string, create a simulation rule with initial states and a initial grid

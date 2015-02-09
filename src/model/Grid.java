@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Grid {
 	private Cell[][] myCells;
-
+	
 	
 	public Grid(int row, int column) {
 		myCells = new Cell[row][column]; //creates 2D array with dimensions
@@ -36,7 +36,7 @@ public class Grid {
 		return neighbors;	
 	}
 	//TOROIDAL
-//	public List<Cell> getAllNeighbors(int row, int col) {
+//	public List<Cell> getAllNeighborsT(int row, int col) {
 //		List<Cell> neighbors = getDirectNeighbors(row,col);
 //		int [][] deltas = {{-1,-1}, {-1,1}, {1,1}, {1,-1}}; //W, NW, SW, S, N, E, SE, NE
 //		for (int i = 0; i < deltas.length; i++) {	
@@ -78,7 +78,7 @@ public class Grid {
 	}
 	
 	//TOROIDAL
-//	public List<Cell> getDirectNeighbors(int row, int col) {
+//	public List<Cell> getDirectNeighborsT(int row, int col) {
 //		List<Cell> neighbors = new ArrayList<Cell>();
 //		int[][] deltas = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}; //E S W N
 //		 for (int i = 0; i < deltas.length; i++) {

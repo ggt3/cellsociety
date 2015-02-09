@@ -3,6 +3,8 @@ package viewPackage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,6 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -37,62 +43,39 @@ public class ButtonBox {
 	private TextField text;
 	private int input;
 	private Text speedText;
+	private Integer speed = 1;
 	
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
 	private ResourceBundle myResources;
-	public ButtonBox(Controller c){
+	public ButtonBox(Controller c,View v){
 		control=c;
-		view=new View(c);
+		view=v;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
 		
 	}
-	//private View view=new View(new Controller());
-	//private Controller control=view.getControl();
-	//private String fileName="";
+	private Button makeButton(String name) {
+		Button btn = new Button(myResources.getString(name));
+		btn.setScaleX(2);
+		btn.setScaleY(2);
+		return btn;
+	}
 	
 	protected HBox makeButtonBox() {
 		HBox hbox = new HBox(50);
-		Button play = new Button(myResources.getString("PlayCommand"));
-		play.setScaleX(2);
-		play.setScaleY(2);
-
-		play.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
+		Button play = makeButton("PlayCommand");
+		play.setOnAction(e -> { 
 				control.changeSpeed(view.getSpeed());
 				control.playSimulation();
-			}
-		});
+				});
 	    
-		Button pause = new Button(myResources.getString("PauseCommand"));
-		pause.setScaleX(2);
-		pause.setScaleY(2);
+		Button pause = makeButton("PauseCommand");
+		pause.setOnAction(e-> control.stopSimulation()); 
+		
+		Button step = makeButton("StepCommand");
+		step.setOnAction(e-> control.stepSimulation());
 
-		pause.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				control.stopSimulation();
-			}
-		});
-
-		Button step = new Button(myResources.getString("StepCommand"));
-		step.setScaleX(2);
-		step.setScaleY(2);
-
-		step.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				control.stepSimulation();
-			}
-		});
-
-		Button load = new Button(myResources.getString("LoadCommand"));
-		load.setScaleX(2);
-		load.setScaleY(2);
-
+		Button load = makeButton("LoadCommand");
+		
 		load.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -129,8 +112,8 @@ public class ButtonBox {
 
 							view.tryLoad(fileName);
 						} else {
-							// grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
-							System.out.println("File Name entered is not a valid name");
+							// grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500))
+							view.createErrorWindow("File Name entered is not a valid name");
 						}
 					}
 				});
@@ -143,52 +126,21 @@ public class ButtonBox {
 			}
 		});
 
-      speedText=view.addText(""+view.getSpeed()+"",20,0,0);
+      speedText=view.addText(speed.toString(),20,0,0);
       speedText.setScaleY(2);
       speedText.setScaleX(2);
-      
-      VBox speedButtons = new VBox();
-      Button down=new Button(myResources.getString("DownCommand"));
-      Button up =new Button(myResources.getString("UpCommand"));
-      //up.setLayoutX(down.getLayoutX());
-      up.setMaxWidth(down.getMaxWidth());
-      //Button down=new Button(myResources.getString("DownCommand"));
-      up.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-          @Override
-          public void handle(ActionEvent event) {
-          	view.addToSpeed(view.getSpeed()+1);
-  			System.out.println(view.getSpeed());
-  			speedText.setText("" + view.getSpeed() + "");
-          }
-	    });
-      down.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-          @Override
-          public void handle(ActionEvent event) {
-  			if (view.getSpeed() > 0)
-  				view.addToSpeed(view.getSpeed()-1);
-  			System.out.println(view.getSpeed());
-  			speedText.setText("" + view.getSpeed() + "");
-          }
-	    });
-
-      speedButtons.getChildren().addAll(up,down);
-      
-      speedButtons.setTranslateY(-11);
-      
+ 
       hbox.setTranslateX(30);
       hbox.setTranslateY(15);
-      
-      System.out.println(hbox.getAlignment());
-      location=speedText.getX()+300;
-      System.out.println(location);
-      hbox.getChildren().addAll(play,pause,step,speedText,speedButtons,load);
-      hbox.setPrefWidth(view.getWindowSize());
+
+      hbox.getChildren().addAll(play,pause,step,load,speedText);
+      //hbox.setPrefWidth(view.getWindowSize());
+      hbox.setAlignment(Pos.CENTER);
       return hbox;
 	}
 	
 	protected HBox makeSlider(){
+		System.out.println("WHOA DER CHECK DIS OUT: "+view.getShape());
 		Slider slider = new Slider();
 		slider.setMin(1);
 		slider.setMax(5);
@@ -203,17 +155,28 @@ public class ButtonBox {
 		slider.setBlockIncrement(1);
 		//slider.getOnDragDetected();
 		slider.setSnapToTicks(true);
-		//return slider;
+		
+		
+		updateSpeed((int)slider.getValue());
+		speedText.setText("" + view.getSpeed() + "");
 		HBox hbox=new HBox(10);
 		Text t=view.addText("Adjust Speed:", 20,(int) hbox.getLayoutX(),(int) hbox.getLayoutY());
 		t.setX(20);
 		//t.setOnKeyPressed(ENTER);
 		text = new TextField();
 		
-		//input=(int) text.getText().charAt(0);
-//		if ((text.getText().trim() != null && !text.getText().isEmpty() && text.getText().endsWith("xml"))) 
-//	        	view.addToSpeed(view.getSpeed()+input);//speed=textField.getText();
-		//view.getScene().setOnKeyPressed(e -> handleKeyInput(e));
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable,
+					Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				updateSpeed((int)slider.getValue());
+				speedText.setText(speed.toString());
+			}
+		    
+		});
+		
 		
 		Button setBtn = new Button(myResources.getString("SetSpeedCommand"));
 		
@@ -222,13 +185,16 @@ public class ButtonBox {
           	@Override
           	    public void handle(ActionEvent e) {
           			input=(int) text.getText().charAt(0)-48;
-          			if ((text.getText().trim() != null && !text.getText().isEmpty()&&input>=1&&input<=5)) {
+          			//System.out.println("PRACTICE: "+);
+          			if ((text.getText().trim() != null && !text.getText().isEmpty()&&input>=1&&input<=5&& text.getText().length()==1)) {
           	        	
           	        	System.out.println("input "+input);
-                		view.addToSpeed(input);
-                		speedText.setText("" + view.getSpeed() + "");
+                		updateSpeed(input);
+                		speedText.setText(speed.toString());
+                		slider.setValue(input);
           	        } else {
-          	        	System.out.println("Speed entered is not a valid speed. Please Enter a number between 1 and 5");
+          	        	view.createErrorWindow("Speed entered is not a valid speed.\nPlease Enter a number between 1 and 5.");
+          	        	
           	        }
           	     }
           	 });
@@ -241,6 +207,11 @@ public class ButtonBox {
 		
 		
 	}
-
+	public int getSpeed(){
+		return speed;
+	}
+	private void updateSpeed(int s){
+		speed=s;
+	}
 	
 }
