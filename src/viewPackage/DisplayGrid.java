@@ -1,26 +1,29 @@
 package viewPackage;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import controller.ViewPackager;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 public abstract class DisplayGrid {
 	private final int totalWidthOfGrid= 350;
 	private final int totalHeightOfGrid= 350;
-	private int numSquareX=0;
-	private int numSquareY=0;
+	private int numSquareX = 0;
+	private int numSquareY = 0;
 	private View view;
 	private Shape[][] myGrid;
 	private boolean random=true;
 	
 	
-	public  DisplayGrid(View mainView){
+	public DisplayGrid(View mainView){
 		view = mainView;
 	}
 
-	public void setGridSize(int sizeX, int sizeY){
+	private void setGridSize(int sizeX, int sizeY){
 		numSquareX = sizeX;
 		numSquareY = sizeY;
 		myGrid=new Shape[numSquareX][numSquareY];
@@ -59,25 +62,45 @@ public abstract class DisplayGrid {
     			setFill(myGrid[i][j], Color.valueOf(color));
     		}
     	}
-  
-    	if (random)
-    		randomizeGrid();
+    	if (random) {
+    		randomizeGrid(viewPackager);
+    		random =false;
+    	}
     }
-    public void randomizeGrid(){
+    
+    public void setToggleColorChange(Shape p) {
+		p.setOnMouseClicked(new EventHandler<Event>() {
+			@Override
+			public void handle(Event event) {
+				
+				//change state instead of just color to white
+				setFill(p,Color.WHITE);
+			}
+		}); 
+    }
+    
+    private ArrayList<ArrayList<String>> randomizeGrid(ViewPackager vPackage){
+    	Random r=new Random();
+    	Object[] color = vPackage.getStateTotals().keySet().toArray();
     	for(int i=0;i < numSquareX;i++){
     		for (int j=0;j < numSquareY;j++){
-    			Random r=new Random();
-    			int p=r.nextInt(3);
-    			
-    			if (p==0)
-    				setFill(myGrid[i][j], Color.VIOLET);
-    			else if (p==1)
-    				setFill(myGrid[i][j], Color.TURQUOISE);
-    			else
-    				setFill(myGrid[i][j], Color.BROWN);
+    			int rand = r.nextInt(vPackage.getStateTotals().keySet().size());
+    			setFill(myGrid[i][j], Color.valueOf(color[rand].toString()));
     		}
     	}
-    	random=false;
+    	return shapeToColorList();
+    }
+    
+    private ArrayList<ArrayList<String>> shapeToColorList() {
+    	ArrayList<ArrayList<String>> newGrid = new ArrayList<ArrayList<String>>();
+    	for(int i=0;i < numSquareX;i++){
+    		ArrayList<String> colorRow = new ArrayList<String>();
+    		for (int j=0;j < numSquareY;j++){
+    			colorRow.add(myGrid[i][j].getFill().toString());
+    		}
+    		newGrid.add(colorRow);
+    	}
+    	return newGrid;
     }
     
 	protected void setFill(Shape gridView, Color c) {

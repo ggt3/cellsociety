@@ -1,9 +1,4 @@
 package viewPackage;
-
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -19,15 +14,6 @@ public class RectangularGridView extends DisplayGrid {
     		int yIndex=0;
     		for (int j=100;j<=ytot-y;j+=y){
     			Shape p = new Rectangle(i,j,x,y);
-
-    			p.setOnMouseClicked(new EventHandler<Event>() {
-					@Override
-					public void handle(Event event) {
-						
-						//change state instead of just color to white
-						setFill(p,Color.WHITE);
-					}
-				}); 
     			super.outline(p);
     			getView().addToRoot(p);
     			setShape(xIndex, yIndex, p);

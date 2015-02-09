@@ -4,11 +4,8 @@ package viewPackage;
 import java.awt.Dimension;
 import java.io.IOException;
 import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import controller.Controller;
 import controller.ViewPackager;
 import javafx.event.ActionEvent;
@@ -124,6 +121,9 @@ public class View {
     	return toggles.getOutline();
     }
     
+	public boolean getEdgeType() {
+		return toggles.getEdgeType();
+	}
 	protected void addToRoot(Node n){
 		root.getChildren().addAll(n);
 	}
