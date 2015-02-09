@@ -1,5 +1,7 @@
 package viewPackage;
 
+import java.util.Random;
+
 import controller.Packager;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -20,6 +22,7 @@ public class DisplayGrid {
 	private View view;
 	private Shape[][] myGrid;
 	private boolean shapey;
+	private boolean boolz=true;
 	
 	
 	public DisplayGrid(View mainView){
@@ -67,7 +70,8 @@ public class DisplayGrid {
     			p.setOnMouseClicked(new EventHandler<Event>() {
 					@Override
 					public void handle(Event event) {
-						// TODO Auto-generated method stub
+						
+						//change state instead of just color to white
 						setFill(p,Color.WHITE);
 					}
 				}); 
@@ -80,6 +84,7 @@ public class DisplayGrid {
     		start=!start;
     		xIndex++;
     	}
+    	view.createGraphWindow();
     }
 
 	private void drawEvenTriangle(double x, double y, int i, int j, Shape p) {
@@ -112,7 +117,26 @@ public class DisplayGrid {
     		}
     	}
     	//view.createGraphWindow();
+    	if (boolz)
+    		randomizeGrid();
     }
+    public void randomizeGrid(){
+    	for(int i=0;i < numSquareX;i++){
+    		for (int j=0;j < numSquareY;j++){
+    			Random r=new Random();
+    			int p=r.nextInt(3);
+    			//int poo= (int) Math.random();
+    			if (p==0)
+    				setFill(myGrid[i][j], Color.VIOLET);
+    			else if (p==1)
+    				setFill(myGrid[i][j], Color.TURQUOISE);
+    			else
+    				setFill(myGrid[i][j], Color.BROWN);
+    		}
+    	}
+    	boolz=false;
+    }
+    
 	protected void setFill(Shape gridView3,Color c) {
 		gridView3.setFill(c);
 	}

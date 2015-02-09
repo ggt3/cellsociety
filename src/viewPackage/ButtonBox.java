@@ -137,6 +137,7 @@ public class ButtonBox {
 						} else {
 							// grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500));
 							System.out.println("File Name entered is not a valid name");
+							view.createErrorWindow("File Name entered is not a valid name");
 						}
 					}
 				});
@@ -189,9 +190,9 @@ public class ButtonBox {
       System.out.println(hbox.getAlignment());
       location=speedText.getX()+300;
       System.out.println(location);
-      hbox.getChildren().addAll(play,pause,step,speedText,speedButtons,load);
-      hbox.setPrefWidth(view.getWindowSize());
-      
+      hbox.getChildren().addAll(play,pause,step,speedText,load);
+      //hbox.setPrefWidth(view.getWindowSize());
+      hbox.setAlignment(Pos.CENTER);
       view.setShape(true);
       
       return hbox;
@@ -252,6 +253,7 @@ public class ButtonBox {
                 		speedText.setText("" + view.getSpeed() + "");
                 		slider.setValue(input);
           	        } else {
+          	        	view.createErrorWindow("Speed entered is not a valid speed.\nPlease Enter a number between 1 and 5.");
           	        	System.out.println("Speed entered is not a valid speed. Please Enter a number between 1 and 5");
           	        }
           	     }
