@@ -67,7 +67,7 @@ public class View {
         
         HBox toggle=toggles.makeToggles();
         toggle.setLayoutY(windowSize-100);
-        toggle.setLayoutX(windowSize/3);
+        toggle.setLayoutX(windowSize/9);
         root = new Group();
         root.getChildren().addAll(topButtonBox,speedSlider,toggle);
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
@@ -75,7 +75,8 @@ public class View {
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
-				additionalStage.close();
+				if (additionalStage!=null)
+					additionalStage.close();
 			}
 		});    }
 
