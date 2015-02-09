@@ -13,8 +13,6 @@ public class Packager {
 	
 	public Map<String,Integer> getPropertiesMap() {
 		HashMap<String, Integer> m = new HashMap<String,Integer>();
-		System.out.print("YOYOYO: "+attributeMap.toString());
-//		m.putAll(attributeMap);
 		for (Map.Entry<String,Integer> entry : attributeMap.entrySet()) {
 			  m.put(entry.getKey(), entry.getValue());
 		}

@@ -48,9 +48,14 @@ public class View {
 	private String fileName="";
 	private Controller control;
 	private Stage mainStage;
+	private boolean shapey;
+	private boolean edgy;
+	private boolean outlined=true;
+	//private String shapeName="";
 
 	private int currentGeneration=0;
 	private ButtonBox buttons;
+	private ToggleBox toggles;
 	private DisplayGrid griddy;//=new DisplayGrid();
 
     public View(Controller c) {
@@ -78,14 +83,16 @@ public class View {
     	primaryStage.setResizable(false);
         primaryStage.setTitle("Cell Society");
         mainStage=primaryStage;
-        buttons = new ButtonBox(control);
+        buttons = new ButtonBox(control,this);
+        toggles = new ToggleBox(control,this);
         HBox hbox=buttons.makeButtonBox();
         HBox slide=buttons.makeSlider();
         slide.setLayoutY(windowSize-40);
         
-        VBox toggle=buttons.makeToggles();
+        HBox toggle=toggles.makeToggles();
         //toggle.set
-        toggle.setLayoutY(windowSize/2);
+        toggle.setLayoutY(windowSize-100);
+        toggle.setLayoutX(windowSize/3);
         
         root = new Group();
         root.getChildren().addAll(hbox,slide,toggle);
@@ -95,14 +102,48 @@ public class View {
     }
 
 
-    public void calculateDynamicSize(int sizeX, int sizeY,boolean shape){
+    public void calculateDynamicSize(int sizeX, int sizeY){
+    	//System.out.println("THE SHAPENAME IN VIEW IS: "+shapeName);
     	griddy.setGridSize(sizeX, sizeY);
     }
     
     //changes color of existing rectangles according to colors
-    public void updateRectangle(Packager colorGrid,boolean bool){
+    public void updateRectangle(Packager colorGrid){
     	griddy.updateRectangle(colorGrid);
 
+    }
+    
+    protected void createGraphWindow(){
+    	PercentageGraph graphy=new PercentageGraph();
+    	Scene s=graphy.makeGraph();
+    	Stage notFirst=new Stage();
+    	notFirst.setScene(s);
+    	notFirst.show();
+    }
+    
+    
+    protected void setEdgeType(boolean s){
+    	edgy=s;
+    }
+    protected boolean getEdgeType(){
+    	return edgy;
+    }
+    
+    protected void setOutline(boolean s){
+    	outlined=s;
+    }
+    protected boolean getOutline(){
+    	return outlined;
+    }
+    
+    protected void setShape(boolean s){
+    	System.out.println(s);
+    	shapey=s;
+    	System.out.println("HERE: "+ shapey);
+    }
+    protected boolean getShape(){
+    	System.out.println("HERE2: "+ shapey);
+    	return shapey;
     }
     
 	protected void addToRoot(Node n){

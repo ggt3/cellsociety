@@ -20,9 +20,6 @@ public class SegregationSimulation extends Simulation {
 	
 	//returns the new state of the cell at (row, col)
 	public CellState calculateNewCellState(int row, int col) {
-		List<Cell> neighbors = super.getCurrentGrid().getAllNeighbors(row, col);
-		
-		
 		Cell theCell = super.getCurrentGrid().getCell(row, col);
 		List<Cell> myType = getCurrentGrid().getDirectNeighborsWithType(row, col, theCell.getState());
 		float count = 0;

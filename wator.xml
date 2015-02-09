@@ -5,7 +5,7 @@
 	<author>Rob Vann</author>
 	<xsize>5</xsize>
 	<ysize>5</ysize>
-	<settings><parameter>BREEDCYCLE,3</parameter><parameter>BREEDTHRESHOLD,3</parameter><parameter>ENERGY,3</parameter></settings>
+	<settings><parameter>BREEDCYCLE,0</parameter><parameter>BREEDTHRESHOLD,3</parameter><parameter>ENERGY,3</parameter></settings>
 	<map><color>SHARK,GRAY</color><color>FISH,ORANGE</color><color>EMPTY,BLUE</color></map>
 	<grid><row><cell>SHARK</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>FISH</cell><cell>EMPTY</cell></row><row><cell>SHARK</cell><cell>EMPTY</cell><cell>FISH</cell><cell>FISH</cell><cell>EMPTY</cell></row><row><cell>SHARK</cell><cell>SHARK</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell></row><row><cell>SHARK</cell><cell>FISH</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>FISH</cell></row><row><cell>EMPTY</cell><cell>EMPTY</cell><cell>EMPTY</cell><cell>SHARK</cell><cell>FISH</cell></row></grid>
 </root>

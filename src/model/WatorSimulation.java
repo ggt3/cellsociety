@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import controller.Packager;
@@ -34,7 +35,7 @@ public class WatorSimulation extends Simulation {
 	
 	private void sharkAction() {
 		for (Point loc : allSharks) {
-			System.out.printf("cell %d, %d, %s %s\n", loc.y, loc.x, getCurrentGrid().getCell(loc.y, loc.x).toString(),getCurrentGrid().getCell(loc.y, loc.x).getProperties().toString());
+			System.out.printf("before cell %d, %d, %s %s\n", loc.y, loc.x, getCurrentGrid().getCell(loc.y, loc.x).toString(),getCurrentGrid().getCell(loc.y, loc.x).getProperties().toString());
 			if (getCurrentGrid().getCell(loc.y, loc.x).getKey("ENERGY") == 0) {
 				removeCreature(allSharks, loc);
 			} else { //shark did not die, want to find all the fish
@@ -48,7 +49,9 @@ public class WatorSimulation extends Simulation {
 					moveIfEmptyAndCheckBaby(loc, CellState.SHARK);
 				}
 			}
+			System.out.printf("after cell %d, %d, %s %s\n", loc.y, loc.x, getNextGrid().getCell(loc.y, loc.x).toString(),getNextGrid().getCell(loc.y, loc.x).getProperties().toString());
 		}
+		
 	}
 	
 	private void moveIfEmptyAndCheckBaby(Point loc, CellState babyType) {
@@ -77,7 +80,7 @@ public class WatorSimulation extends Simulation {
 
 	private void fishAction() {
 		for (Point loc : allFish) {
-			System.out.printf("cell %d, %d, %s %s", loc.y, loc.x, getCurrentGrid().getCell(loc.y, loc.x).toString(),getCurrentGrid().getCell(loc.y, loc.x).getProperties().toString());
+			System.out.printf("cell %d, %d, %s %s\n", loc.y, loc.x, getCurrentGrid().getCell(loc.y, loc.x).toString(),getCurrentGrid().getCell(loc.y, loc.x).getProperties().toString());
 			moveIfEmptyAndCheckBaby(loc, CellState.FISH);
 		}
 	}
@@ -99,6 +102,12 @@ public class WatorSimulation extends Simulation {
 	}
 	//remove it from it's specified creature list and put empty cell on the grid
 	private void removeCreature(List<Point> list, Point p) {
+		for (Iterator<Point> it = list.iterator(); it.hasNext(); ) {
+	        Point f = (Point) it.next();
+	        if (p.equals(f)) {
+	        	it.remove();
+	        }
+	    }
 		getNextGrid().getCell(p.x, p.y).changeToEmptyCell();
 		list.remove(p);
 		
@@ -110,7 +119,9 @@ public class WatorSimulation extends Simulation {
 	
 	//creates baby at location and resents parent cycle
 	private void makeBaby(CellState c, Point loc) {
-		getNextGrid().putCell(new Cell(c, attributes), loc.y, loc.x);
+		Packager p = new Packager();
+		p.setPropertiesMap(getCurrentGrid().getCell(loc.y, loc.x).getProperties());
+		getNextGrid().putCell(new Cell(c, p), loc.y, loc.x);
 		
 	}
 	//returns true if this cell can reproduce

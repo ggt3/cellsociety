@@ -3,6 +3,8 @@ package viewPackage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.DragEvent;
@@ -23,7 +26,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import javax.swing.event.ChangeListener;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -44,9 +46,9 @@ public class ButtonBox {
 	
 	public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
 	private ResourceBundle myResources;
-	public ButtonBox(Controller c){
+	public ButtonBox(Controller c,View v){
 		control=c;
-		view=new View(c);
+		view=v;
 		myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
 		
 	}
@@ -189,10 +191,14 @@ public class ButtonBox {
       System.out.println(location);
       hbox.getChildren().addAll(play,pause,step,speedText,speedButtons,load);
       hbox.setPrefWidth(view.getWindowSize());
+      
+      view.setShape(true);
+      
       return hbox;
 	}
 	
 	protected HBox makeSlider(){
+		System.out.println("WHOA DER CHECK DIS OUT: "+view.getShape());
 		Slider slider = new Slider();
 		slider.setMin(1);
 		slider.setMax(5);
@@ -218,10 +224,18 @@ public class ButtonBox {
 		//t.setOnKeyPressed(ENTER);
 		text = new TextField();
 		
-		//input=(int) text.getText().charAt(0);
-//		if ((text.getText().trim() != null && !text.getText().isEmpty() && text.getText().endsWith("xml"))) 
-//	        	view.addToSpeed(view.getSpeed()+input);//speed=textField.getText();
-		//view.getScene().setOnKeyPressed(e -> handleKeyInput(e));
+		slider.valueProperty().addListener(new ChangeListener<Number>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Number> observable,
+					Number oldValue, Number newValue) {
+				// TODO Auto-generated method stub
+				view.addToSpeed((int)slider.getValue());
+				speedText.setText("" + view.getSpeed() + "");
+			}
+		    
+		});
+		
 		
 		Button setBtn = new Button(myResources.getString("SetSpeedCommand"));
 		
@@ -230,11 +244,13 @@ public class ButtonBox {
           	@Override
           	    public void handle(ActionEvent e) {
           			input=(int) text.getText().charAt(0)-48;
-          			if ((text.getText().trim() != null && !text.getText().isEmpty()&&input>=1&&input<=5)) {
+          			//System.out.println("PRACTICE: "+);
+          			if ((text.getText().trim() != null && !text.getText().isEmpty()&&input>=1&&input<=5&& text.getText().length()==1)) {
           	        	
           	        	System.out.println("input "+input);
                 		view.addToSpeed(input);
                 		speedText.setText("" + view.getSpeed() + "");
+                		slider.setValue(input);
           	        } else {
           	        	System.out.println("Speed entered is not a valid speed. Please Enter a number between 1 and 5");
           	        }
@@ -249,41 +265,6 @@ public class ButtonBox {
 		
 		
 	}
-	
-	
-	protected VBox makeToggles(){
-		VBox vbox=new VBox();
-		
 
-		ToggleGroup edgeType = new ToggleGroup();
-
-		ToggleButton tb1 = new ToggleButton("Finite");
-		tb1.setToggleGroup(edgeType);
-		tb1.setSelected(true);
-
-		ToggleButton tb2 = new ToggleButton("Toroidal");
-		tb2.setToggleGroup(edgeType);
-		
-		//tb2.getLabelPadding()
-		
-		
-		ToggleGroup cellShape = new ToggleGroup();
-
-		ToggleButton tb11 = new ToggleButton("Square");
-		tb11.setToggleGroup(cellShape);
-		tb11.setSelected(true);
-
-		ToggleButton tb12 = new ToggleButton("Triangle");
-		tb12.setToggleGroup(cellShape);
-
-		tb1.setStyle("-fx-base: lightgreen;");
-		tb2.setStyle("-fx-base: lightblue;");
-		tb11.setStyle("-fx-base: salmon;");
-		
-		
-		//ToggleButton tb1 = new ToggleButton();
-		vbox.getChildren().addAll(tb1,tb2,tb11,tb12);
-		return vbox;
-	}
 	
 }
