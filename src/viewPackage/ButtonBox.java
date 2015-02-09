@@ -1,6 +1,5 @@
 package viewPackage;
 
-import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -14,21 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import controller.Controller;
 
@@ -112,7 +102,7 @@ public class ButtonBox {
 
 							view.tryLoad(fileName);
 						} else {
-							// grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500))
+							
 							view.createErrorWindow("File Name entered is not a valid name");
 						}
 					}
@@ -140,7 +130,7 @@ public class ButtonBox {
 	}
 	
 	protected HBox makeSlider(){
-		System.out.println("WHOA DER CHECK DIS OUT: "+view.getShape());
+		
 		Slider slider = new Slider();
 		slider.setMin(1);
 		slider.setMax(5);
@@ -151,14 +141,13 @@ public class ButtonBox {
 		slider.setShowTickMarks(true);
 		slider.setMajorTickUnit(1);
 		slider.setMinorTickCount(0);
-		//slider.setMinorTickCount(3);
+		
 		slider.setBlockIncrement(1);
-		//slider.getOnDragDetected();
 		slider.setSnapToTicks(true);
 		
 		
 		updateSpeed((int)slider.getValue());
-		speedText.setText("" + view.getSpeed() + "");
+		speedText.setText(speed.toString());
 		HBox hbox=new HBox(10);
 		Text t=view.addText("Adjust Speed:", 20,(int) hbox.getLayoutX(),(int) hbox.getLayoutY());
 		t.setX(20);
@@ -201,8 +190,6 @@ public class ButtonBox {
 		
 		
 		hbox.getChildren().addAll(t,slider,text,setBtn);
-		
-
 		return hbox;
 		
 		
