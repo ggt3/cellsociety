@@ -12,12 +12,12 @@ import controller.Packager;
 
 public abstract class Simulation {
 	private Grid currentGrid, nextGrid;
-	private Map<String, String> colors;
+	private Map<String, Integer> initialState;
 	public static final Random myGenerator = new Random(1234); //seeding the random so we get consistent results
 	
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;
-		colors = attributes.getColorMap(); //stores the state to color map
+		initialState = attributes.getPropertiesMap(); //stores the state to color map
 		
 	}
 
@@ -51,19 +51,5 @@ public abstract class Simulation {
 	//rules logic implemented here
 	public abstract CellState calculateNewCellState(int row, int col);
 	
-	//class that takes a grid of states and packages the grid of colors
-	public Packager createColorGrid(Grid gridToReturn) {
-		Packager colorGrid = new Packager();
-		for (int r = 0; r< gridToReturn.getRowSize(); r++) {
-			ArrayList<String> colorRow = new ArrayList<String>();
-			for (int c = 0; c< gridToReturn.getColSize(); c++) {
-				String state = gridToReturn.getCell(c, r).toString();
-				colorRow.add(colors.get(state)); //gets the color
-
-			}
-			colorGrid.getColorGrid().add(colorRow); //add to double array list
-		}
-		return colorGrid;
-	}
 	
 }

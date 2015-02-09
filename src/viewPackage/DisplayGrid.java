@@ -4,6 +4,7 @@ import java.util.ResourceBundle;
 
 import controller.Controller;
 import controller.Packager;
+import controller.ViewPackager;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -92,10 +93,10 @@ public class DisplayGrid {
 //        	}
 //    }
 	
-    public void updateRectangle(Packager colorGrid){
+    public void updateGrid(ViewPackager viewPackager){
     	for(int i=0;i < numSquareX;i++){
     		for (int j=0;j < numSquareY;j++){
-    			String color=colorGrid.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
+    			String color=viewPackager.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(myGrid[i][j], Color.valueOf(color));
     
     		}

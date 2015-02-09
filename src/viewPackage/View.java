@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 
 import controller.Controller;
 import controller.Packager;
+import controller.ViewPackager;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -97,8 +98,8 @@ public class View {
     }
     
     //changes color of existing rectangles according to colors
-    public void updateRectangle(Packager colorGrid,boolean bool){
-    	griddy.updateRectangle(colorGrid);
+    public void updateGridView(ViewPackager viewPackager){
+    	griddy.updateGrid(viewPackager);
 
     }
     
@@ -160,4 +161,7 @@ public class View {
 	protected Scene getScene(){
 		return myScene;
 	}
+
+
+
 }

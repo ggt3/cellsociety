@@ -1,8 +1,8 @@
 package model;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import controller.Packager;
 
 /**
  * general cell class 
@@ -15,15 +15,14 @@ public class Cell {
 	private Map<String, Integer> properties;
 	
 	//only importing attributes if a cell has other traits
-	public Cell(CellState setState, Packager attributes) {
+	public Cell(CellState setState, Map<String, Integer> attributes) {
 		state = setState;
-		properties = attributes.getPropertiesMap(); 
+		properties = attributes;
 	}
 	
 	public Cell copyCell() {
-		Packager p = new Packager();
-		p.setPropertiesMap(this.getProperties());
-		return new Cell(this.getState(), p); //for copying all properties of the cell
+		Map<String, Integer> newM = new HashMap<String,Integer>(properties);
+		return new Cell(this.getState(), newM); //for copying all properties of the cell
 	}
 	public void changeToEmptyCell(){
 		this.state = CellState.EMPTY;
@@ -45,11 +44,6 @@ public class Cell {
 		return this.state.toString();
 	}
 
-	//returning the values in the map for thresholds
-	public double getKeyToDouble(String key) {
-		return (double) properties.get(key);
-	}
-	
 	//returning the values in the map for energy
 	public Integer getKey(String key) {
 		return properties.get(key);
