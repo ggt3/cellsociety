@@ -8,3 +8,7 @@ Empty repository for CellSociety project
 * explain how we would implement features that we didn't implement
 
 * explain more about our structure and classes we added.
+
+###Simulation
+####Variety of Grid Location Shapes
+* We implemented both the square and triangular grid location shapes in our assignment, with
