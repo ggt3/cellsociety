@@ -10,11 +10,12 @@ import javafx.scene.layout.VBox;
 
 public class ToggleBox {
 
-	private View view;
+	private ToggleGroup edgeType, cellShape, outline;
+	private boolean isTriangleShape;
+	private boolean isToroidalEdgeType;
+	private boolean isNoStroke;
 	
-	public ToggleBox(View v){
-		view=v;
-	}
+	
 	
 	private ToggleButton createToggleButton(String name, ToggleGroup group, boolean depressed) {
 		ToggleButton tb = new ToggleButton(name);
@@ -22,71 +23,36 @@ public class ToggleBox {
 		tb.setSelected(depressed);
 		return tb;
 	}
+	private VBox createToggleGroupVBox(ToggleGroup group, String btn1, String btn2) {
+		VBox vbox=new VBox();
+		group = new ToggleGroup();
+		ToggleButton tb1 = createToggleButton(btn1, group, true);
+		ToggleButton tb2 = createToggleButton(btn2, group, false);
+		setToggleProperty(group, tb1, tb2);
+		vbox.getChildren().addAll(tb1,tb2);
+		return vbox;
+	}
 
 	protected HBox makeToggles(){
 		HBox hbox=new HBox(20);
+//		VBox vbox1 = createToggleGroupVBox(edgeType, "Finite", "Toroidal");
+//		VBox vbox2 = createToggleGroupVBox(cellShape, "Square", "Triangle");
+//		VBox vbox3 = createToggleGroupVBox(outline, "Stroke", "No Stroke");
 		
-		ToggleGroup edgeType = new ToggleGroup();
+		edgeType = new ToggleGroup();
 		ToggleButton tb1 = createToggleButton("Finite", edgeType, true);
 		ToggleButton tb2 = createToggleButton("Toroidal", edgeType, false);
-
-		edgeType.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable,
-					Toggle oldValue, Toggle newValue) {
-				// TODO Auto-generated method stub
-				if(newValue!=null&&newValue.toString().equals(tb1.toString())){
-					view.setEdgeType(false);
-				}
-				else if (newValue!=null&&newValue.toString().equals(tb2.toString())){
-					view.setEdgeType(true);
-				}
-			}
-
-		});
+		setToggleProperty(edgeType, tb1, tb2);
 		
-		ToggleGroup cellShape = new ToggleGroup();
-
+		cellShape = new ToggleGroup();
 		ToggleButton tb11 = createToggleButton("Square", cellShape, true);
 		ToggleButton tb12 = createToggleButton("Triangle", cellShape, false);
+		setToggleProperty(cellShape, tb11, tb12);
 		
-		cellShape.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable,
-					Toggle oldValue, Toggle newValue) {
-				// TODO Auto-generated method stub
-				if((newValue==null&&oldValue.toString().equals(tb11.toString()))||newValue.toString().equals(tb11.toString())){
-					view.setShape(false);
-				}
-				else if (newValue!=null&&newValue.toString().equals(tb12.toString())){
-					view.setShape(true);
-				}
-			}
-
-		});
-		
-		ToggleGroup outline = new ToggleGroup();
+		outline = new ToggleGroup();
 		ToggleButton tb21 = createToggleButton("Stroke", outline, true);
 		ToggleButton tb22 = createToggleButton("No Stroke", outline, false);
-
-		
-		outline.selectedToggleProperty().addListener(new ChangeListener<Toggle>(){
-
-			@Override
-			public void changed(ObservableValue<? extends Toggle> observable,
-					Toggle oldValue, Toggle newValue) {
-				// TODO Auto-generated method stub
-				if(newValue!=null&&newValue.toString().equals(tb21.toString())){
-					view.setOutline(false);
-				}
-				else if (newValue!=null&&newValue.toString().equals(tb22.toString())){
-					view.setOutline(true);
-				}
-			}
-
-		});
+		setToggleProperty(outline, tb21, tb22);
 		
 		
 		VBox vbox1=new VBox();
@@ -96,8 +62,49 @@ public class ToggleBox {
 		VBox vbox3=new VBox();
 		vbox3.getChildren().addAll(tb21,tb22);
 		
-		//ToggleButton tb1 = new ToggleButton();
-		hbox.getChildren().addAll(vbox1,vbox2,vbox3);//tb1,tb2,tb11,tb12,tb21,tb22);
+	
+		hbox.getChildren().addAll(vbox1,vbox2,vbox3);
 		return hbox;
+	}
+
+	private void setToggleProperty(ToggleGroup group, ToggleButton tb1, ToggleButton tb2) {
+		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				if ((newValue == null && oldValue.toString().equals(tb1.toString()))
+						|| (newValue != null && newValue.toString().equals(tb1.toString()))) {
+					setToggleChangeMethod(group, false);
+				} else if (newValue != null && newValue.toString().equals(tb2.toString())) {
+
+					setToggleChangeMethod(group, true);
+				}
+			}
+
+		});
+	}
+	
+	private void setToggleChangeMethod(ToggleGroup groupName, boolean change){
+		if(groupName.equals(outline)) {
+			isNoStroke = change;
+		}
+		if(groupName.equals(edgeType)) {
+			isToroidalEdgeType = change;
+		}
+		if (groupName.equals(cellShape)) {
+			isTriangleShape = change;
+		}
+	}
+
+	protected boolean getEdgeType() {
+		return isToroidalEdgeType;
+	}
+
+	protected boolean getOutline() {
+		return isNoStroke;
+	}
+
+	protected boolean getShape() {
+		return isTriangleShape;
 	}
 }

@@ -117,7 +117,7 @@ public class Controller {
 				ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid(xySize[0], xySize[1]);
 				Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 				setSimulationType(simName, xml.parseGlobalParameters(), init);
-				myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls display grid
+				myView.createDisplayView(xySize[0], xySize[1]); //sets grid size and calls display grid
 				myView.updateGridView(bundleViewPackager(init));
 			}
 			catch(IllegalArgumentException e){
