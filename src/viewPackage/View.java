@@ -75,10 +75,8 @@ public class View {
     		myGridDisplayed = new RectangularGridView(this);
     	}
     	myGridDisplayed.initializeGridView(x, y);
-    	
-    	
+    
     }
-
     
     //changes color of existing rectangles according to colors
     public void updateGridView(ViewPackager colorGrid){
@@ -119,7 +117,6 @@ public class View {
 	protected void setFileName(String file){
 		fileName=file;
 	}
-
 	
 	protected void tryLoad(String s){
 		try {
