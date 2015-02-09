@@ -2,6 +2,7 @@ package viewPackage;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -35,7 +36,7 @@ public class ToggleBox {
 	}
 
 	protected HBox makeToggles(){
-		HBox hbox=new HBox(20);
+		HBox hbox=new HBox(50);
 //		VBox vbox1 = createToggleGroupVBox(edgeType, "Finite", "Toroidal");
 //		VBox vbox2 = createToggleGroupVBox(cellShape, "Square", "Triangle");
 //		VBox vbox3 = createToggleGroupVBox(outline, "Stroke", "No Stroke");
@@ -61,18 +62,37 @@ public class ToggleBox {
 		setToggleProperty(randomized, tb31, tb32);
 		
 		
-		VBox vbox1=new VBox();
-		vbox1.getChildren().addAll(tb1,tb2);
-		VBox vbox2=new VBox();
-		vbox2.getChildren().addAll(tb11,tb12);
-		VBox vbox3=new VBox();
-		vbox3.getChildren().addAll(tb21,tb22);
+		VBox vbox1=assignToVBox(tb1,tb2);
+		VBox vbox2=assignToVBox(tb11,tb12);
+		VBox vbox3=assignToVBox(tb21,tb22);
+		VBox vbox4=assignToVBox(tb31,tb32);
+//		VBox vbox1=new VBox();
+//		vbox1.getChildren().addAll(tb1,tb2);
+//		vbox1.setAlignment(Pos.CENTER);
+//		
+//		VBox vbox2=new VBox();
+//		vbox2.getChildren().addAll(tb11,tb12);
+//		vbox2.setAlignment(Pos.CENTER);
+//		
+//		VBox vbox3=new VBox();
+//		vbox3.getChildren().addAll(tb21,tb22);
+//		vbox3.setAlignment(Pos.CENTER);
+//		VBox vbox4=new VBox();
+//		vbox4.getChildren().addAll(tb31,tb32);
+//		vbox4.setAlignment(Pos.CENTER);
 		
 	
-		hbox.getChildren().addAll(vbox1,vbox2,vbox3);
+		hbox.getChildren().addAll(vbox1,vbox2,vbox3,vbox4);
 		return hbox;
 	}
 
+	private VBox assignToVBox(ToggleButton tb1,ToggleButton tb2){
+		VBox vbox=new VBox();
+		vbox.getChildren().addAll(tb1,tb2);
+		vbox.setAlignment(Pos.CENTER);
+		return vbox;
+	}
+	
 	private void setToggleProperty(ToggleGroup group, ToggleButton tb1, ToggleButton tb2) {
 		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
