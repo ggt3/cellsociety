@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -23,6 +24,7 @@ public class Controller {
 	private Timeline myTimeline;
 	private int frameCounter;
 	private Map<String, String> stateColorMap;
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources/English");
 	
 	public Controller(Stage primaryStage) {
 		myView = new View(this);
@@ -107,15 +109,28 @@ public class Controller {
 		stopSimulation();
 		XMLParser xml = new XMLParser();
 		xml.parseXMLFile(fileName);
-		String simName = xml.parseSimulationName();
-		int[] xySize = xml.parseGridSize();
-		stateColorMap = xml.parseColorMap().getColorMap();
-		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
-		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
-		setSimulationType(simName, xml.parseGlobalParameters(), init);
-		myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls display grid
-		myView.updateGridView(bundleViewPackager(init));
-		
+		try{
+			String simName = xml.parseSimulationName();
+			int[] xySize = xml.parseGridSize();
+			stateColorMap = xml.parseColorMap().getColorMap();
+			try{
+				ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid(xySize[0], xySize[1]);
+				Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
+				setSimulationType(simName, xml.parseGlobalParameters(), init);
+				myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls display grid
+				myView.updateGridView(bundleViewPackager(init));
+			}
+			catch(IllegalArgumentException e){
+				myView.createErrorWindow(myResources.getString("InvalidCellStates"));
+			}
+			catch(IndexOutOfBoundsException e){
+				myView.createErrorWindow(myResources.getString("CellLocationsOutOfBounds"));
+			}
+			
+		}
+		catch(NullPointerException e){
+			myView.createErrorWindow(myResources.getString("InvalidSimulation"));
+		}
 	}
 	
 	//depending on the string, create a simulation rule with initial states and a initial grid
