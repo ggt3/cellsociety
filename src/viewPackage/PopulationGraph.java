@@ -43,7 +43,6 @@ public class PopulationGraph {
 		for (int i=0;i<keys.length;i++){
 			XYChart.Series species=listOfSpecies.get(i);
 			int x=colorGrid.getStateTotals().get(keys[i]);
-			System.out.println("x: "+x + "generation: "+generation+"keys.length"+keys.length);
 			species.getData().add(new XYChart.Data(generation,x));
 			Path p=(Path) species.nodeProperty().getValue();
 			p.setStroke(Color.valueOf(keys[i].toString()));

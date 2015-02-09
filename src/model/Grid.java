@@ -68,6 +68,7 @@ public abstract class Grid {
 		
 	}
 	public abstract Grid copyGrid();
+	
 	public Cell getCell(int row, int col) {
 		return myCells[row][col];
 	}

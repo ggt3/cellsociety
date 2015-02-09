@@ -22,7 +22,6 @@ public class Controller {
 	private Simulation rules;
 	private View myView;
 	private Timeline myTimeline;
-	private int frameCounter;
 	private Map<String, String> stateColorMap;
 	private static final int FRAME_MULTIPLIER = 4;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources/English");
@@ -31,7 +30,7 @@ public class Controller {
 		myView = new View(this);
 		myView.initialize(primaryStage);
 		generateTimeline();
-		frameCounter = 0;
+		
 	}
 
 	
@@ -56,7 +55,6 @@ public class Controller {
 
 	public void stepSimulation() {
 		Grid next = rules.makeNextGrid();
-		frameCounter++; //updating the generation
 		rules.updateGrid(next); //sets the next grid as the new grid
 		myView.updateGridView(bundleViewPackager(next));
 	}
@@ -118,10 +116,11 @@ public class Controller {
 				ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid(xySize[0], xySize[1]);
 				Packager params = xml.parseGlobalParameters();
 				validateParameters(simName, params);
-				Grid init = listToGrid(initGridArray, params); //creating initial grid
+				Grid init = listToGrid(initGridArray, params);
 				setSimulationType(simName, params, init);
-				myView.createDisplayView(xySize[0], xySize[1]); //sets grid size and calls display grid
+				myView.createDisplayView(xySize[0], xySize[1]);
 				myView.updateGridView(bundleViewPackager(init));
+
 			}
 			catch(IllegalArgumentException e){
 				myView.createErrorWindow(myResources.getString("InvalidCellStates"));
@@ -136,8 +135,7 @@ public class Controller {
 		}
 	}
 
-	private Packager validateParameters(String simName,
-			Packager Pack) {
+	private Packager validateParameters(String simName, Packager Pack) {
 		if (simName.equals("FIRE")) {
 			ResourceBundle defs = ResourceBundle.getBundle("resources/FireDefaults");
 			for(String key:defs.keySet()){
@@ -188,12 +186,13 @@ public class Controller {
 	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Packager properties) {
 		Grid init;
+		
 		if (myView.getEdgeType() == true) { // grid is toroidial
 			init = new ToroidalGrid(given.size(), given.get(0).size());
-		}else {
+		} else {
 			init = new FiniteGrid(given.size(), given.get(0).size());
 		}
-		
+			
 		for (int i = 0; i<given.size();i++) {
 			for (int k = 0; k<given.get(0).size(); k++) {
 				init.putCell(new Cell(given.get(i).get(k), properties.getPropertiesMap()), i, k);
@@ -201,19 +200,6 @@ public class Controller {
 		}
 		return init;
 	}
-	private Grid colorsToStateGrid(ArrayList<ArrayList<String>> given, Packager properties) {
-		Grid init;
-		if (myView.getEdgeType() == true) { // grid is toroidial
-			init = new ToroidalGrid(given.size(), given.get(0).size());
-		}else {
-			init = new FiniteGrid(given.size(), given.get(0).size());
-		}
-		for (int i = 0; i<given.size();i++) {
-			for (int k = 0; k<given.get(0).size(); k++) { 
-				
-			}
-		}
-		return init;
-	}
+
 
 }

@@ -1,6 +1,11 @@
 package viewPackage;
 
+import java.io.IOException;
 import java.util.ResourceBundle;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,13 +18,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import controller.Controller;
 
 
@@ -100,7 +102,12 @@ public class ButtonBox {
 
 							secondStage.close();
 
-							view.tryLoad(fileName);
+							try {
+								view.tryLoad(fileName);
+							} catch (ParserConfigurationException | SAXException | IOException e1) {
+			
+								e1.printStackTrace();
+							}
 						} else {
 							view.createErrorWindow(myResources.getString("InvalidFileName"));
 
@@ -134,7 +141,7 @@ public class ButtonBox {
 		Slider slider = new Slider();
 		slider.setMin(1);
 		slider.setMax(5);
-		System.out.println(location);
+	
 		slider.setLayoutX(location);
 		//slider.setValue(1);
 		slider.setShowTickLabels(true);
@@ -174,10 +181,9 @@ public class ButtonBox {
           	@Override
           	    public void handle(ActionEvent e) {
           			input=(int) text.getText().charAt(0)-48;
-          			//System.out.println("PRACTICE: "+);
+      
           			if ((text.getText().trim() != null && !text.getText().isEmpty()&&input>=1&&input<=5&& text.getText().length()==1)) {
           	        	
-          	        	System.out.println("input "+input);
                 		updateSpeed(input);
                 		speedText.setText(speed.toString());
                 		slider.setValue(input);

@@ -7,7 +7,6 @@ public class ToroidalGrid extends Grid{
 
 	public ToroidalGrid(int row, int column) {
 		super(row, column);
-		// TODO Auto-generated constructor stub
 	}
 	public List<Cell> getAllNeighbors(int row, int col) {
 		List<Cell> neighbors = getDirectNeighbors(row,col);
@@ -24,12 +23,25 @@ public class ToroidalGrid extends Grid{
 			else if (newR < 0 &&newC < 0){
 				neighbors.add(getCell(getGridRowSize()-1, getGridColSize()-1));
 			}
+			else if (newR<0 && newC< getGridRowSize() && newC>=0) {
+				neighbors.add(getCell(getGridRowSize() -1, newC));
+			}
+			else if (newC<0 && newR< getGridRowSize() && newR>=0) {
+				neighbors.add(getCell(newR, getGridColSize() -1));
+			}
 			else if (newR == getGridRowSize() &&newC < 0){
 				neighbors.add(getCell(0, getGridColSize()-1));
 			}
-			else if (newR < 0&&newC==getGridColSize()){
+			else if (newR < 0 &&newC==getGridColSize()){
 				neighbors.add(getCell(getGridRowSize()-1, 0));
 			}
+			else if (newR ==getGridRowSize() && newC< getGridColSize() && newC>=0) {
+				neighbors.add(getCell(0,newC));
+			}
+			else if (newC ==getGridColSize() && newR< getGridRowSize() && newR>=0) {
+				neighbors.add(getCell(newR,0));
+			}
+			
 		}
 		return neighbors;	
 	}
@@ -43,7 +55,7 @@ public class ToroidalGrid extends Grid{
 				neighbors.add(getCell(newR, newC));	
 			}
 			else if (newR == getGridRowSize()){
-				neighbors.add(getCell(newR, newC));
+				neighbors.add(getCell(0, newC));
 			}
 			else if (newR < 0){
 				neighbors.add(getCell(getGridRowSize()-1, newC));
@@ -55,6 +67,7 @@ public class ToroidalGrid extends Grid{
 				neighbors.add(getCell(newR, getGridColSize()-1));
 			}
 		}
+		
 		return neighbors;
 	}
 	//make a deep copy of this Grid

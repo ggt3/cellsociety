@@ -77,6 +77,7 @@ public class XMLParser {
 	}
 
 	public Packager parseColorMap(){
+		
 		HashMap<String, String> map = new HashMap<String, String>();
 
 		NodeList params = root.getElementsByTagName("map").item(0).getChildNodes();

@@ -1,7 +1,5 @@
 package viewPackage;
 
-import java.util.ArrayList;
-import java.util.Random;
 
 import controller.ViewPackager;
 import javafx.event.Event;
@@ -16,7 +14,6 @@ public abstract class DisplayGrid {
 	private int numSquareY = 0;
 	private View view;
 	private Shape[][] myGrid;
-	private boolean random=true;
 	
 	
 	public DisplayGrid(View mainView){
@@ -36,6 +33,7 @@ public abstract class DisplayGrid {
 		initialEmptyGrid(425,450,x,y);
 		view.createGraphWindow();
 	}
+	
 	private double determineXlength(int numCols){
 		return ((double)totalWidthOfGrid)/numCols;
 	}
@@ -55,17 +53,13 @@ public abstract class DisplayGrid {
 	}
 	
     public void updateGrid(ViewPackager viewPackager){
-    	System.out.println(viewPackager.getColorGrid().toString());
     	for(int i=0;i < numSquareX;i++){
     		for (int j=0;j < numSquareY;j++){
     			String color=viewPackager.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
     			setFill(myGrid[i][j], Color.valueOf(color));
     		}
     	}
-    	if (random) {
-    		randomizeGrid(viewPackager);
-    		random =false;
-    	}
+
     }
     
     public void setToggleColorChange(Shape p) {
@@ -79,29 +73,6 @@ public abstract class DisplayGrid {
 		}); 
     }
     
-    private ArrayList<ArrayList<String>> randomizeGrid(ViewPackager vPackage){
-    	Random r=new Random();
-    	Object[] color = vPackage.getStateTotals().keySet().toArray();
-    	for(int i=0;i < numSquareX;i++){
-    		for (int j=0;j < numSquareY;j++){
-    			int rand = r.nextInt(vPackage.getStateTotals().keySet().size());
-    			setFill(myGrid[i][j], Color.valueOf(color[rand].toString()));
-    		}
-    	}
-    	return shapeToColorList();
-    }
-    
-    private ArrayList<ArrayList<String>> shapeToColorList() {
-    	ArrayList<ArrayList<String>> newGrid = new ArrayList<ArrayList<String>>();
-    	for(int i=0;i < numSquareX;i++){
-    		ArrayList<String> colorRow = new ArrayList<String>();
-    		for (int j=0;j < numSquareY;j++){
-    			colorRow.add(myGrid[i][j].getFill().toString());
-    		}
-    		newGrid.add(colorRow);
-    	}
-    	return newGrid;
-    }
     
 	protected void setFill(Shape gridView, Color c) {
 		gridView.setFill(c);

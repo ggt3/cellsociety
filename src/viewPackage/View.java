@@ -3,9 +3,15 @@ package viewPackage;
 
 import java.awt.Dimension;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.xml.sax.SAXException;
+
 import controller.Controller;
 import controller.ViewPackager;
 import javafx.event.ActionEvent;
@@ -111,7 +117,7 @@ public class View {
     
     public void createErrorWindow(String st){
     	ErrorDisplay showError=new ErrorDisplay();
-    	Scene s=showError.display(st);
+    	Scene s = showError.display(st);
     	Stage newStage=new Stage();
     	newStage.setScene(s);
     	newStage.show();
@@ -120,7 +126,7 @@ public class View {
     protected boolean getOutline(){
     	return toggles.getOutline();
     }
-    
+
 	public boolean getEdgeType() {
 		return toggles.getEdgeType();
 	}
@@ -145,20 +151,8 @@ public class View {
 	protected int getGeneration(){
 		return generation;
 	}
-	
-	protected void tryLoad(String s){
-		try {
-			control.loadFile(s);
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void tryLoad(String file) throws ParserConfigurationException, SAXException, IOException {
+		control.loadFile(file);
 	}
 
 }
