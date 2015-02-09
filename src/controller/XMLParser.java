@@ -101,6 +101,7 @@ public class XMLParser {
 				clean(child);
 			else if (nodeType == Node.TEXT_NODE) {
 				String trimmedNodeVal = child.getNodeValue().trim();
+				trimmedNodeVal.replaceAll("\n|\r", "");
 				if (trimmedNodeVal.length() == 0)
 					node.removeChild(child);
 				else
