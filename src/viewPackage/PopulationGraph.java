@@ -2,62 +2,60 @@ package viewPackage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import controller.ViewPackager;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 
 public class PopulationGraph {
 	
 	private View view;
+	private Object[] keys;
 	private List<XYChart.Series> listOfSpecies;
-	//private XYChart.Series species1;
-	//private XYChart.Series species2;
+	final NumberAxis xAxis = new NumberAxis();
+    final NumberAxis yAxis = new NumberAxis();
+	final LineChart<Number,Number> lineChart=new LineChart<Number,Number>(xAxis,yAxis);
+
 	public PopulationGraph(View v){
 		view=v;
 	}
 	
 	public Scene makeGraph(){
-		final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Generation");
-        //creating the chart
-        final LineChart<Number,Number> lineChart = 
-                new LineChart<Number,Number>(xAxis,yAxis);
-                
+        xAxis.setLabel("Generation");      
         lineChart.setTitle("Populations");
-        //defining a series
         listOfSpecies=new ArrayList<XYChart.Series>();
-        XYChart.Series species1= new XYChart.Series();
-        XYChart.Series species2= new XYChart.Series();
-        listOfSpecies.add(species1);
-        listOfSpecies.add(species2);
-        //species1.setName("Percentage of Different Populations");
-        //populating the series with data
         
         Scene scene  = new Scene(lineChart,0,0);
-        lineChart.getData().addAll(species1,species2);
-        addToSeries(species1,20,1);
-        addToSeries(species2,40,1);
-        addToSeries(species1,30,2);
-        addToSeries(species2,10,2);
        return scene;
 	}
-	
-	protected void addToSeries(XYChart.Series species, int percentage, int generation){
-		XYChart.Series correctSpecies=new XYChart.Series();//=listOfSpecies.indexOf(species);
-		
-		for (XYChart.Series s: listOfSpecies){
-			System.out.println(s.toString());
-			if (species.equals(s.toString())){
-				correctSpecies=s;
-				break;
-			}	
-		}
-		//listOfSpecies[0].getData().add(new XYChart.Data(generation, percentage));
-		species.getData().add(new XYChart.Data(generation, percentage));
+	protected void updateGraph(ViewPackager colorGrid){
+		Set<String> keySet=colorGrid.getStateTotals().keySet();
+		keys= keySet.toArray();
 
-		//correctSpecies.getData().add(new XYChart.Data(generation, percentage));
+		if (listOfSpecies.size()==0)
+			addToList(keys.length);
+		int generation=view.getGeneration();
+		for (int i=0;i<keys.length;i++){
+			XYChart.Series species=listOfSpecies.get(i);
+			int x=colorGrid.getStateTotals().get(keys[i]);
+			System.out.println("x: "+x + "generation: "+generation+"keys.length"+keys.length);
+			species.getData().add(new XYChart.Data(generation,x));
+			Path p=(Path) species.nodeProperty().getValue();
+			p.setStroke(Color.valueOf(keys[i].toString()));
+		}
+	}
+	private void addToList(int l){
+		int i=0;
+		while (i<l){
+			XYChart.Series species1= new XYChart.Series();
+	        listOfSpecies.add(species1);
+	        lineChart.getData().add(species1);
+	        i++;
+		}
 	}
 }

@@ -31,8 +31,8 @@ public class XMLParser {
 		clean(root);
 
 	}
-	
-	public ArrayList<ArrayList<CellState>> parseGrid(){
+
+	public ArrayList<ArrayList<CellState>> parseGrid(int r, int c) throws IllegalArgumentException, IndexOutOfBoundsException{
 		//Root
 		ArrayList<ArrayList<CellState>>colorGrid = new ArrayList<ArrayList<CellState>>();
 		NodeList grid = root.getElementsByTagName("grid").item(0).getChildNodes();
@@ -40,8 +40,17 @@ public class XMLParser {
 			NodeList row = grid.item(i).getChildNodes();
 			ArrayList<CellState> rowgrid = new ArrayList<CellState>();
 			for(int j=0; j<row.getLength(); j++){
-				rowgrid.add(CellState.valueOf(row.item(j).getTextContent()));
-				
+				if(i>=r||j>=c){
+					throw new IndexOutOfBoundsException();
+				}
+				try{
+					CellState state = CellState.valueOf(row.item(j).getTextContent());
+					rowgrid.add(state);
+				}
+				catch(IllegalArgumentException e){
+					throw e;
+				};
+
 			}
 			colorGrid.add(rowgrid);
 		}
@@ -54,7 +63,7 @@ public class XMLParser {
 		size[1] = Integer.parseInt(root.getElementsByTagName("ysize").item(0).getTextContent());
 		return size;
 	}
-	public Packager parseGlobalParameters(){
+	public Packager parseGlobalParameters() {
 		Map<String, Integer> map = new HashMap<String, Integer>();
 		NodeList params = root.getElementsByTagName("settings").item(0).getChildNodes();
 		for(int i=0; i<params.getLength(); i++){
@@ -66,12 +75,12 @@ public class XMLParser {
 		p.setPropertiesMap(map);
 		return p;
 	}
-	
+
 	public Packager parseColorMap(){
 		HashMap<String, String> map = new HashMap<String, String>();
-		
+
 		NodeList params = root.getElementsByTagName("map").item(0).getChildNodes();
-		
+
 		for(int i=0; i<params.getLength(); i++){
 			String state = params.item(i).getTextContent().split(",")[0];
 			String color = params.item(i).getTextContent().split(",")[1];
@@ -81,7 +90,7 @@ public class XMLParser {
 		p.setColorMap(map);
 		return p;
 	}
-	public String parseSimulationName() {
+	public String parseSimulationName() throws NullPointerException{
 		return root.getElementsByTagName("name").item(0).getTextContent();
 	}
 

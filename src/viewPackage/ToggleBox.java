@@ -10,10 +10,11 @@ import javafx.scene.layout.VBox;
 
 public class ToggleBox {
 
-	private ToggleGroup edgeType, cellShape, outline;
+	private ToggleGroup edgeType, cellShape, outline,randomized;
 	private boolean isTriangleShape;
 	private boolean isToroidalEdgeType;
 	private boolean isNoStroke;
+	private boolean isRandom;
 	
 	
 	
@@ -53,6 +54,11 @@ public class ToggleBox {
 		ToggleButton tb21 = createToggleButton("Stroke", outline, true);
 		ToggleButton tb22 = createToggleButton("No Stroke", outline, false);
 		setToggleProperty(outline, tb21, tb22);
+		
+		randomized = new ToggleGroup();
+		ToggleButton tb31 = createToggleButton("Not Random", randomized, true);
+		ToggleButton tb32 = createToggleButton("Random", randomized, false);
+		setToggleProperty(randomized, tb31, tb32);
 		
 		
 		VBox vbox1=new VBox();
@@ -94,6 +100,9 @@ public class ToggleBox {
 		if (groupName.equals(cellShape)) {
 			isTriangleShape = change;
 		}
+		if (groupName.equals(randomized)){
+			isRandom = change;
+		}
 	}
 
 	protected boolean getEdgeType() {
@@ -106,5 +115,8 @@ public class ToggleBox {
 
 	protected boolean getShape() {
 		return isTriangleShape;
+	}
+	protected boolean getRandomized(){
+		return isRandom;
 	}
 }

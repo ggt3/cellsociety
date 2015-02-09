@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -24,19 +25,21 @@ public class Controller {
 	private int frameCounter;
 	private Map<String, String> stateColorMap;
 	private static final int FRAME_MULTIPLIER = 4;
-	
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources/English");
+
 	public Controller(Stage primaryStage) {
 		myView = new View(this);
 		myView.initialize(primaryStage);
-	    generateTimeline();
-	    frameCounter = 0;
+		generateTimeline();
+		frameCounter = 0;
 	}
+
 	
 	private void generateTimeline(){
 		myTimeline = new Timeline();
 		myTimeline.setCycleCount(Animation.INDEFINITE);
 	}
-	
+
 	public void changeSpeed(int frameRate) {
 		int totalSpeed = frameRate*FRAME_MULTIPLIER;
 		KeyFrame frame = new KeyFrame(Duration.millis(1000 / totalSpeed), e -> playSimulation()); //max fps is 20
@@ -46,11 +49,11 @@ public class Controller {
 		myTimeline.getKeyFrames().add(frame);
 		myTimeline.play();
 	}
-	
+
 	public void playSimulation() {
 		stepSimulation();
 	}
-	
+
 	public void stepSimulation() {
 		Grid next = rules.makeNextGrid();
 		frameCounter++; //updating the generation
@@ -61,7 +64,6 @@ public class Controller {
 	//information for the graph, colorgrid are here
 	private ViewPackager bundleViewPackager(Grid next) {
 		ViewPackager p = new ViewPackager();
-		p.setGenerationCount(frameCounter);
 		p.setStateTotalMap(updateStateTotals(next));
 		p.setColorGrid(createColorGrid(next));
 		return p;
@@ -108,37 +110,81 @@ public class Controller {
 		stopSimulation();
 		XMLParser xml = new XMLParser();
 		xml.parseXMLFile(fileName);
-		String simName = xml.parseSimulationName();
-		int[] xySize = xml.parseGridSize();
-		stateColorMap = xml.parseColorMap().getColorMap();
-		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
-		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
-		setSimulationType(simName, xml.parseGlobalParameters(), init);
-		myView.createDisplayView(xySize[0], xySize[1]); //sets grid size and calls display grid
-		myView.updateGridView(bundleViewPackager(init));
-		
+		try{
+			String simName = xml.parseSimulationName();
+			int[] xySize = xml.parseGridSize();
+			stateColorMap = xml.parseColorMap().getColorMap();
+			try{
+				ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid(xySize[0], xySize[1]);
+				Packager params = xml.parseGlobalParameters();
+				validateParameters(simName, params);
+				Grid init = listToGrid(initGridArray, params); //creating initial grid
+				setSimulationType(simName, params, init);
+				myView.createDisplayView(xySize[0], xySize[1]); //sets grid size and calls display grid
+				myView.updateGridView(bundleViewPackager(init));
+			}
+			catch(IllegalArgumentException e){
+				myView.createErrorWindow(myResources.getString("InvalidCellStates"));
+			}
+			catch(IndexOutOfBoundsException e){
+				myView.createErrorWindow(myResources.getString("CellLocationsOutOfBounds"));
+			}
+
+		}
+		catch(NullPointerException e){
+			myView.createErrorWindow(myResources.getString("InvalidSimulation"));
+		}
 	}
-	
+
+	private Packager validateParameters(String simName,
+			Packager Pack) {
+		if (simName.equals("FIRE")) {
+			ResourceBundle defs = ResourceBundle.getBundle("resources/FireDefaults");
+			for(String key:defs.keySet()){
+				if (!Pack.getPropertiesMap().containsKey(key)){
+					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
+				}
+			}
+		}
+		if (simName.equals("WATOR")) {
+			ResourceBundle defs = ResourceBundle.getBundle("resources/WatorDefaults");
+			for(String key:defs.keySet()){
+				if (!Pack.getPropertiesMap().containsKey(key)){
+					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
+				}
+			}
+		}
+		if (simName.equals("SEGREGATION")) {
+			ResourceBundle defs = ResourceBundle.getBundle("resources/SegregationDefaults");
+			for(String key:defs.keySet()){
+				if (!Pack.getPropertiesMap().containsKey(key)){
+					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
+				}
+			}
+		}
+		return Pack;
+	}
+
 	//depending on the string, create a simulation rule with initial states and a initial grid
 	private void setSimulationType(String name, Packager p, Grid g) {
-			if (name.equals("FIRE")) {
-				rules = new FireSimulation(g, p);
-				return;
-			}
-			if(name.equals("LIFE")) {
-				rules= new GameLifeSimulation(g,p);
-				return;
-			}
-			if (name.equals("WATOR")) {
-				rules = new WatorSimulation(g, p);
-				return;
-			}
-			if (name.equals("SEGREGATION")) {
-				rules = new SegregationSimulation(g, p);
-				return;
-			}
+		if (name.equals("FIRE")) {
+			rules = new FireSimulation(g, p);
+			return;
+		}
+		if(name.equals("LIFE")) {
+			rules= new GameLifeSimulation(g,p);
+			return;
+		}
+		if (name.equals("WATOR")) {
+			rules = new WatorSimulation(g, p);
+			return;
+		}
+		if (name.equals("SEGREGATION")) {
+			rules = new SegregationSimulation(g, p);
+			return;
+		}
 	}
-	
+
 	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Packager properties) {
 		Grid init;
@@ -167,6 +213,7 @@ public class Controller {
 				
 			}
 		}
+		return init;
 	}
 
 }

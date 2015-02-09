@@ -8,6 +8,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import controller.Controller;
 import controller.ViewPackager;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -16,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 //import org.controlsfx.dialog.Dialogs;
 
@@ -32,6 +35,8 @@ public class View {
 	private ToggleBox toggles;
 	private DisplayGrid myGridDisplayed;
 	private PopulationGraph myGraph;
+	private int generation;
+	private Stage additionalStage;
 	
     public View(Controller c) {
     	control = c;
@@ -67,27 +72,38 @@ public class View {
         root.getChildren().addAll(topButtonBox,speedSlider,toggle);
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
-    }
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				additionalStage.close();
+			}
+		});    }
 
     public void createDisplayView(int x, int y) {
-    	if (toggles.getShape() ==true) { //if its triangles
+		root.getChildren().remove(3, root.getChildren().size());
+		if(additionalStage!=null)
+			additionalStage.close();
+    	generation=0;
+		if (toggles.getShape() ==true) { //if its triangles
     		myGridDisplayed = new TriangularGridView(this);
     	} else {
     		myGridDisplayed = new RectangularGridView(this);
     	}
     	myGridDisplayed.initializeGridView(x, y);
-    
     }
     
     //changes color of existing rectangles according to colors
     public void updateGridView(ViewPackager colorGrid){
+    	//generation++;
     	myGridDisplayed.updateGrid(colorGrid);
+    	myGraph.updateGraph(colorGrid);
+    	generation++;
     }
     
     protected void createGraphWindow(){
     	myGraph=new PopulationGraph(this);
     	Scene graphScene=myGraph.makeGraph();
-    	Stage additionalStage=new Stage();
+    	additionalStage=new Stage();
     	additionalStage.setScene(graphScene);
     	additionalStage.show();
     }
@@ -125,7 +141,9 @@ public class View {
 	public ResourceBundle getResourceBundle(){
 		return myResources;
 	}
-
+	protected int getGeneration(){
+		return generation;
+	}
 	
 	protected void tryLoad(String s){
 		try {
