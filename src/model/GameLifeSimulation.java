@@ -9,7 +9,7 @@ import controller.Packager;
  */
 
 public class GameLifeSimulation extends Simulation {
-
+	
 	public GameLifeSimulation(Grid aGrid, Packager attributes) {
 		super(aGrid, attributes);
 

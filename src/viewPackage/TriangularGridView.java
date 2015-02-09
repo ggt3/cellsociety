@@ -1,8 +1,4 @@
 package viewPackage;
-
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Shape;
 
@@ -29,14 +25,6 @@ public class TriangularGridView extends DisplayGrid {
         			else {
         				drawOddTriangle(x, y, i, j, p);
         			}
-    			p.setOnMouseClicked(new EventHandler<Event>() {
-					@Override
-					public void handle(Event event) {
-						
-						//change state instead of just color to white
-						setFill(p,Color.WHITE);
-					}
-				}); 
     			super.outline(p);
     			getView().addToRoot(p);
     			setShape(xIndex, yIndex, p);

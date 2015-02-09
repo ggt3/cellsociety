@@ -23,6 +23,7 @@ public class Controller {
 	private Timeline myTimeline;
 	private int frameCounter;
 	private Map<String, String> stateColorMap;
+	private static final int FRAME_MULTIPLIER = 4;
 	
 	public Controller(Stage primaryStage) {
 		myView = new View(this);
@@ -31,15 +32,14 @@ public class Controller {
 	    frameCounter = 0;
 	}
 	
-	private void generateTimeline (){
+	private void generateTimeline(){
 		myTimeline = new Timeline();
 		myTimeline.setCycleCount(Animation.INDEFINITE);
 	}
 	
 	public void changeSpeed(int frameRate) {
-		int totalSpeed = frameRate*4;
+		int totalSpeed = frameRate*FRAME_MULTIPLIER;
 		KeyFrame frame = new KeyFrame(Duration.millis(1000 / totalSpeed), e -> playSimulation()); //max fps is 20
-		System.out.println(totalSpeed);
 		if (!myTimeline.getKeyFrames().isEmpty()) {
 			myTimeline.getKeyFrames().remove(0);
 		}
@@ -56,8 +56,9 @@ public class Controller {
 		frameCounter++; //updating the generation
 		rules.updateGrid(next); //sets the next grid as the new grid
 		myView.updateGridView(bundleViewPackager(next));
-		
 	}
+	
+	//information for the graph, colorgrid are here
 	private ViewPackager bundleViewPackager(Grid next) {
 		ViewPackager p = new ViewPackager();
 		p.setGenerationCount(frameCounter);
@@ -68,9 +69,9 @@ public class Controller {
 	//class that takes a grid of states and packages the grid of colors
 	private ArrayList<ArrayList<String>> createColorGrid(Grid gridToReturn) {
 		ArrayList<ArrayList<String>> colorGrid = new ArrayList<ArrayList<String>>();
-		for (int r = 0; r< gridToReturn.getRowSize(); r++) {
+		for (int r = 0; r< gridToReturn.getGridRowSize(); r++) {
 			ArrayList<String> colorRow = new ArrayList<String>();
-			for (int c = 0; c< gridToReturn.getColSize(); c++) {
+			for (int c = 0; c< gridToReturn.getGridColSize(); c++) {
 				String state = gridToReturn.getCell(c, r).toString();
 				String color = stateColorMap.get(state);
 				colorRow.add(color); //gets the color
@@ -82,8 +83,8 @@ public class Controller {
 	//calculate the total number of 
 	private Map<String, Integer> updateStateTotals(Grid gridToReturn) {
 		Map<String,Integer> mapTotal = new HashMap<String,Integer>();
-		for (int r = 0; r< gridToReturn.getRowSize(); r++) {
-			for (int c = 0; c < gridToReturn.getColSize(); c++) {
+		for (int r = 0; r< gridToReturn.getGridRowSize(); r++) {
+			for (int c = 0; c < gridToReturn.getGridColSize(); c++) {
 				String state = gridToReturn.getCell(c, r).toString();
 				String color = stateColorMap.get(state);
 				if (!mapTotal.containsKey(color)) {
@@ -140,7 +141,13 @@ public class Controller {
 	
 	//translating the first grid from a arraylist of arrays into a Grid object to give to simulation
 	private Grid listToGrid(ArrayList<ArrayList<CellState>> given, Packager properties) {
-		Grid init = new Grid(given.size(), given.get(0).size());
+		Grid init;
+		if (myView.getEdgeType() == true) { // grid is toroidial
+			init = new ToroidalGrid(given.size(), given.get(0).size());
+		}else {
+			init = new FiniteGrid(given.size(), given.get(0).size());
+		}
+		
 		for (int i = 0; i<given.size();i++) {
 			for (int k = 0; k<given.get(0).size(); k++) {
 				init.putCell(new Cell(given.get(i).get(k), properties.getPropertiesMap()), i, k);
@@ -148,6 +155,18 @@ public class Controller {
 		}
 		return init;
 	}
-
+	private Grid colorsToStateGrid(ArrayList<ArrayList<String>> given, Packager properties) {
+		Grid init;
+		if (myView.getEdgeType() == true) { // grid is toroidial
+			init = new ToroidalGrid(given.size(), given.get(0).size());
+		}else {
+			init = new FiniteGrid(given.size(), given.get(0).size());
+		}
+		for (int i = 0; i<given.size();i++) {
+			for (int k = 0; k<given.get(0).size(); k++) { 
+				
+			}
+		}
+	}
 
 }

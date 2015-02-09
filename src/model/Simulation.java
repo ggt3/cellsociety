@@ -32,8 +32,8 @@ public abstract class Simulation {
 	//returning the next grid states
 	public Grid makeNextGrid() {
 		nextGrid = currentGrid.copyGrid(); //setting the next grid a new grid
-		for (int r = 0; r< currentGrid.getRowSize(); r++) {
-			for (int c = 0; c< currentGrid.getColSize(); c++) {
+		for (int r = 0; r< currentGrid.getGridRowSize(); r++) {
+			for (int c = 0; c< currentGrid.getGridColSize(); c++) {
 				CellState newState = calculateNewCellState(r,c);
 				nextGrid.getCell(r, c).setState(newState); //changing the cell state in the new grid
 
