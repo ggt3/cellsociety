@@ -113,7 +113,7 @@ public class ButtonBox {
 							view.tryLoad(fileName);
 						} else {
 							// grid.add(addText("Not a valid name. Make sure it ends in .xml",10,50,500))
-							view.createErrorWindow("File Name entered is not a valid name");
+							view.createErrorWindow(myResources.getString("InvalidFileName"));
 						}
 					}
 				});
@@ -193,7 +193,7 @@ public class ButtonBox {
                 		speedText.setText(speed.toString());
                 		slider.setValue(input);
           	        } else {
-          	        	view.createErrorWindow("Speed entered is not a valid speed.\nPlease Enter a number between 1 and 5.");
+          	        	view.createErrorWindow(myResources.getString("InvalidSpeed"));
           	        	
           	        }
           	     }
