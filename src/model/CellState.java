@@ -1,6 +1,7 @@
 package model;
 
-public enum CellState {
+
+public enum CellState{
 	
 	//Conway game of life
 	ALIVE,

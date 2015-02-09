@@ -60,7 +60,6 @@ public class Controller {
 	}
 	private ViewPackager bundleViewPackager(Grid next) {
 		ViewPackager p = new ViewPackager();
-		//p.setGenerationCount(frameCounter);
 		p.setStateTotalMap(updateStateTotals(next));
 		p.setColorGrid(createColorGrid(next));
 		return p;
@@ -110,10 +109,10 @@ public class Controller {
 		String simName = xml.parseSimulationName();
 		int[] xySize = xml.parseGridSize();
 		stateColorMap = xml.parseColorMap().getColorMap();
-		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid();
+		ArrayList<ArrayList<CellState>> initGridArray = xml.parseGrid(xySize[0],xySize[1]);
 		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 		setSimulationType(simName, xml.parseGlobalParameters(), init);
-		myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls display grid
+		myView.createDisplayView(xySize[0], xySize[1]); //sets grid size and calls display grid
 		myView.updateGridView(bundleViewPackager(init));
 		
 	}

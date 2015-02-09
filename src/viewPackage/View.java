@@ -11,6 +11,8 @@ import org.xml.sax.SAXException;
 
 import controller.Controller;
 import controller.ViewPackager;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -19,6 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 //import org.controlsfx.dialog.Dialogs;
 
@@ -31,20 +34,18 @@ public class View {
 	private ResourceBundle myResources;
     private String fileName="";
 	private Controller control;
-	private boolean isTriangleShape;
-	private boolean isToroidalEdgeType;
-	private boolean isNoStroke;
 	private ButtonBox buttons;
 	private ToggleBox toggles;
 	private DisplayGrid myGridDisplayed;
 	private PopulationGraph myGraph;
 	private int generation;
+	private Stage additionalStage;
 	
     public View(Controller c) {
     	control = c;
-    	myGridDisplayed=new DisplayGrid(this);
     	myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
 		
+
     }
     
 	public Text addText(String s,int size,int xLocation,int yLocation){
@@ -57,12 +58,11 @@ public class View {
 
 	//beginning screen with no grid
     public void initialize(Stage primaryStage) {
-    	System.out.println("isTriangle: "+isTriangleShape);
     	primaryStage.setResizable(false);
         primaryStage.setTitle("Cell Society");
-        //mainStage=primaryStage;
+      
         buttons = new ButtonBox(control,this);
-        toggles = new ToggleBox(this);
+        toggles = new ToggleBox();
         
         HBox topButtonBox=buttons.makeButtonBox();
         HBox speedSlider=buttons.makeSlider();
@@ -71,18 +71,28 @@ public class View {
         HBox toggle=toggles.makeToggles();
         toggle.setLayoutY(windowSize-100);
         toggle.setLayoutX(windowSize/3);
-        
         root = new Group();
         root.getChildren().addAll(topButtonBox,speedSlider,toggle);
-        System.out.printf("edge %b outline %b shape %b", getEdgeType(), getOutline(), getShape());
         primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
         primaryStage.show();
-    }
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent event) {
+				additionalStage.close();
+			}
+		});    }
 
-
-    public void calculateDynamicSize(int sizeX, int sizeY){
-    	myGridDisplayed.setGridSize(sizeX, sizeY);
+    public void createDisplayView(int x, int y) {
+		root.getChildren().remove(3, root.getChildren().size());
+		if(additionalStage!=null)
+			additionalStage.close();
     	generation=0;
+		if (toggles.getShape() ==true) { //if its triangles
+    		myGridDisplayed = new TriangularGridView(this);
+    	} else {
+    		myGridDisplayed = new RectangularGridView(this);
+    	}
+    	myGridDisplayed.initializeGridView(x, y);
     }
     
     //changes color of existing rectangles according to colors
@@ -96,7 +106,7 @@ public class View {
     protected void createGraphWindow(){
     	myGraph=new PopulationGraph(this);
     	Scene graphScene=myGraph.makeGraph();
-    	Stage additionalStage=new Stage();
+    	additionalStage=new Stage();
     	additionalStage.setScene(graphScene);
     	additionalStage.show();
     }
@@ -109,31 +119,8 @@ public class View {
     	newStage.show();
     }
     
-
-    
-    //protected void updateGraph(String species, int percentage, int generation){
-    	//graphy.addToSeries(species,percentage,generation);
-    //}
-    
-    protected void setEdgeType(boolean s){
-    	isToroidalEdgeType=s;
-    }
-    protected boolean getEdgeType(){
-    	return isToroidalEdgeType;
-    }
-    
-    protected void setOutline(boolean s){
-    	isNoStroke=s;
-    }
     protected boolean getOutline(){
-    	return isNoStroke;
-    }
-    
-    protected void setShape(boolean s){
-    	isTriangleShape=s;
-    }
-    protected boolean getShape(){
-    	return isTriangleShape;
+    	return toggles.getOutline();
     }
     
 	protected void addToRoot(Node n){
@@ -150,9 +137,7 @@ public class View {
 	protected void setFileName(String file){
 		fileName=file;
 	}
-	protected int getWindowSize(){
-		return windowSize;
-	}
+
 	public ResourceBundle getResourceBundle(){
 		return myResources;
 	}

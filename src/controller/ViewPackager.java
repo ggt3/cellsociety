@@ -12,7 +12,6 @@ import java.util.Map;
  */
 public class ViewPackager {
 	private ArrayList<ArrayList<String>> colorGrid;
-	private int generationCount;
 	private Map<String, Integer> stateTotals;
 	
 	public void setColorGrid(ArrayList<ArrayList<String>> color ) {
@@ -21,12 +20,6 @@ public class ViewPackager {
 	public ArrayList<ArrayList<String>> getColorGrid() {
 		return colorGrid;
 	}
-//	public int getGenerationCount() {
-//		return generationCount;
-//	}
-//	public void setGenerationCount(int count) {
-//		generationCount = count;
-//	}
 	
 	public Map<String, Integer> getStateTotals() {
 		return Collections.unmodifiableMap(stateTotals);
