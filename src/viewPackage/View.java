@@ -27,7 +27,9 @@ public class View {
 	private Integer windowSize=600;
 	private Group root;
     public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
-	private String fileName="";
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
+	private ResourceBundle myResources;
+    private String fileName="";
 	private Controller control;
 	private boolean isTriangleShape;
 	private boolean isToroidalEdgeType;
@@ -40,6 +42,8 @@ public class View {
     public View(Controller c) {
     	control = c;
     	myGridDisplayed=new DisplayGrid(this);
+    	myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
+		
     }
     
 	public Text addText(String s,int size,int xLocation,int yLocation){
@@ -92,13 +96,15 @@ public class View {
     	additionalStage.show();
     }
     
-    protected void createErrorWindow(String st){
+    public void createErrorWindow(String st){
     	ErrorDisplay showError=new ErrorDisplay();
     	Scene s=showError.display(st);
     	Stage newStage=new Stage();
     	newStage.setScene(s);
     	newStage.show();
     }
+    
+
     
     //protected void updateGraph(String species, int percentage, int generation){
     	//graphy.addToSeries(species,percentage,generation);
@@ -142,7 +148,9 @@ public class View {
 	protected int getWindowSize(){
 		return windowSize;
 	}
-
+	public ResourceBundle getResourceBundle(){
+		return myResources;
+	}
 	
 	protected void tryLoad(String s){
 		try {
