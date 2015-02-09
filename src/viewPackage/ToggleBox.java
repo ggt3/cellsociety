@@ -17,8 +17,7 @@ public class ToggleBox {
 	private boolean isNoStroke;
 	private boolean isRandom;
 	
-	
-	
+
 	private ToggleButton createToggleButton(String name, ToggleGroup group, boolean depressed) {
 		ToggleButton tb = new ToggleButton(name);
 		tb.setToggleGroup(group);
@@ -60,26 +59,11 @@ public class ToggleBox {
 		ToggleButton tb31 = createToggleButton("Not Random", randomized, true);
 		ToggleButton tb32 = createToggleButton("Random", randomized, false);
 		setToggleProperty(randomized, tb31, tb32);
-		
-		
+				
 		VBox vbox1=assignToVBox(tb1,tb2);
 		VBox vbox2=assignToVBox(tb11,tb12);
 		VBox vbox3=assignToVBox(tb21,tb22);
 		VBox vbox4=assignToVBox(tb31,tb32);
-//		VBox vbox1=new VBox();
-//		vbox1.getChildren().addAll(tb1,tb2);
-//		vbox1.setAlignment(Pos.CENTER);
-//		
-//		VBox vbox2=new VBox();
-//		vbox2.getChildren().addAll(tb11,tb12);
-//		vbox2.setAlignment(Pos.CENTER);
-//		
-//		VBox vbox3=new VBox();
-//		vbox3.getChildren().addAll(tb21,tb22);
-//		vbox3.setAlignment(Pos.CENTER);
-//		VBox vbox4=new VBox();
-//		vbox4.getChildren().addAll(tb31,tb32);
-//		vbox4.setAlignment(Pos.CENTER);
 		
 	
 		hbox.getChildren().addAll(vbox1,vbox2,vbox3,vbox4);
@@ -106,7 +90,6 @@ public class ToggleBox {
 					setToggleChangeMethod(group, true);
 				}
 			}
-
 		});
 	}
 	
