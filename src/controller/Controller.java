@@ -57,7 +57,7 @@ public class Controller {
 		Grid next = rules.makeNextGrid();
 		rules.updateGrid(next); //sets the next grid as the new grid
 		Packager bundle = rules.createColorGrid(next);
-		myView.updateRectangle(bundle,false);
+		myView.updateRectangle(bundle);
 	}
 	
 
@@ -79,8 +79,8 @@ public class Controller {
 		Grid init = listToGrid(initGridArray, xml.parseGlobalParameters()); //creating initial grid
 		
 		setSimulationType(simName, xml.parseColorMap(), init);
-		myView.calculateDynamicSize(xySize[0], xySize[1],false); //sets grid size and calls display grid
-		myView.updateRectangle(rules.createColorGrid(init),false);
+		myView.calculateDynamicSize(xySize[0], xySize[1]); //sets grid size and calls display grid
+		myView.updateRectangle(rules.createColorGrid(init));
 	}
 	
 	private void setSimulationType(String name, Packager p, Grid g) {

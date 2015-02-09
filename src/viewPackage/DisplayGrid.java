@@ -1,9 +1,12 @@
 package viewPackage;
 
-import java.util.ResourceBundle;
+import java.util.Random;
 
-import controller.Controller;
 import controller.Packager;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
@@ -18,17 +21,19 @@ public class DisplayGrid {
 	private int numSquareY=0;
 	private View view;
 	private Shape[][] myGrid;
+	private boolean shapey;
+	private boolean boolz=true;
 	
 	
 	public DisplayGrid(View mainView){
 		view = mainView;
+		//shape=mainView.getShape();
 	}
 
 	public void setGridSize(int sizeX, int sizeY){
 		numSquareX = sizeX;
 		numSquareY = sizeY;
 		myGrid=new Shape[numSquareX][numSquareY];
-		
 		double x=determineXlength(numSquareX);
 		double y=determineYlength(numSquareY);
 		displayGrid(425,450,x,y);
@@ -43,54 +48,65 @@ public class DisplayGrid {
 		return ((double)totalHeightOfGrid)/numRows;
 	}
     public void displayGrid(int xtot, int ytot,double x,double y){
+    	boolean even=true;//=false;
+    	boolean start=even;
     	int xIndex=0;
     	for(int i=75;i<=xtot-x;i+=x){
     		int yIndex=0;
+    		even=start;
     		for (int j=100;j<=ytot-y;j+=y){
-    			Shape rex=new Rectangle(i,j,x,y);
-    			rex.setStroke(Color.BLACK);
-    			rex.setStrokeWidth(0.5);
-    			view.addToRoot(rex);//root.getChildren().add(rex);
-    			myGrid[xIndex][yIndex]=rex;
+    			Shape p;
+    			shapey=view.getShape();
+    			if (shapey){
+    				p=new Rectangle(i,j,x,y);
+    			}
+    			else{
+    				p=new Polygon();
+        			if (even)
+        				drawEvenTriangle(x, y, i, j, p);
+        			else
+        				drawOddTriangle(x, y, i, j, p);
+    			}
+    			p.setOnMouseClicked(new EventHandler<Event>() {
+					@Override
+					public void handle(Event event) {
+						
+						//change state instead of just color to white
+						setFill(p,Color.WHITE);
+					}
+				}); 
+    			outline(p);
+    			view.addToRoot(p);
+    			myGrid[xIndex][yIndex]=p;
     			yIndex++;
+    			even=!even;
     		}
-   
+    		start=!start;
     		xIndex++;
     	}
+    	view.createGraphWindow();
     }
-//        public void displayGrid(int xtot, int ytot,double x,double y){
-//        	boolean even=true;//=false;
-//        	boolean start=even;
-//        	int xIndex=0;
-//        	for(int i=75;i<=xtot-x;i+=x){
-//        		int yIndex=0;
-//        		even=start;
-//        		for (int j=100;j<=ytot-y;j+=y){
-//        			//Rectangle rex=new Rectangle(i,j,x,y);
-//        			Polygon p=new Polygon();
-//        			if (even){
-//        				p.getPoints().addAll(new Double[]{
-//            					i+0.0, j+0.0,
-//            					i+x+x, j+0.0,
-//            					i+x, j+y });
-//        			}
-//        			else{
-//        			p.getPoints().addAll(new Double[]{
-//        					i+x, j+0.0,
-//        					i+0.0, j+y,
-//        					i+x+x, j+y });
-//        			}
-//        			p.setStroke(Color.BLACK);
-//        			p.setStrokeWidth(0.5);
-//        			view.addToRoot(p);//root.getChildren().add(rex);
-//        			myGrid[xIndex][yIndex]=p;
-//        			yIndex++;
-//        			even=!even;
-//        		}
-//        		start=!start;
-//        		xIndex++;
-//        	}
-//    }
+
+	private void drawEvenTriangle(double x, double y, int i, int j, Shape p) {
+		((Polygon) p).getPoints().addAll(new Double[]{
+				i+0.0, j+0.0,
+				i+x+x, j+0.0,
+				i+x, j+y });
+	}
+
+	private void drawOddTriangle(double x, double y, int i, int j, Shape p) {
+		((Polygon) p).getPoints().addAll(new Double[]{
+				i+x, j+0.0,
+				i+0.0, j+y,
+				i+x+x, j+y });
+	}
+
+	private void outline(Shape p) {
+		if (view.getOutline()){
+			p.setStroke(Color.BLACK);
+			p.setStrokeWidth(0.5);
+		}
+	}
 	
     public void updateRectangle(Packager colorGrid){
     	for(int i=0;i < numSquareX;i++){
@@ -100,10 +116,31 @@ public class DisplayGrid {
     
     		}
     	}
-    	
-
+    	//view.createGraphWindow();
+    	if (boolz)
+    		randomizeGrid();
     }
+    public void randomizeGrid(){
+    	for(int i=0;i < numSquareX;i++){
+    		for (int j=0;j < numSquareY;j++){
+    			Random r=new Random();
+    			int p=r.nextInt(3);
+    			//int poo= (int) Math.random();
+    			if (p==0)
+    				setFill(myGrid[i][j], Color.VIOLET);
+    			else if (p==1)
+    				setFill(myGrid[i][j], Color.TURQUOISE);
+    			else
+    				setFill(myGrid[i][j], Color.BROWN);
+    		}
+    	}
+    	boolz=false;
+    }
+    
 	protected void setFill(Shape gridView3,Color c) {
 		gridView3.setFill(c);
 	}
+	
+	
+	
 }
