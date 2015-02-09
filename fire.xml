@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.1"?>
 <root>
 	<name>FIRE</name>
 	<title>My Simulation</title>
@@ -7,16 +7,5 @@
 	<ysize>10</ysize>
 	<settings><parameter>THRESHOLD,70</parameter></settings>
 	<map><color>BURNING,RED</color><color>TREE,GREEN</color><color>EMPTY,YELLOW</color></map>
-	<grid>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>BURNING</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row>
-	<row><cell>TREE</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row>
-	</grid>
+	<grid><row><cell>TRE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>BURNING</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row><row><cell>TREE</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>BURNING</cell><cell>TREE</cell><cell>TREE</cell><cell>EMPTY</cell><cell>TREE</cell><cell>EMPTY</cell></row></grid>
 </root>
