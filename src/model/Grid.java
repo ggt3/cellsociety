@@ -18,10 +18,10 @@ public abstract class Grid {
 	public Grid(int row, int column) {
 		myCells = new Cell[row][column]; //creates 2D array with dimensions
 	}
-	public abstract List<Cell> getAllNeighbors(int row, int col);
-	public abstract List<Cell> getDirectNeighbors(int row, int col);
+	protected abstract List<Cell> getAllNeighbors(int row, int col);
+	protected abstract List<Cell> getDirectNeighbors(int row, int col);
 	
-	public ArrayList<Point> getLocationsWithState(CellState x) {
+	protected ArrayList<Point> getLocationsWithState(CellState x) {
 		ArrayList<Point> stateList = new ArrayList<Point>();
 		for (int i = 0; i< myCells.length; i++) {
 			for (int j = 0; j<myCells[0].length; j++) {
@@ -32,16 +32,14 @@ public abstract class Grid {
 		}
 		return stateList;
 	}
-	public List<Point> getDirectNeighborsWithType(Point p, CellState c) {
+	protected List<Point> getDirectLocationsWithType(Point p, CellState c) {
 		List<Point> neighbors = new ArrayList<Point>();
 		int[][] deltas = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}; //E S W N
 		 for (int i = 0; i < deltas.length; i++) {
 			int newR = p.y + deltas[i][0];
 			int newC = p.x + deltas[i][1];
 			if (inBounds(newR, newC)) {
-				if (myCells[newR][newC].getState().equals(c)) { // only add
-																// neighbor if
-																// in bounds
+				if (myCells[newR][newC].getState().equals(c)) {
 					neighbors.add(new Point(newC, newR));
 				}
 			}
@@ -50,7 +48,7 @@ public abstract class Grid {
 	
 		
 	}
-	public List<Cell> getDirectNeighborsWithType(int row, int col, CellState c) {
+	protected List<Cell> getDirectNeighborsWithType(int row, int col, CellState c) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int[][] deltas = {{1, 0}, {0, -1}, {-1, 0}, {0, 1}}; //E S W N
 		 for (int i = 0; i < deltas.length; i++) {
@@ -67,7 +65,7 @@ public abstract class Grid {
 	
 		
 	}
-	public abstract Grid copyGrid();
+	protected abstract Grid copyGrid();
 	
 	public Cell getCell(int row, int col) {
 		return myCells[row][col];

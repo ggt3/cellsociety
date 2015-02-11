@@ -134,38 +134,20 @@ public class Controller {
 			myView.createErrorWindow(myResources.getString("InvalidSimulation"));
 		}
 	}
-
-	private Packager validateParameters(String simName, Packager Pack) {
-		if (simName.equals("FIRE")) {
-			ResourceBundle defs = ResourceBundle.getBundle("resources/FireDefaults");
-			for(String key:defs.keySet()){
-				if (!Pack.getPropertiesMap().containsKey(key)){
-					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
-				}
+	private void validateParameters(String source, Packager Pack) {
+		ResourceBundle defs = ResourceBundle.getBundle(source);
+		for(String key:defs.keySet()){
+			if (!Pack.getPropertiesMap().containsKey(key)){
+				Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
 			}
 		}
-		if (simName.equals("WATOR")) {
-			ResourceBundle defs = ResourceBundle.getBundle("resources/WatorDefaults");
-			for(String key:defs.keySet()){
-				if (!Pack.getPropertiesMap().containsKey(key)){
-					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
-				}
-			}
-		}
-		if (simName.equals("SEGREGATION")) {
-			ResourceBundle defs = ResourceBundle.getBundle("resources/SegregationDefaults");
-			for(String key:defs.keySet()){
-				if (!Pack.getPropertiesMap().containsKey(key)){
-					Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
-				}
-			}
-		}
-		return Pack;
 	}
+
 
 	//depending on the string, create a simulation rule with initial states and a initial grid
 	private void setSimulationType(String name, Packager p, Grid g) {
 		if (name.equals("FIRE")) {
+			validateParameters("resources/FireDefaults", p);
 			rules = new FireSimulation(g, p);
 			return;
 		}
@@ -174,10 +156,12 @@ public class Controller {
 			return;
 		}
 		if (name.equals("WATOR")) {
+			validateParameters("resources/WatorDefaults", p);
 			rules = new WatorSimulation(g, p);
 			return;
 		}
 		if (name.equals("SEGREGATION")) {
+			validateParameters("resources/SegregationDefaults", p);
 			rules = new SegregationSimulation(g, p);
 			return;
 		}

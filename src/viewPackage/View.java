@@ -51,13 +51,6 @@ public class View {
 
     }
     
-	public Text addText(String s,int size,int xLocation,int yLocation){
-        Text t = new Text(xLocation,yLocation,s);
-        t.setFont(Font.font ("Verdana", size));
-        t.setCache(true);
-        t.setFill(Color.BLACK);
-        return t;
-	}
 
 	//beginning screen with no grid
     public void initialize(Stage primaryStage) {
@@ -74,19 +67,18 @@ public class View {
         HBox toggle=toggles.makeToggles();
         toggle.setLayoutY(windowSize-100);
         toggle.setLayoutX(windowSize/9);
-        root = new Group();
-        root.getChildren().addAll(topButtonBox,speedSlider,toggle);
-        primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
-        primaryStage.show();
-        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
-			public void handle(WindowEvent event) {
-				if (additionalStage!=null)
-					additionalStage.close();
+		root = new Group();
+		root.getChildren().addAll(topButtonBox, speedSlider, toggle);
+		primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
+		primaryStage.show();
+		primaryStage.setOnCloseRequest(e -> {
+			if (additionalStage != null) {
+				additionalStage.close();
 			}
-		});    }
+		});
+	}
 
-    public void createDisplayView(int x, int y) {
+	public void createDisplayView(int x, int y) {
 		root.getChildren().remove(3, root.getChildren().size());
 		if(additionalStage!=null)
 			additionalStage.close();
@@ -101,7 +93,6 @@ public class View {
     
     //changes color of existing rectangles according to colors
     public void updateGridView(ViewPackager colorGrid){
-    	//generation++;
     	myGridDisplayed.updateGrid(colorGrid);
     	myGraph.updateGraph(colorGrid);
     	generation++;

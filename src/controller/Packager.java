@@ -1,14 +1,12 @@
 package controller;
 
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class Packager {
 	private Map<String,Integer> attributeMap; 
-	private ArrayList<ArrayList<String>> colorGrid=new ArrayList<ArrayList<String>>();
 	private Map<String, String> colorsMap;
 	
 	public Map<String,Integer> getPropertiesMap() {
@@ -18,10 +16,6 @@ public class Packager {
 		}
 		return m;
 
-	}
-	
-	public ArrayList<ArrayList<String>> getColorGrid() {
-		return colorGrid;
 	}
 	
 	public Map<String, String> getColorMap() {

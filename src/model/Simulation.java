@@ -1,6 +1,4 @@
 package model;
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.Random;
 
 import controller.Packager;
@@ -12,12 +10,10 @@ import controller.Packager;
 
 public abstract class Simulation {
 	private Grid currentGrid, nextGrid;
-	private Map<String, Integer> initialState;
 	public static final Random myGenerator = new Random(1234); //seeding the random so we get consistent results
 	
 	public Simulation(Grid aGrid, Packager attributes) {
 		currentGrid = aGrid;
-		initialState = attributes.getPropertiesMap(); //stores the state to color map
 	}
 
  	public Grid getCurrentGrid() {
@@ -48,6 +44,6 @@ public abstract class Simulation {
 	}
 	//rules logic implemented here
 	public abstract CellState calculateNewCellState(int row, int col);
-	
-	
+
+			
 }

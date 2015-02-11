@@ -44,7 +44,9 @@ public class XMLParser {
 					throw new IndexOutOfBoundsException();
 				}
 				try{
-					CellState state = CellState.valueOf(row.item(j).getTextContent());
+					
+					String newTrimmedNodeVal = row.item(j).getTextContent().replaceAll("\\n|\\r|\\t", "");
+					CellState state = CellState.valueOf(newTrimmedNodeVal);
 					rowgrid.add(state);
 				}
 				catch(IllegalArgumentException e){
@@ -110,8 +112,7 @@ public class XMLParser {
 			if (nodeType == Node.ELEMENT_NODE)
 				clean(child);
 			else if (nodeType == Node.TEXT_NODE) {
-				String trimmedNodeVal = child.getNodeValue().trim();
-				trimmedNodeVal.replaceAll("\n|\r|\t", "");
+				String trimmedNodeVal = child.getTextContent().trim();
 				if (trimmedNodeVal.length() == 0)
 					node.removeChild(child);
 				else

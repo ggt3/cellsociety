@@ -9,14 +9,12 @@ import controller.Packager;
 
 public class WatorSimulation extends Simulation {
 	private ArrayList<Point> allSharks, allFish;
-	private Packager attributes;
 	
 	//if ENERGY == 0, shark is dead
 	//if you reach the breed cycle number, you make a baby
 	
 	public WatorSimulation(Grid aGrid, Packager settings) {
 		super(aGrid, settings);
-		attributes = settings; //colormap
 	}
 
 	public CellState calculateNewCellState(int row, int col) {
@@ -48,7 +46,7 @@ public class WatorSimulation extends Simulation {
 
 				removeCreature(allSharks, loc);
 			} else { //shark did not die, want to find all the fish
-				List<Point> fishNeighbors = getCurrentGrid().getDirectNeighborsWithType(loc, CellState.FISH); 
+				List<Point> fishNeighbors = getCurrentGrid().getDirectLocationsWithType(loc, CellState.FISH); 
 				if (fishNeighbors.size() >= 1) { //if there is at least one fish, eat it
 					Point fish = fishNeighbors.get(myGenerator.nextInt(fishNeighbors.size()));
 					removeCreature(allFish, fish); 
@@ -66,7 +64,7 @@ public class WatorSimulation extends Simulation {
 	}
 	
 	private void moveIfEmptyAndCheckBaby(Point loc, CellState babyType) {
-		List<Point> emptyNeighbors = getNextGrid().getDirectNeighborsWithType(loc, CellState.EMPTY);
+		List<Point> emptyNeighbors = getNextGrid().getDirectLocationsWithType(loc, CellState.EMPTY);
 		if (!emptyNeighbors.isEmpty()) { // want to move to empty spot
 			Point empty = emptyNeighbors.get(myGenerator.nextInt(emptyNeighbors.size()));
 			moveAndCheckBaby(loc, empty, babyType);
@@ -92,7 +90,6 @@ public class WatorSimulation extends Simulation {
 
 	private void fishAction() {
 		for (Point loc : allFish) {
-
 			System.out.printf("cell before %d, %d, %s %s\n", loc.y, loc.x, getCurrentGrid().getCell(loc.y, loc.x).toString(),getCurrentGrid().getCell(loc.y, loc.x).getProperties().toString());
 
 			moveIfEmptyAndCheckBaby(loc, CellState.FISH);
