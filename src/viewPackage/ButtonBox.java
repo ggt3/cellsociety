@@ -1,3 +1,5 @@
+// This entire file is part of my masterpiece.
+// COSETTE GOLDSTEIN
 package viewPackage;
 
 import java.io.IOException;
@@ -27,8 +29,7 @@ import controller.Controller;
 
 public class ButtonBox {
 
-	//private Controller control=new Controller();
-	private Controller control;//=view.getControl();
+	private Controller control;
 	private View view;
 	private String fileName="";
 	private double location;
@@ -67,7 +68,6 @@ public class ButtonBox {
 		step.setOnAction(e-> control.stepSimulation());
 
 		Button load = makeButton("LoadCommand");
-		
 		load.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -78,7 +78,6 @@ public class ButtonBox {
 				grid.setAlignment(Pos.CENTER);
 				grid.setHgap(10);
 				grid.setVgap(10);
-				grid.setPadding(new Insets(25, 25, 25, 25));
 
 				TextField textField = new TextField();
 				grid.add(textField, 0, 1);
@@ -110,7 +109,6 @@ public class ButtonBox {
 							}
 						} else {
 							view.createErrorWindow(myResources.getString("InvalidFileName"));
-
 						}
 					}
 				});
@@ -131,79 +129,70 @@ public class ButtonBox {
       hbox.setTranslateY(15);
 
       hbox.getChildren().addAll(play,pause,step,load,speedText);
-      //hbox.setPrefWidth(view.getWindowSize());
-      hbox.setAlignment(Pos.CENTER);
       return hbox;
 	}
 	
 	protected HBox makeSlider(){
 		
-		Slider slider = new Slider();
-		slider.setMin(1);
-		slider.setMax(5);
+		Slider speedSlider = new Slider();
+		speedSlider.setMin(1);
+		speedSlider.setMax(5);
 	
-		slider.setLayoutX(location);
-		//slider.setValue(1);
-		slider.setShowTickLabels(true);
-		slider.setShowTickMarks(true);
-		slider.setMajorTickUnit(1);
-		slider.setMinorTickCount(0);
+		speedSlider.setLayoutX(location);
+		speedSlider.setShowTickLabels(true);
+		speedSlider.setShowTickMarks(true);
+		speedSlider.setMajorTickUnit(1);
+		speedSlider.setMinorTickCount(0);
 		
-		slider.setBlockIncrement(1);
-		slider.setSnapToTicks(true);
+		speedSlider.setSnapToTicks(true);
 		
 		
-		updateSpeed((int)slider.getValue());
+		updateSpeed((int)speedSlider.getValue());
 		speedText.setText(speed.toString());
 		HBox hbox=new HBox(10);
 		Text t=view.addText("Adjust Speed:", 20,(int) hbox.getLayoutX(),(int) hbox.getLayoutY());
 		t.setX(20);
-		//t.setOnKeyPressed(ENTER);
 		text = new TextField();
 		
-		slider.valueProperty().addListener(new ChangeListener<Number>() {
-
+		speedSlider.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable,
 					Number oldValue, Number newValue) {
 				// TODO Auto-generated method stub
-				updateSpeed((int)slider.getValue());
+				updateSpeed((int)speedSlider.getValue());
 				speedText.setText(speed.toString());
 			}
 		    
 		});
 		
 		
-		Button setBtn = new Button(myResources.getString("SetSpeedCommand"));
+		Button setSpeedBtn = new Button(myResources.getString("SetSpeedCommand"));
 		
-		setBtn.setOnAction(new EventHandler<ActionEvent>() {
+		setSpeedBtn.setOnAction(new EventHandler<ActionEvent>() {
 
           	@Override
           	    public void handle(ActionEvent e) {
           			input=(int) text.getText().charAt(0)-48;
-      
           			if ((text.getText().trim() != null && !text.getText().isEmpty()&&input>=1&&input<=5&& text.getText().length()==1)) {
-          	        	
                 		updateSpeed(input);
                 		speedText.setText(speed.toString());
-                		slider.setValue(input);
+                		speedSlider.setValue(input);
           	        } else {
           	        	view.createErrorWindow(myResources.getString("InvalidSpeed"));
-          	        	
           	        }
           	     }
           	 });
 		
 		
-		hbox.getChildren().addAll(t,slider,text,setBtn);
+		hbox.getChildren().addAll(t,speedSlider,text,setSpeedBtn);
 		return hbox;
 		
 		
 	}
-	public int getSpeed(){
+	public int getSpeed() {
 		return speed;
 	}
-	private void updateSpeed(int s){
+	private void updateSpeed(int s) {
 		speed=s;
 	}
 	

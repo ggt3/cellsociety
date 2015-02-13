@@ -1,3 +1,6 @@
+// This entire file is part of my masterpiece.
+// COSETTE GOLDSTEIN
+
 package viewPackage;
 
 import javafx.beans.value.ChangeListener;

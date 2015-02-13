@@ -1,11 +1,9 @@
+// This entire file is part of my masterpiece.
+// COSETTE GOLDSTEIN
+
 package viewPackage;
 
-
-import java.awt.Dimension;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,7 +12,6 @@ import org.xml.sax.SAXException;
 
 import controller.Controller;
 import controller.ViewPackager;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -26,14 +23,16 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-//import org.controlsfx.dialog.Dialogs;
 
 
 public class View {
-	private Integer windowSize=600;
+	private static Integer windowSize=600;
 	private Group root;
-    public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
+    
+    private static final int TOGGLEBAR_START_LOCATION_X=windowSize/6;
+    private static final int TOGGLEBAR_START_LOCATION_Y=windowSize-100; 
+    private static final int SPEEDBAR_START_LOCATION_Y=windowSize-40;
 	private ResourceBundle myResources;
     private String fileName="";
 	private Controller control;
@@ -47,11 +46,9 @@ public class View {
     public View(Controller c) {
     	control = c;
     	myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
-		
-
     }
     
-	public Text addText(String s,int size,int xLocation,int yLocation){
+	public Text addText(String s,int size,int xLocation,int yLocation) {
         Text t = new Text(xLocation,yLocation,s);
         t.setFont(Font.font ("Verdana", size));
         t.setCache(true);
@@ -61,23 +58,20 @@ public class View {
 
 	//beginning screen with no grid
     public void initialize(Stage primaryStage) {
-    	primaryStage.setResizable(false);
-        primaryStage.setTitle("Cell Society");
-      
         buttons = new ButtonBox(control,this);
         toggles = new ToggleBox();
         
         HBox topButtonBox=buttons.makeButtonBox();
         HBox speedSlider=buttons.makeSlider();
-        speedSlider.setLayoutY(windowSize-40);
+        speedSlider.setLayoutY(SPEEDBAR_START_LOCATION_Y);
         
         HBox toggle=toggles.makeToggles();
-        toggle.setLayoutY(windowSize-100);
-        toggle.setLayoutX(windowSize/9);
+        toggle.setLayoutY(TOGGLEBAR_START_LOCATION_Y);
+        toggle.setLayoutX(TOGGLEBAR_START_LOCATION_X);
         root = new Group();
         root.getChildren().addAll(topButtonBox,speedSlider,toggle);
-        primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
-        primaryStage.show();
+    	primaryStage.setResizable(false);
+    	setAndShowStage(primaryStage,new Scene(root, windowSize, windowSize, Color.WHITE),"Cell Society");
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 			@Override
 			public void handle(WindowEvent event) {
@@ -88,67 +82,65 @@ public class View {
 
     public void createDisplayView(int x, int y) {
 		root.getChildren().remove(3, root.getChildren().size());
-		if(additionalStage!=null)
+		if(additionalStage!=null) //close Graph Window when new simulation is being loaded
 			additionalStage.close();
     	generation=0;
-		if (toggles.getShape() ==true) { //if its triangles
+		if (toggles.getShape()) { //if its triangles
     		myGridDisplayed = new TriangularGridView(this);
-    	} else {
+    	} 
+		else {
     		myGridDisplayed = new RectangularGridView(this);
     	}
     	myGridDisplayed.initializeGridView(x, y);
     }
     
-    //changes color of existing rectangles according to colors
-    public void updateGridView(ViewPackager colorGrid){
-    	//generation++;
+    //changes color of existing grid shapes according to colors
+    public void updateGridView(ViewPackager colorGrid) {
     	myGridDisplayed.updateGrid(colorGrid);
     	myGraph.updateGraph(colorGrid);
     	generation++;
     }
     
-    protected void createGraphWindow(){
+    private void setAndShowStage(Stage stage, Scene scene, String title) {
+    	stage.setScene(scene);
+    	stage.setTitle(title);
+    	stage.show();
+    }
+    
+    protected void createGraphWindow() {
     	myGraph=new PopulationGraph(this);
     	Scene graphScene=myGraph.makeGraph();
     	additionalStage=new Stage();
-    	additionalStage.setScene(graphScene);
-    	additionalStage.show();
+    	setAndShowStage(additionalStage,graphScene,"Population Graph");
     }
     
-    public void createErrorWindow(String st){
+    public void createErrorWindow(String st) {
     	ErrorDisplay showError=new ErrorDisplay();
-    	Scene s = showError.display(st);
-    	Stage newStage=new Stage();
-    	newStage.setScene(s);
-    	newStage.show();
+    	Scene errorScene = showError.display(st);
+    	Stage newStage = new Stage();
+    	setAndShowStage(newStage,errorScene,"Error");
     }
     
-    protected boolean getOutline(){
+    protected boolean getOutline() {
     	return toggles.getOutline();
     }
 
 	public boolean getEdgeType() {
 		return toggles.getEdgeType();
 	}
-	protected void addToRoot(Node n){
+	protected void addToRoot(Node n) {
 		root.getChildren().addAll(n);
 	}
-
-	protected String getFileName(){
-		return fileName;
-	}
-	public int getSpeed(){
+	public int getSpeed() {
 		return buttons.getSpeed();
 	}
-
-	protected void setFileName(String file){
+	protected void setFileName(String file) {
 		fileName=file;
 	}
-
-	public ResourceBundle getResourceBundle(){
+	public ResourceBundle getResourceBundle() {
 		return myResources;
 	}
-	protected int getGeneration(){
+	protected int getGeneration() {
 		return generation;
 	}
 	public void tryLoad(String file) throws ParserConfigurationException, SAXException, IOException {

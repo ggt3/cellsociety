@@ -10,7 +10,6 @@ import javafx.scene.layout.GridPane;
 public class ErrorDisplay {
 	
 	public Scene display(String s){
-		//Scene s=new Scene();
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);

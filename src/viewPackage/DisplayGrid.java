@@ -34,11 +34,11 @@ public abstract class DisplayGrid {
 		view.createGraphWindow();
 	}
 	
-	private double determineXlength(int numCols){
+	private double determineXlength(int numCols) {
 		return ((double)totalWidthOfGrid)/numCols;
 	}
 
-	private double determineYlength(int numRows){
+	private double determineYlength(int numRows) {
 		return ((double)totalHeightOfGrid)/numRows;
 	}
     
@@ -52,7 +52,7 @@ public abstract class DisplayGrid {
 		}
 	}
 	
-    public void updateGrid(ViewPackager viewPackager){
+    public void updateGrid(ViewPackager viewPackager) {
     	for(int i=0;i < numSquareX;i++){
     		for (int j=0;j < numSquareY;j++){
     			String color=viewPackager.getColorGrid().get(i).get(j).toUpperCase(); //getting the specified color at each grid
@@ -66,13 +66,11 @@ public abstract class DisplayGrid {
 		p.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-				
 				//change state instead of just color to white
 				setFill(p,Color.WHITE);
 			}
 		}); 
     }
-    
     
 	protected void setFill(Shape gridView, Color c) {
 		gridView.setFill(c);
