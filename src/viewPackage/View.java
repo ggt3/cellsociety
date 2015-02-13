@@ -1,39 +1,24 @@
 package viewPackage;
 
 
-import java.awt.Dimension;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import controller.Controller;
 import controller.ViewPackager;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
-//import org.controlsfx.dialog.Dialogs;
 
 
 public class View {
-	private Integer windowSize=600;
+	private Integer DEFAULT_WINDOW_SIZE = 600;
 	private Group root;
-    public static final Dimension DEFAULT_SIZE = new Dimension(600, 600); //size of the window screen
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/English";
 	private ResourceBundle myResources;
     private String fileName="";
 	private Controller control;
@@ -44,10 +29,9 @@ public class View {
 	private int generation;
 	private Stage additionalStage;
 	
-    public View(Controller c) {
+    public View(Controller c, ResourceBundle resources) {
     	control = c;
-    	myResources=ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE);
-		
+    	myResources = resources;
 
     }
     
@@ -57,19 +41,19 @@ public class View {
     	primaryStage.setResizable(false);
         primaryStage.setTitle("Cell Society");
       
-        buttons = new ButtonBox(control,this);
+        buttons = new ButtonBox(this);
         toggles = new ToggleBox();
         
         HBox topButtonBox=buttons.makeButtonBox();
         HBox speedSlider=buttons.makeSlider();
-        speedSlider.setLayoutY(windowSize-40);
+        speedSlider.setLayoutY(DEFAULT_WINDOW_SIZE-40);
         
         HBox toggle=toggles.makeToggles();
-        toggle.setLayoutY(windowSize-100);
-        toggle.setLayoutX(windowSize/9);
+        toggle.setLayoutY(DEFAULT_WINDOW_SIZE-100);
+        toggle.setLayoutX(DEFAULT_WINDOW_SIZE/9);
 		root = new Group();
 		root.getChildren().addAll(topButtonBox, speedSlider, toggle);
-		primaryStage.setScene(new Scene(root, windowSize, windowSize, Color.WHITE));
+		primaryStage.setScene(new Scene(root, DEFAULT_WINDOW_SIZE, DEFAULT_WINDOW_SIZE, Color.WHITE));
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(e -> {
 			if (additionalStage != null) {
@@ -79,10 +63,10 @@ public class View {
 	}
 
 	public void createDisplayView(int x, int y) {
-		root.getChildren().remove(3, root.getChildren().size());
+		root.getChildren().remove(3, root.getChildren().size()); //remove what used to be on the screen
 		if(additionalStage!=null)
 			additionalStage.close();
-    	generation=0;
+    	generation = 0;
 		if (toggles.getShape() ==true) { //if its triangles
     		myGridDisplayed = new TriangularGridView(this);
     	} else {
@@ -124,7 +108,17 @@ public class View {
 	protected void addToRoot(Node n){
 		root.getChildren().addAll(n);
 	}
-
+	protected void setPlayAction() {
+		control.changeSpeed(buttons.getSpeed());
+		control.playSimulation();
+	}
+	protected void setPause() {
+		control.stopSimulation();
+	}
+	protected void setStepSimulation() {
+		control.stepSimulation();
+	}
+	
 	protected String getFileName(){
 		return fileName;
 	}
@@ -135,8 +129,7 @@ public class View {
 	protected void setFileName(String file){
 		fileName=file;
 	}
-
-	public ResourceBundle getResourceBundle(){
+	protected ResourceBundle getResourcePath() {
 		return myResources;
 	}
 	protected int getGeneration(){

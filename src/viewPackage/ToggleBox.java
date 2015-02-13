@@ -33,6 +33,7 @@ public class ToggleBox {
 	}
 	
 	protected HBox makeToggles(){
+		System.out.printf("%b %b %b",edgeType, cellShape, outline);
 		HBox hbox=new HBox(50);
 		edgeType = new ToggleGroup();
 		ToggleButton tb1 = createToggleButton("Finite", edgeType, true);

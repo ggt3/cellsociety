@@ -24,10 +24,12 @@ public class Controller {
 	private Timeline myTimeline;
 	private Map<String, String> stateColorMap;
 	private static final int FRAME_MULTIPLIER = 4;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources/English");
+	private ResourceBundle myResources;
+    public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
 
 	public Controller(Stage primaryStage) {
-		myView = new View(this);
+		myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE +"English");
+		myView = new View(this, myResources);
 		myView.initialize(primaryStage);
 		generateTimeline();
 		
@@ -134,8 +136,8 @@ public class Controller {
 			myView.createErrorWindow(myResources.getString("InvalidSimulation"));
 		}
 	}
-	private void validateParameters(String source, Packager Pack) {
-		ResourceBundle defs = ResourceBundle.getBundle(source);
+	private void setDefaultParameters(String source, Packager Pack) {
+		ResourceBundle defs = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + source);
 		for(String key:defs.keySet()){
 			if (!Pack.getPropertiesMap().containsKey(key)){
 				Pack.getPropertiesMap().put(key, Integer.parseInt(defs.getString(key)));
@@ -143,27 +145,32 @@ public class Controller {
 		}
 	}
 
-
+	private Packager validateParameters(String simName, Packager pack) {
+		if (simName.equals("FIRE")) {
+			setDefaultParameters("FireDefaults", pack);
+		}
+		if (simName.equals("WATOR")) {
+			setDefaultParameters("WatorDefaults", pack);
+		}
+		if (simName.equals("SEGREGATION")) {
+			setDefaultParameters("SegregationDefaults", pack);
+		}
+		return pack;
+	}
 	//depending on the string, create a simulation rule with initial states and a initial grid
 	private void setSimulationType(String name, Packager p, Grid g) {
 		if (name.equals("FIRE")) {
-			validateParameters("resources/FireDefaults", p);
 			rules = new FireSimulation(g, p);
-			return;
 		}
 		if(name.equals("LIFE")) {
-			rules= new GameLifeSimulation(g,p);
-			return;
+			rules= new GameLifeSimulation(g,p);	
 		}
-		if (name.equals("WATOR")) {
-			validateParameters("resources/WatorDefaults", p);
-			rules = new WatorSimulation(g, p);
-			return;
+		if (name.equals("WATOR")) {	
+			rules = new WatorSimulation(g, p);	
 		}
-		if (name.equals("SEGREGATION")) {
-			validateParameters("resources/SegregationDefaults", p);
+		if (name.equals("SEGREGATION")) {			
 			rules = new SegregationSimulation(g, p);
-			return;
+		
 		}
 	}
 
