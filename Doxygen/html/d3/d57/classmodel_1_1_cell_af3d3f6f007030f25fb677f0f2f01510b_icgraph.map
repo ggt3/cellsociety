@@ -1,0 +1,8 @@
+<map id="model.Cell.getState" name="model.Cell.getState">
+<area shape="rect" id="node2" href="$da/df2/classmodel_1_1_game_life_simulation.html#abf884de11d364a4e30c22d8f108c2c55" title="model.GameLifeSimulation.calculate\lNewCellState" alt="" coords="212,5,468,46"/>
+<area shape="rect" id="node3" href="$d0/dea/classmodel_1_1_fire_simulation.html#afa5681b8bca9d9b06d8503cfb9debb51" title="model.FireSimulation.calculate\lNewCellState" alt="" coords="231,70,449,111"/>
+<area shape="rect" id="node4" href="$dc/d98/classmodel_1_1_segregation_simulation.html#ac32e4a0070545825aab876954e6f68e5" title="model.SegregationSimulation.calculate\lNewCellState" alt="" coords="203,135,477,177"/>
+<area shape="rect" id="node5" href="$d3/d57/classmodel_1_1_cell.html#a760ac2cd0c4393c3881a77f8a8f4faba" title="model.Cell.copyCell" alt="" coords="267,201,413,228"/>
+<area shape="rect" id="node6" href="$dc/d8f/classmodel_1_1_grid.html#a58bacc5c1bb1e3db7647ee8730bf57ce" title="model.Grid.getLocationsWith\lState" alt="" coords="237,253,443,294"/>
+<area shape="rect" id="node7" href="$db/ddc/classmodel_1_1_wator_simulation.html#a71ffa6547eb00615e94ba1d708a08281" title="model.WatorSimulation.make\lNextGrid" alt="" coords="525,253,736,294"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="viewPackage.DisplayGrid" name="viewPackage.DisplayGrid">
+<area shape="rect" id="node2" href="$db/d94/classview_package_1_1_rectangular_grid_view.html" title="viewPackage.RectangularGridView" alt="" coords="5,80,240,107"/>
+<area shape="rect" id="node3" href="$d6/dde/classview_package_1_1_triangular_grid_view.html" title="viewPackage.TriangularGridView" alt="" coords="265,80,487,107"/>
+</map>

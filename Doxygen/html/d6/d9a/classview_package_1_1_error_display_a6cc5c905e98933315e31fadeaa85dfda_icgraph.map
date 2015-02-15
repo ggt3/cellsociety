@@ -1,0 +1,10 @@
+<map id="viewPackage.ErrorDisplay.display" name="viewPackage.ErrorDisplay.display">
+<area shape="rect" id="node2" href="$d1/dbf/classview_package_1_1_view.html#a03c6d8048559bfb48f6b81662fd54057" title="viewPackage.View.createError\lWindow" alt="" coords="283,49,493,90"/>
+<area shape="rect" id="node3" href="$d9/df7/classcontroller_1_1_controller.html#af7cc9ab6dfe60da36d3159eea48882db" title="controller.Controller.loadFile" alt="" coords="541,5,739,32"/>
+<area shape="rect" id="node5" href="$dc/d2c/classview_package_1_1_button_box.html#aef53bd97c4407ecd3fb5dfbf42850a46" title="viewPackage.ButtonBox.load\lFileBox" alt="" coords="1049,49,1253,90"/>
+<area shape="rect" id="node9" href="$dc/d2c/classview_package_1_1_button_box.html#a6bf9f301b61c832c249686871cb810b8" title="viewPackage.ButtonBox.make\lSlider" alt="" coords="787,107,1000,149"/>
+<area shape="rect" id="node4" href="$d1/dbf/classview_package_1_1_view.html#a718e5f42ae85512916198548e28477c7" title="viewPackage.View.tryLoad" alt="" coords="800,5,987,32"/>
+<area shape="rect" id="node6" href="$dc/d2c/classview_package_1_1_button_box.html#a9756fc46a96c169ce48a1867bd2c82f5" title="viewPackage.ButtonBox.make\lButtonBox" alt="" coords="1301,49,1515,90"/>
+<area shape="rect" id="node7" href="$d1/dbf/classview_package_1_1_view.html#af6f6887ef253ae0fba2634e367b95312" title="viewPackage.View.initialize" alt="" coords="1563,85,1752,112"/>
+<area shape="rect" id="node8" href="$d9/df7/classcontroller_1_1_controller.html#a4dbfef3e3e30bd1bb84df7a6b24ad1e7" title="controller.Controller.Controller" alt="" coords="1801,85,2013,112"/>
+</map>
