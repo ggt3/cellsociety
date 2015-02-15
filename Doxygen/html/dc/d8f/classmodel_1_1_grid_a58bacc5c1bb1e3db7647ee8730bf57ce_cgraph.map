@@ -1,0 +1,4 @@
+<map id="model.Grid.getLocationsWithState" name="model.Grid.getLocationsWithState">
+<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="263,5,403,32"/>
+<area shape="rect" id="node3" href="$d3/d57/classmodel_1_1_cell.html#af3d3f6f007030f25fb677f0f2f01510b" title="model.Cell.getState" alt="" coords="259,56,408,83"/>
+</map>
