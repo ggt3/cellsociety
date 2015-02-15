@@ -1,6 +1,0 @@
-<map id="model.GameLifeSimulation" name="model.GameLifeSimulation">
-<area shape="rect" id="node2" href="$d2/d17/classmodel_1_1_simulation.html" title="model.Simulation" alt="" coords="162,291,296,317"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html" title="model.Grid" alt="" coords="130,187,221,213"/>
-<area shape="rect" id="node4" href="$d3/d57/classmodel_1_1_cell.html" title="model.Cell" alt="" coords="131,96,220,123"/>
-<area shape="rect" id="node6" href="$d0/d76/enummodel_1_1_cell_state.html" title="model.CellState" alt="" coords="201,5,324,32"/>
-</map>

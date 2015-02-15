@@ -1,6 +1,0 @@
-<map id="controller.Controller.createColorGrid" name="controller.Controller.createColorGrid">
-<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="273,5,413,32"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#a01924b6019a14826898f281a3064b3b5" title="model.Grid.getGridColSize" alt="" coords="247,56,438,83"/>
-<area shape="rect" id="node4" href="$dc/d8f/classmodel_1_1_grid.html#a40adce87c26a3a6830125324ae576c34" title="model.Grid.getGridRowSize" alt="" coords="245,107,440,133"/>
-<area shape="rect" id="node5" href="$d3/d57/classmodel_1_1_cell.html#a527cb796745a34155e9b2a82b2a8812a" title="model.Cell.toString" alt="" coords="271,157,415,184"/>
-</map>

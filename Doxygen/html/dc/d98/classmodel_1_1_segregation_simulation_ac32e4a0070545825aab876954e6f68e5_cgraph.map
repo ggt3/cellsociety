@@ -1,7 +1,0 @@
-<map id="model.SegregationSimulation.calculateNewCellState" name="model.SegregationSimulation.calculateNewCellState">
-<area shape="rect" id="node2" href="$d2/d17/classmodel_1_1_simulation.html#a8e66f9dff5f29f97efb58d49193e0e1f" title="model.Simulation.getCurrentGrid" alt="" coords="329,5,562,32"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#ad735ff84934075c0000347c1685cc9d2" title="model.Grid.getDirectNeighbors\lWithType" alt="" coords="335,57,555,98"/>
-<area shape="rect" id="node5" href="$d3/d57/classmodel_1_1_cell.html#ae3edf2d4d7cc0314b5813d12dc8034f5" title="model.Cell.getKey" alt="" coords="377,123,513,149"/>
-<area shape="rect" id="node6" href="$d3/d57/classmodel_1_1_cell.html#af3d3f6f007030f25fb677f0f2f01510b" title="model.Cell.getState" alt="" coords="371,173,520,200"/>
-<area shape="rect" id="node4" href="$dc/d8f/classmodel_1_1_grid.html#a7fd07edd38cb4fbc123431255df70a84" title="model.Grid.inBounds" alt="" coords="611,64,765,91"/>
-</map>

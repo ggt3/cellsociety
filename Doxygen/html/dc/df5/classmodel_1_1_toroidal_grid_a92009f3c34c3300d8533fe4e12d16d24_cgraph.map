@@ -1,7 +1,0 @@
-<map id="model.ToroidalGrid.getAllNeighbors" name="model.ToroidalGrid.getAllNeighbors">
-<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="513,5,653,32"/>
-<area shape="rect" id="node3" href="$dc/df5/classmodel_1_1_toroidal_grid.html#a52805c279f2f0d1edc793980f171dffb" title="model.ToroidalGrid.getDirect\lNeighbors" alt="" coords="235,93,437,134"/>
-<area shape="rect" id="node4" href="$dc/d8f/classmodel_1_1_grid.html#a7fd07edd38cb4fbc123431255df70a84" title="model.Grid.inBounds" alt="" coords="505,85,660,112"/>
-<area shape="rect" id="node5" href="$dc/d8f/classmodel_1_1_grid.html#a40adce87c26a3a6830125324ae576c34" title="model.Grid.getGridRowSize" alt="" coords="485,140,680,167"/>
-<area shape="rect" id="node6" href="$dc/d8f/classmodel_1_1_grid.html#a01924b6019a14826898f281a3064b3b5" title="model.Grid.getGridColSize" alt="" coords="487,200,678,227"/>
-</map>

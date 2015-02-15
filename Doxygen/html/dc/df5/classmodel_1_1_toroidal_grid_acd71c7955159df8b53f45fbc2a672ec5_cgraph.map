@@ -1,7 +1,0 @@
-<map id="model.ToroidalGrid.copyGrid" name="model.ToroidalGrid.copyGrid">
-<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="293,5,433,32"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#a01924b6019a14826898f281a3064b3b5" title="model.Grid.getGridColSize" alt="" coords="267,56,458,83"/>
-<area shape="rect" id="node4" href="$dc/d8f/classmodel_1_1_grid.html#a40adce87c26a3a6830125324ae576c34" title="model.Grid.getGridRowSize" alt="" coords="265,107,460,133"/>
-<area shape="rect" id="node5" href="$dc/d8f/classmodel_1_1_grid.html#a9e11c6171839cc24ba2b1d86b185912f" title="model.Grid.putCell" alt="" coords="293,157,433,184"/>
-<area shape="rect" id="node6" href="$dc/df5/classmodel_1_1_toroidal_grid.html#af1c56ec916e15a5fb25417aa727c9bfb" title="model.ToroidalGrid.ToroidalGrid" alt="" coords="253,208,472,235"/>
-</map>

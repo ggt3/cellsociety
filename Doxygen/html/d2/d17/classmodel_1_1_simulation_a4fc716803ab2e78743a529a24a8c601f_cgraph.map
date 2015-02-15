@@ -1,8 +1,0 @@
-<map id="model.Simulation.makeNextGrid" name="model.Simulation.makeNextGrid">
-<area shape="rect" id="node2" href="$d2/d17/classmodel_1_1_simulation.html#ab1da5698abc45e35e163f783fa393f8d" title="model.Simulation.calculate\lNewCellState" alt="" coords="285,5,480,46"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#a994d6c682166c2599924fba6a64db842" title="model.Grid.copyGrid" alt="" coords="307,71,459,97"/>
-<area shape="rect" id="node4" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="313,121,453,148"/>
-<area shape="rect" id="node5" href="$dc/d8f/classmodel_1_1_grid.html#a01924b6019a14826898f281a3064b3b5" title="model.Grid.getGridColSize" alt="" coords="287,172,478,199"/>
-<area shape="rect" id="node6" href="$dc/d8f/classmodel_1_1_grid.html#a40adce87c26a3a6830125324ae576c34" title="model.Grid.getGridRowSize" alt="" coords="285,223,480,249"/>
-<area shape="rect" id="node7" href="$d3/d57/classmodel_1_1_cell.html#afba3057d5fff58793cb8118915f47e2a" title="model.Cell.setState" alt="" coords="309,273,457,300"/>
-</map>

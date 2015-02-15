@@ -1,5 +1,0 @@
-<map id="model.Cell.copyCell" name="model.Cell.copyCell">
-<area shape="rect" id="node2" href="$d3/d57/classmodel_1_1_cell.html#ad2650e84dd059c88de833b4f96745fc8" title="model.Cell.Cell" alt="" coords="217,5,333,32"/>
-<area shape="rect" id="node4" href="$d3/d57/classmodel_1_1_cell.html#af3d3f6f007030f25fb677f0f2f01510b" title="model.Cell.getState" alt="" coords="200,56,349,83"/>
-<area shape="rect" id="node3" href="$d3/d57/classmodel_1_1_cell.html#afba3057d5fff58793cb8118915f47e2a" title="model.Cell.setState" alt="" coords="398,5,546,32"/>
-</map>

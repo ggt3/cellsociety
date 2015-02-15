@@ -1,5 +1,0 @@
-<map id="model.WatorSimulation.resetBreedTime" name="model.WatorSimulation.resetBreedTime">
-<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="299,5,439,32"/>
-<area shape="rect" id="node3" href="$d2/d17/classmodel_1_1_simulation.html#a0252922993a1cbfd2a23f05f834df1fc" title="model.Simulation.getNextGrid" alt="" coords="262,56,477,83"/>
-<area shape="rect" id="node4" href="$d3/d57/classmodel_1_1_cell.html#a21f51d50e471c093ccba82f974f30032" title="model.Cell.getProperties" alt="" coords="280,107,459,133"/>
-</map>

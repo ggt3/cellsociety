@@ -1,7 +1,0 @@
-<map id="controller.Controller.playSimulation" name="controller.Controller.playSimulation">
-<area shape="rect" id="node2" href="$d9/df7/classcontroller_1_1_controller.html#a37d9d1d84d304a9d94d7666322b7c6ab" title="controller.Controller.change\lSpeed" alt="" coords="229,5,427,46"/>
-<area shape="rect" id="node3" href="$d1/dbf/classview_package_1_1_view.html#a1d1a8e16ae622c0d6a66cd9c516672a6" title="viewPackage.View.setPlay\lAction" alt="" coords="475,34,659,75"/>
-<area shape="rect" id="node4" href="$dc/d2c/classview_package_1_1_button_box.html#a9756fc46a96c169ce48a1867bd2c82f5" title="viewPackage.ButtonBox.make\lButtonBox" alt="" coords="707,34,920,75"/>
-<area shape="rect" id="node5" href="$d1/dbf/classview_package_1_1_view.html#af6f6887ef253ae0fba2634e367b95312" title="viewPackage.View.initialize" alt="" coords="968,41,1157,68"/>
-<area shape="rect" id="node6" href="$d9/df7/classcontroller_1_1_controller.html#a4dbfef3e3e30bd1bb84df7a6b24ad1e7" title="controller.Controller.Controller" alt="" coords="1206,41,1418,68"/>
-</map>

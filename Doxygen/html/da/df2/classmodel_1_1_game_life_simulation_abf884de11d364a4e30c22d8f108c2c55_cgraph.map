@@ -1,6 +1,0 @@
-<map id="model.GameLifeSimulation.calculateNewCellState" name="model.GameLifeSimulation.calculateNewCellState">
-<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#af78a30e4a758cd489fd0d4291ca693c5" title="model.Grid.getAllNeighbors" alt="" coords="328,5,525,32"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="357,56,497,83"/>
-<area shape="rect" id="node4" href="$d2/d17/classmodel_1_1_simulation.html#a8e66f9dff5f29f97efb58d49193e0e1f" title="model.Simulation.getCurrentGrid" alt="" coords="310,107,543,133"/>
-<area shape="rect" id="node5" href="$d3/d57/classmodel_1_1_cell.html#af3d3f6f007030f25fb677f0f2f01510b" title="model.Cell.getState" alt="" coords="352,157,501,184"/>
-</map>

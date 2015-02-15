@@ -1,7 +1,0 @@
-<map id="model.SegregationSimulation.makeNextGrid" name="model.SegregationSimulation.makeNextGrid">
-<area shape="rect" id="node2" href="$d2/d17/classmodel_1_1_simulation.html#a8e66f9dff5f29f97efb58d49193e0e1f" title="model.Simulation.getCurrentGrid" alt="" coords="307,5,541,32"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#a2a1dabe5f40f45e1018d5fce56ae29bc" title="model.Grid.print" alt="" coords="361,56,487,83"/>
-<area shape="rect" id="node6" href="$dc/d8f/classmodel_1_1_grid.html#a9e11c6171839cc24ba2b1d86b185912f" title="model.Grid.putCell" alt="" coords="354,107,494,133"/>
-<area shape="rect" id="node4" href="$d3/d57/classmodel_1_1_cell.html#a21f51d50e471c093ccba82f974f30032" title="model.Cell.getProperties" alt="" coords="589,31,768,57"/>
-<area shape="rect" id="node5" href="$d3/d57/classmodel_1_1_cell.html#a527cb796745a34155e9b2a82b2a8812a" title="model.Cell.toString" alt="" coords="607,81,751,108"/>
-</map>

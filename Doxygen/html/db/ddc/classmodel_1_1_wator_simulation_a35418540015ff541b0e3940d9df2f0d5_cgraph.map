@@ -1,5 +1,0 @@
-<map id="model.WatorSimulation.canReproduce" name="model.WatorSimulation.canReproduce">
-<area shape="rect" id="node2" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="298,5,438,32"/>
-<area shape="rect" id="node3" href="$d2/d17/classmodel_1_1_simulation.html#a8e66f9dff5f29f97efb58d49193e0e1f" title="model.Simulation.getCurrentGrid" alt="" coords="251,56,485,83"/>
-<area shape="rect" id="node4" href="$d3/d57/classmodel_1_1_cell.html#ae3edf2d4d7cc0314b5813d12dc8034f5" title="model.Cell.getKey" alt="" coords="300,107,436,133"/>
-</map>

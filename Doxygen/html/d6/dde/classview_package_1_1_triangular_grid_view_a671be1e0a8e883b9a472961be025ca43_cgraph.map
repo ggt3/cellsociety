@@ -1,7 +1,0 @@
-<map id="viewPackage.TriangularGridView.initialEmptyGrid" name="viewPackage.TriangularGridView.initialEmptyGrid">
-<area shape="rect" id="node2" href="$d1/dbf/classview_package_1_1_view.html#aec9d25091987c1259ada51e121b5680a" title="viewPackage.View.addToRoot" alt="" coords="263,5,465,32"/>
-<area shape="rect" id="node3" href="$d6/dde/classview_package_1_1_triangular_grid_view.html#a9dd84b4958220fb4820afe2787cb44aa" title="viewPackage.TriangularGrid\lView.drawEvenTriangle" alt="" coords="267,57,461,98"/>
-<area shape="rect" id="node4" href="$d6/dde/classview_package_1_1_triangular_grid_view.html#a360d12b23a08792692a523ce7911f544" title="viewPackage.TriangularGrid\lView.drawOddTriangle" alt="" coords="267,122,461,163"/>
-<area shape="rect" id="node5" href="$df/dcf/classview_package_1_1_display_grid.html#a097c515d1afff2b98764e2dfa1b4562a" title="viewPackage.DisplayGrid.getView" alt="" coords="248,188,480,215"/>
-<area shape="rect" id="node6" href="$df/dcf/classview_package_1_1_display_grid.html#aa1467f245293c26d8dd0132f03e1b414" title="viewPackage.DisplayGrid.set\lShape" alt="" coords="263,239,465,281"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="controller.Controller.stopSimulation" name="controller.Controller.stopSimulation">
-<area shape="rect" id="node2" href="$d9/df7/classcontroller_1_1_controller.html#af7cc9ab6dfe60da36d3159eea48882db" title="controller.Controller.loadFile" alt="" coords="232,15,429,41"/>
-<area shape="rect" id="node8" href="$d1/dbf/classview_package_1_1_view.html#a354522de3d58253a4528eb669d109234" title="viewPackage.View.setPause" alt="" coords="478,71,674,97"/>
-<area shape="rect" id="node3" href="$d1/dbf/classview_package_1_1_view.html#a718e5f42ae85512916198548e28477c7" title="viewPackage.View.tryLoad" alt="" coords="483,13,669,40"/>
-<area shape="rect" id="node4" href="$dc/d2c/classview_package_1_1_button_box.html#aef53bd97c4407ecd3fb5dfbf42850a46" title="viewPackage.ButtonBox.load\lFileBox" alt="" coords="723,5,927,46"/>
-<area shape="rect" id="node5" href="$dc/d2c/classview_package_1_1_button_box.html#a9756fc46a96c169ce48a1867bd2c82f5" title="viewPackage.ButtonBox.make\lButtonBox" alt="" coords="976,34,1189,75"/>
-<area shape="rect" id="node6" href="$d1/dbf/classview_package_1_1_view.html#af6f6887ef253ae0fba2634e367b95312" title="viewPackage.View.initialize" alt="" coords="1237,41,1427,68"/>
-<area shape="rect" id="node7" href="$d9/df7/classcontroller_1_1_controller.html#a4dbfef3e3e30bd1bb84df7a6b24ad1e7" title="controller.Controller.Controller" alt="" coords="1475,41,1687,68"/>
-</map>

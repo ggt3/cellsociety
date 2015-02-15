@@ -1,7 +1,0 @@
-<map id="model.WatorSimulation.moveCreature" name="model.WatorSimulation.moveCreature">
-<area shape="rect" id="node2" href="$d3/d57/classmodel_1_1_cell.html#a16fd95430857f2f07371364b0015a32d" title="model.Cell.changeToEmptyCell" alt="" coords="273,5,490,32"/>
-<area shape="rect" id="node3" href="$dc/d8f/classmodel_1_1_grid.html#a7308e05b94f35a2f8198f314eb384267" title="model.Grid.getCell" alt="" coords="311,56,451,83"/>
-<area shape="rect" id="node4" href="$d2/d17/classmodel_1_1_simulation.html#a8e66f9dff5f29f97efb58d49193e0e1f" title="model.Simulation.getCurrentGrid" alt="" coords="265,107,498,133"/>
-<area shape="rect" id="node5" href="$d2/d17/classmodel_1_1_simulation.html#a0252922993a1cbfd2a23f05f834df1fc" title="model.Simulation.getNextGrid" alt="" coords="274,157,489,184"/>
-<area shape="rect" id="node6" href="$dc/d8f/classmodel_1_1_grid.html#a9e11c6171839cc24ba2b1d86b185912f" title="model.Grid.putCell" alt="" coords="311,208,451,235"/>
-</map>
