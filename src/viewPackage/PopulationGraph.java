@@ -41,7 +41,7 @@ public class PopulationGraph {
 	}
 	protected void updateGraph(ViewPackager colorGrid){
 		Set<String> keySet=colorGrid.getStateTotals().keySet();
-		keys= keySet.toArray();
+		keys = keySet.toArray();
 
 		if (listOfSpecies.size()==0)
 			addToList(keys.length);
