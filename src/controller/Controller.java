@@ -1,3 +1,6 @@
+//this entire file is a part of my masterpiece
+//Georgia Tse (ggt3)
+
 package controller;
 
 import java.io.IOException;
@@ -15,8 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import viewPackage.View;
 import model.*;
-//this entire file is a part of my masterpiece
-//Georgia
+
 
 public class Controller {
 	private Simulation rules;
@@ -98,6 +100,7 @@ public class Controller {
 			myView.createErrorWindow(myResources.getString("InvalidSimulation"));
 		}
 	}
+	
 	private void setDefaultParameters(String source, Packager Pack) {
 		ResourceBundle defs = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + source);
 		for(String key:defs.keySet()){
