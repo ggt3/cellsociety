@@ -33,7 +33,6 @@ public class Controller {
 		myView.initialize(primaryStage);
 		generateTimeline();
 	}
-
 	
 	private void generateTimeline(){
 		myTimeline = new Timeline();
